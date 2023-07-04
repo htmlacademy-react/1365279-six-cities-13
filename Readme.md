@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Дарья Пьянова](https://up.htmlacademy.ru/react/13/user/1365279).
-* Наставник: `Неизвестно`.
+* Наставник: [Arthur Litovko](https://htmlacademy.ru/profile/id6927).
 
 ---
 
