@@ -1,10 +1,14 @@
+import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';
+import { CITIES } from '../../const';
+import mockOffer from '../../mocks/offers';
 
 type MainProps = {
 	offersCount: number;
 }
 
 function Main({offersCount}: MainProps): JSX.Element {
+	const offers = Array.from({length: offersCount}, mockOffer);
 	return (
 		<div className="page page--gray page--main">
 			<header className="header">
@@ -50,36 +54,20 @@ function Main({offersCount}: MainProps): JSX.Element {
 				<div className="tabs">
 					<section className="locations container">
 						<ul className="locations__list tabs__list">
-							<li className="locations__item">
-								<a className="locations__item-link tabs__item" href="#">
-									<span>Paris</span>
-								</a>
-							</li>
-							<li className="locations__item">
-								<a className="locations__item-link tabs__item" href="#">
-									<span>Cologne</span>
-								</a>
-							</li>
-							<li className="locations__item">
-								<a className="locations__item-link tabs__item" href="#">
-									<span>Brussels</span>
-								</a>
-							</li>
-							<li className="locations__item">
-								<a className="locations__item-link tabs__item tabs__item--active">
-									<span>Amsterdam</span>
-								</a>
-							</li>
-							<li className="locations__item">
-								<a className="locations__item-link tabs__item" href="#">
-									<span>Hamburg</span>
-								</a>
-							</li>
-							<li className="locations__item">
-								<a className="locations__item-link tabs__item" href="#">
-									<span>Dusseldorf</span>
-								</a>
-							</li>
+							{CITIES.map((city) => (
+								<li className="locations__item" key={city}>
+									<a
+										className={classNames(
+											'locations__item-link',
+											{'tabs__item': city === 'Amsterdam'},
+											'tabs__item'
+										)}
+										href="#"
+									>
+										<span>{city}</span>
+									</a>
+								</li>
+							))}
 						</ul>
 					</section>
 				</div>
@@ -115,22 +103,9 @@ function Main({offersCount}: MainProps): JSX.Element {
 								</ul>
 							</form>
 							<div className="cities__places-list places__list tabs__content">
-								<OfferCard
-									image='img/apartment-01.jpg'
-									price={120}
-									rating={4}
-									title='Beautiful & luxurious apartment at great location'
-									type='Apartment'
-									isPremium
-								/>
-								<OfferCard
-									image='img/room.jpg'
-									price={180}
-									rating={5}
-									title='Wood and stone place'
-									type='Private room'
-									isBookmark
-								/>
+								{offers.map((offer) => (
+									<OfferCard {...offer} key={offer.id} />
+								))}
 							</div>
 						</section>
 						<div className="cities__right-section">

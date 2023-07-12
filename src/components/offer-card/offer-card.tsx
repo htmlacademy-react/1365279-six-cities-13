@@ -1,26 +1,19 @@
 import classNames from 'classnames';
+import type { ServerOffer } from '../../mocks/offers';
 
-type OfferCardProps = {
-	image: string;
-	price: number;
-	rating: number;
-	title: string;
-	type: string;
-	isPremium?: boolean;
-	isBookmark?: boolean;
-}
+type OfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isFavorite' | 'isPremium' | 'rating' | 'previewImage'>
 
 function OfferCard({
-	image,
+	previewImage,
 	price,
 	rating,
 	title,
 	type,
 	isPremium = false,
-	isBookmark = false
+	isFavorite = false
 } : OfferCardProps): JSX.Element {
-	const bookmarkClass = classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isBookmark}, 'button');
-	const bookmarkLabel = `${isBookmark ? 'In' : 'To'} bookmarks`;
+	const bookmarkClass = classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite}, 'button');
+	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
 	return (
 		<article className="cities__card place-card">
 			{isPremium && (
@@ -32,7 +25,7 @@ function OfferCard({
 				<a href="#">
 					<img
 						className="place-card__image"
-						src={image}
+						src={previewImage}
 						width={260}
 						height={200}
 						alt="Place image"
