@@ -1,3 +1,3 @@
-export const Setting = {
+export const TemporalData = {
 	offersCount: 5,
 } as const;
