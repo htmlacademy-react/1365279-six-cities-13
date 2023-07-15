@@ -25,4 +25,10 @@ enum AppRoute {
   Root = '/',
 }
 
-export { TemporalData, CITIES, OFFER_TYPES, AppRoute };
+enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
+export { TemporalData, CITIES, OFFER_TYPES, AppRoute, AuthorizationStatus };
