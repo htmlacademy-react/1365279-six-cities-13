@@ -18,4 +18,11 @@ const OFFER_TYPES = [
 	'Hotel',
 ] as const;
 
-export { TemporalData, CITIES, OFFER_TYPES };
+enum AppRoute {
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer',
+  Root = '/',
+}
+
+export { TemporalData, CITIES, OFFER_TYPES, AppRoute };

@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';
 import { CITIES } from '../../const';
@@ -56,16 +57,16 @@ function Main({offersCount}: MainProps): JSX.Element {
 						<ul className="locations__list tabs__list">
 							{CITIES.map((city) => (
 								<li className="locations__item" key={city}>
-									<a
+									<Link
 										className={classNames(
 											'locations__item-link',
 											{'tabs__item': city === 'Amsterdam'},
 											'tabs__item'
 										)}
-										href="#"
+										to="#"
 									>
 										<span>{city}</span>
-									</a>
+									</Link>
 								</li>
 							))}
 						</ul>
@@ -77,7 +78,7 @@ function Main({offersCount}: MainProps): JSX.Element {
 							<h2 className="visually-hidden">Places</h2>
 							<b className="places__found">{offersCount} places to stay in Amsterdam</b>
 							<form className="places__sorting" action="#" method="get">
-								<span className="places__sorting-caption">Sort by </span>
+								<span className="places__sorting-caption">Sort by</span>{' '}
 								<span className="places__sorting-type" tabIndex={0}>
 									Popular
 									<svg className="places__sorting-arrow" width={7} height={4}>
