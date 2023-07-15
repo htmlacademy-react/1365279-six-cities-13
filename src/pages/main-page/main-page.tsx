@@ -4,11 +4,11 @@ import OfferCard from '../../components/offer-card/offer-card';
 import { CITIES } from '../../const';
 import mockOffer from '../../mocks/offers';
 
-type MainProps = {
+type MainPageProps = {
 	offersCount: number;
 }
 
-function Main({offersCount}: MainProps): JSX.Element {
+function MainPage({offersCount}: MainPageProps): JSX.Element {
 	const offers = Array.from({length: offersCount}, mockOffer);
 	return (
 		<div className="page page--gray page--main">
@@ -119,5 +119,5 @@ function Main({offersCount}: MainProps): JSX.Element {
 	);
 }
 
-export default Main;
-export type { MainProps };
+export default MainPage;
+export type { MainPageProps };

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function Favorites(): JSX.Element {
+function FavoritesPage(): JSX.Element {
 	return (
 		<div className="page">
 			<header className="header">
@@ -229,4 +229,4 @@ function Favorites(): JSX.Element {
 	);
 }
 
-export default Favorites;
+export default FavoritesPage;

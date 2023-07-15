@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import styles from './not-found.module.css';
+import styles from './not-found-page.module.css';
 
-function NotFound() : JSX.Element {
+function NotFoundPage() : JSX.Element {
 	return (
 		<div className="page page--gray">
 			<header className="header">
@@ -29,4 +29,4 @@ function NotFound() : JSX.Element {
 	);
 }
 
-export default NotFound;
+export default NotFoundPage;

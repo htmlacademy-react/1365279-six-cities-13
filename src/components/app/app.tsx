@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Main from '../../pages/main/main';
-import Login from '../../pages/login/login';
-import Favorites from '../../pages/favorites/favorites';
-import Offer from '../../pages/offer/offer';
-import NotFound from '../../pages/not-found/not-found';
-import type { MainProps } from '../../pages/main/main';
+import MainPage from '../../pages/main-page/main-page';
+import LoginPage from '../../pages/login-page/login-page';
+import FavoritesPage from '../../pages/favorites-page/favorites-page';
+import OfferPage from '../../pages/offer-page/offer-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import type { MainPageProps } from '../../pages/main-page/main-page';
 import { AppRoute } from '../../const';
 
-type AppProps = MainProps;
+type AppProps = MainPageProps;
 
 function App({offersCount}: AppProps): JSX.Element {
 	return (
@@ -15,23 +15,23 @@ function App({offersCount}: AppProps): JSX.Element {
 			<Routes>
 				<Route
 					path={AppRoute.Root}
-					element={<Main offersCount={offersCount} />}
+					element={<MainPage offersCount={offersCount} />}
 				/>
 				<Route
 					path={AppRoute.Login}
-					element={<Login />}
+					element={<LoginPage />}
 				/>
 				<Route
 					path={AppRoute.Favorites}
-					element={<Favorites />}
+					element={<FavoritesPage />}
 				/>
 				<Route
 					path={`${AppRoute.Offer}/:offerd`}
-					element={<Offer />}
+					element={<OfferPage />}
 				/>
 				<Route
 					path='*'
-					element={<NotFound />}
+					element={<NotFoundPage />}
 				/>
 			</Routes>
 		</BrowserRouter>
