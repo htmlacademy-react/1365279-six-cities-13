@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -11,30 +12,32 @@ type AppProps = MainPageProps;
 
 function App({offersCount}: AppProps): JSX.Element {
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route
-					path={AppRoute.Root}
-					element={<MainPage offersCount={offersCount} />}
-				/>
-				<Route
-					path={AppRoute.Login}
-					element={<LoginPage />}
-				/>
-				<Route
-					path={AppRoute.Favorites}
-					element={<FavoritesPage />}
-				/>
-				<Route
-					path={`${AppRoute.Offer}/:offerd`}
-					element={<OfferPage />}
-				/>
-				<Route
-					path='*'
-					element={<NotFoundPage />}
-				/>
-			</Routes>
-		</BrowserRouter>
+		<HelmetProvider>
+			<BrowserRouter>
+				<Routes>
+					<Route
+						path={AppRoute.Root}
+						element={<MainPage offersCount={offersCount} />}
+					/>
+					<Route
+						path={AppRoute.Login}
+						element={<LoginPage />}
+					/>
+					<Route
+						path={AppRoute.Favorites}
+						element={<FavoritesPage />}
+					/>
+					<Route
+						path={`${AppRoute.Offer}/:offerd`}
+						element={<OfferPage />}
+					/>
+					<Route
+						path='*'
+						element={<NotFoundPage />}
+					/>
+				</Routes>
+			</BrowserRouter>
+		</HelmetProvider>
 	);
 }
 

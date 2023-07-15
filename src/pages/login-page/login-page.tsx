@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 
 function LoginPage(): JSX.Element {
 	return (
 		<div className="page page--gray page--login">
+			<Helmet>
+				<title>6 cities - Login</title>
+			</Helmet>
 			<Header withNavigation={false} />
 			<main className="page__main page__main--login">
 				<div className="page__login-container container">

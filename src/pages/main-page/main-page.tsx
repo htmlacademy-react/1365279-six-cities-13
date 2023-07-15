@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';
 import { CITIES } from '../../const';
@@ -13,6 +14,9 @@ function MainPage({offersCount}: MainPageProps): JSX.Element {
 	const offers = Array.from({length: offersCount}, mockOffer);
 	return (
 		<div className="page page--gray page--main">
+			<Helmet>
+				<title>6 cities</title>
+			</Helmet>
 			<Header />
 			<main className="page__main page__main--index">
 				<h1 className="visually-hidden">Cities</h1>
