@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';

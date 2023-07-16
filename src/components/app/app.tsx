@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import PrivateRoute from '../private-route/private-route';
+import { PrivateRoute, PublicRoute } from '../access-route/access-route';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -22,20 +22,26 @@ function App({offersCount}: AppProps): JSX.Element {
 					/>
 					<Route
 						path={AppRoute.Login}
-						element={<LoginPage />}
+						element={
+							<PublicRoute
+								status={AuthorizationStatus.NoAuth}
+							>
+								<LoginPage />
+							</PublicRoute>
+						}
 					/>
 					<Route
 						path={AppRoute.Favorites}
 						element={
 							<PrivateRoute
-								authorizationStatus={AuthorizationStatus.NoAuth}
+								status={AuthorizationStatus.NoAuth}
 							>
 								<FavoritesPage />
 							</PrivateRoute>
 						}
 					/>
 					<Route
-						path={`${AppRoute.Offer}/:offerd`}
+						path={`${AppRoute.Offer}/:offerId`}
 						element={<OfferPage />}
 					/>
 					<Route

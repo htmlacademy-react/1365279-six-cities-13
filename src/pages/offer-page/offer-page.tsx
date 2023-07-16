@@ -8,7 +8,7 @@ function OfferPage(): JSX.Element {
 			<Helmet>
 				<title>6 cities - Offer</title>
 			</Helmet>
-			<Header />
+			<Header isAuthorized={false} />
 			<main className="page__main page__main--offer">
 				<section className="offer">
 					<div className="offer__gallery-container container">

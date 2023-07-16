@@ -18,17 +18,17 @@ const OFFER_TYPES = [
 	'Hotel',
 ] as const;
 
-enum AppRoute {
-  Login = '/login',
-  Favorites = '/favorites',
-  Offer = '/offer',
-  Root = '/',
-}
+const AppRoute = {
+	Login: '/login',
+	Favorites: '/favorites',
+	Offer: '/offer',
+	Root: '/',
+} as const;
 
-enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+const enum AuthorizationStatus {
+	Auth = 'AUTH',
+	NoAuth ='NO_AUTH',
+	Unknown = 'UNKNOWN',
 }
 
 export { TemporalData, CITIES, OFFER_TYPES, AppRoute, AuthorizationStatus };
