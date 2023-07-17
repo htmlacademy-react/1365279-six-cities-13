@@ -1,0 +1,11 @@
+.link {
+	color: #4481c3;
+	font-weight: 300;
+	-webkit-transition: text-shadow .3s;
+	transition: text-shadow .3s;
+}
+
+.link:hover,
+.link:active {
+	text-shadow: 1px 0 0, 0.5px 0 0, -1px 0 0;
+}

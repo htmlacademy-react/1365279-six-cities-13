@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import type { ServerOffer } from '../../mocks/offers';
 
@@ -22,7 +23,7 @@ function OfferCard({
 				</div>
 			)}
 			<div className="cities__image-wrapper place-card__image-wrapper">
-				<a href="#">
+				<Link to="#">
 					<img
 						className="place-card__image"
 						src={previewImage}
@@ -30,7 +31,7 @@ function OfferCard({
 						height={200}
 						alt="Place image"
 					/>
-				</a>
+				</Link>
 			</div>
 			<div className="place-card__info">
 				<div className="place-card__price-wrapper">
@@ -59,7 +60,7 @@ function OfferCard({
 					</div>
 				</div>
 				<h2 className="place-card__name">
-					<a href="#">{title}</a>
+					<Link to="#">{title}</Link>
 				</h2>
 				<p className="place-card__type">{type}</p>
 			</div>
