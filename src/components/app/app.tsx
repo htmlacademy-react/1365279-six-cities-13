@@ -33,9 +33,9 @@ function App(): JSX.Element {
 						path={AppRoute.Favorites}
 						element={
 							<PrivateRoute
-								status={AuthorizationStatus.NoAuth}
+								status={AuthorizationStatus.Auth}
 							>
-								<FavoritesPage />
+								<FavoritesPage offers={mockOffers} />
 							</PrivateRoute>
 						}
 					/>
