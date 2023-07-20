@@ -26,13 +26,13 @@ type ServerOffer = {
 type FullOffer = Omit<ServerOffer, 'previewImage'> & {
 	description: string;
 	bedrooms: number;
-	goods: [string];
+	goods: string[];
 	host: {
 		name: string;
 		avatarUrl: string;
 		isPro: boolean;
 	};
-	images: [string];
+	images: string[];
 	maxAdults: number;
 }
 
@@ -65,16 +65,16 @@ function mockOffer(): ServerOffer {
 function mockFullOffer(): ServerOffer & FullOffer {
 	return({
 		...mockOffer(),
-		description: 'string',
-		bedrooms: 3,
-		goods: ['string'],
+		description: faker.lorem.sentence({min: 5, max: 25}),
+		bedrooms: faker.number.int({min: 1, max: 10}),
+		goods: Array.from({ length: faker.number.int({min: 1, max: 10}) }, () => faker.lorem.word()),
 		host: {
-			name: 'string',
-			avatarUrl: 'string',
+			name: faker.internet.userName(),
+			avatarUrl: faker.image.avatar(),
 			isPro: true,
 		},
-		images: ['string'],
-		maxAdults: 4,
+		images: Array.from({ length: faker.number.int({min: 1, max: 10}) }, () => faker.image.urlLoremFlickr({category: 'appartment'})),
+		maxAdults: faker.number.int({min: 1, max: 10}),
 	});
 }
 
