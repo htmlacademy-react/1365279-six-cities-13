@@ -16,7 +16,7 @@ function App(): JSX.Element {
 			<BrowserRouter>
 				<Routes>
 					<Route
-						path={AppRoute.Root}
+						path={AppRoute.Main}
 						element={<MainPage offers={mockOffers} />}
 					/>
 					<Route

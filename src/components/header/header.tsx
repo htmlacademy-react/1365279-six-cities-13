@@ -19,9 +19,9 @@ function Header({
 					<div className="header__left">
 						<Link
 							className={classNames('header__logo-link', {
-								'header__logo-link--active': pathname === AppRoute.Root,
+								'header__logo-link--active': pathname === AppRoute.Main,
 							})}
-							to={AppRoute.Root}
+							to={AppRoute.Main}
 						>
 							<img
 								className="header__logo"
@@ -49,7 +49,7 @@ function Header({
 										</Link>
 									</li>
 									<li className="header__nav-item">
-										<Link className="header__nav-link" to="#">
+										<Link className="header__nav-link" to={AppRoute.Main}>
 											<span className="header__signout">Sign out</span>
 										</Link>
 									</li>

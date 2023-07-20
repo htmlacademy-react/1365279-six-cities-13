@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import type { ServerOffer } from '../../mocks/offers';
 
+import { AppRoute } from '../../const';
+
 type FavoritesOfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isPremium' | 'rating' | 'previewImage'>
 
 function FavoritesOfferCard({
@@ -9,6 +11,7 @@ function FavoritesOfferCard({
 	rating,
 	title,
 	type,
+	id,
 	isPremium = false
 } : FavoritesOfferCardProps): JSX.Element {
 	return (
@@ -19,7 +22,7 @@ function FavoritesOfferCard({
 				</div>
 			)}
 			<div className="favorites__image-wrapper place-card__image-wrapper">
-				<Link to="#">
+				<Link to={`${AppRoute.Offer}/${id}`}>
 					<img
 						className="place-card__image"
 						src={previewImage}
@@ -58,7 +61,7 @@ function FavoritesOfferCard({
 					</div>
 				</div>
 				<h2 className="place-card__name">
-					<Link to="#">{title}</Link>
+					<Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
 				</h2>
 				<p className="place-card__type">{type}</p>
 			</div>

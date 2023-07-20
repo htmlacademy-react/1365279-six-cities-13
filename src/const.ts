@@ -22,7 +22,7 @@ const AppRoute = {
 	Login: '/login',
 	Favorites: '/favorites',
 	Offer: '/offer',
-	Root: '/',
+	Main: '/',
 } as const;
 
 const enum AuthorizationStatus {
