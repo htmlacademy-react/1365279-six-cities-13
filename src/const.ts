@@ -31,4 +31,7 @@ const enum AuthorizationStatus {
 	Unknown = 'UNKNOWN',
 }
 
-export { TemporalData, CITIES, OFFER_TYPES, AppRoute, AuthorizationStatus };
+const MIN_REVIEW_LENGHT = 50;
+const MAX_REVIEW_LENGHT = 400;
+
+export { TemporalData, CITIES, OFFER_TYPES, AppRoute, AuthorizationStatus, MIN_REVIEW_LENGHT, MAX_REVIEW_LENGHT };
