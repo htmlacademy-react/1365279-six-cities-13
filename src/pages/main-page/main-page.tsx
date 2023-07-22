@@ -25,6 +25,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 
 	const cities = Object.keys(offersByCities);
 	const [activeCity, setActiveCity] = useState(cities[0]);
+	const [activeOffer, setActiveOffer] = useState<ServerOffer | null>(null);
 
 	return (
 		<div className="page page--gray page--main">
@@ -90,7 +91,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 							</form>
 							<div className="cities__places-list places__list tabs__content">
 								{offersByCities[activeCity].map((offer) => (
-									<OfferCard {...offer} key={offer.id} />
+									<OfferCard {...offer} key={offer.id} onMouseEnter={() => setActiveOffer(offer)} />
 								))}
 							</div>
 						</section>

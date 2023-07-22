@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import type { ServerOffer } from '../../mocks/offers';
 import { AppRoute } from '../../const';
+import { HTMLAttributes } from 'react';
 
-type OfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isFavorite' | 'isPremium' | 'rating' | 'previewImage'>
+type OfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isFavorite' | 'isPremium' | 'rating' | 'previewImage'> &
+Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'>
 
 function OfferCard({
 	previewImage,
@@ -13,12 +15,13 @@ function OfferCard({
 	type,
 	id,
 	isPremium = false,
-	isFavorite = false
+	isFavorite = false,
+	onMouseEnter
 } : OfferCardProps): JSX.Element {
 	const bookmarkClass = classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite}, 'button');
 	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
 	return (
-		<article className="cities__card place-card">
+		<article className="cities__card place-card" onMouseEnter={onMouseEnter}>
 			{isPremium && (
 				<div className="place-card__mark">
 					<span>Premium</span>

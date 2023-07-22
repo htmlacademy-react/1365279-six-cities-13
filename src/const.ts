@@ -1,5 +1,5 @@
 const TemporalData = {
-	offersCount: 5,
+	OffersCount: 5,
 } as const;
 
 const CITIES = [
