@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';
 import { ServerOffer } from '../../mocks/offers';
 import Header from '../../components/header/header';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
 	offers: ServerOffer[];
@@ -25,7 +26,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 
 	const cities = Object.keys(offersByCities);
 	const [activeCity, setActiveCity] = useState(cities[0]);
-	const [activeOffer, setActiveOffer] = useState<ServerOffer | null>(null);
+	const [activeOffer, setActiveOffer] = useState<ServerOffer | undefined>(undefined);
 
 	return (
 		<div className="page page--gray page--main">
@@ -38,20 +39,20 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 				<div className="tabs">
 					<section className="locations container">
 						<ul className="locations__list tabs__list">
-							{cities.map((city) => (
-								<li className="locations__item" key={city}>
+							{cities.map((cityName) => (
+								<li className="locations__item" key={cityName}>
 									<Link
 										className={classNames(
 											'locations__item-link',
 											'tabs__item',
-											{'tabs__item--active': city === activeCity},
+											{'tabs__item--active': cityName === activeCity},
 										)}
 										onClick={() => {
-											setActiveCity(city);
+											setActiveCity(cityName);
 										}}
 										to="#"
 									>
-										<span>{city}</span>
+										<span>{cityName}</span>
 									</Link>
 								</li>
 							))}
@@ -96,7 +97,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 							</div>
 						</section>
 						<div className="cities__right-section">
-							<section className="cities__map map" />
+							<Map city={offersByCities[activeCity][0].city} points={offersByCities[activeCity]} activeOffer={activeOffer} />
 						</div>
 					</div>
 				</div>

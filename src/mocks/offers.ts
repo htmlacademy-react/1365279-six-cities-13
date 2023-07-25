@@ -40,7 +40,7 @@ function mockLocation(): ServerLocation {
 	return({
 		latitude: faker.location.latitude(),
 		longitude: faker.location.longitude(),
-		zoom: faker.number.int({min: 1, max: 10}),
+		zoom: faker.number.int({min: 4, max: 6}),
 	});
 }
 
