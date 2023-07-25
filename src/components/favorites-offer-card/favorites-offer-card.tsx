@@ -1,51 +1,47 @@
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 import type { ServerOffer } from '../../mocks/offers';
+
 import { AppRoute } from '../../const';
-import { HTMLAttributes } from 'react';
 
-type OfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isFavorite' | 'isPremium' | 'rating' | 'previewImage'> &
-Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'>
+type FavoritesOfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isPremium' | 'rating' | 'previewImage'>
 
-function OfferCard({
+function FavoritesOfferCard({
 	previewImage,
 	price,
 	rating,
 	title,
 	type,
 	id,
-	isPremium = false,
-	isFavorite = false,
-	onMouseEnter
-} : OfferCardProps): JSX.Element {
-	const bookmarkClass = classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite}, 'button');
-	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
+	isPremium = false
+} : FavoritesOfferCardProps): JSX.Element {
 	return (
-		<article className="cities__card place-card" onMouseEnter={onMouseEnter}>
+		<article className="favorites__card place-card">
 			{isPremium && (
 				<div className="place-card__mark">
 					<span>Premium</span>
 				</div>
 			)}
-			<div className="cities__image-wrapper place-card__image-wrapper">
+			<div className="favorites__image-wrapper place-card__image-wrapper">
 				<Link to={`${AppRoute.Offer}/${id}`}>
 					<img
 						className="place-card__image"
 						src={previewImage}
-						width={260}
-						height={200}
+						width={150}
+						height={110}
 						alt="Place image"
 					/>
 				</Link>
 			</div>
-			<div className="place-card__info">
+			<div className="favorites__card-info place-card__info">
 				<div className="place-card__price-wrapper">
 					<div className="place-card__price">
-						<b className="place-card__price-value">€{price}</b>
-						<span className="place-card__price-text">/&nbsp;night</span>
+						<b className="place-card__price-value">{price}</b>
+						<span className="place-card__price-text">
+					/&nbsp;night
+						</span>
 					</div>
 					<button
-						className={bookmarkClass}
+						className="place-card__bookmark-button place-card__bookmark-button--active button"
 						type="button"
 					>
 						<svg
@@ -55,7 +51,7 @@ function OfferCard({
 						>
 							<use xlinkHref="#icon-bookmark" />
 						</svg>
-						<span className="visually-hidden">{bookmarkLabel}</span>
+						<span className="visually-hidden">In bookmarks</span>
 					</button>
 				</div>
 				<div className="place-card__rating rating">
@@ -73,4 +69,4 @@ function OfferCard({
 	);
 }
 
-export default OfferCard;
+export default FavoritesOfferCard;

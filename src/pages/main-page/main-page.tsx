@@ -1,17 +1,32 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useState } from 'react';
 import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';
-import { CITIES } from '../../const';
-import mockOffer from '../../mocks/offers';
+import { ServerOffer } from '../../mocks/offers';
 import Header from '../../components/header/header';
 
 type MainPageProps = {
-	offersCount: number;
+	offers: ServerOffer[];
 }
 
-function MainPage({offersCount}: MainPageProps): JSX.Element {
-	const offers = Array.from({length: offersCount}, mockOffer);
+function MainPage({offers}: MainPageProps): JSX.Element {
+	const offersByCities: Record<string, ServerOffer[]> = {};
+	for (const offer of offers) {
+		const city = offer.city.name;
+		if (city in offersByCities) {
+			offersByCities[city].push(offer);
+			continue;
+		}
+
+		offersByCities[city] = [offer];
+		continue;
+	}
+
+	const cities = Object.keys(offersByCities);
+	const [activeCity, setActiveCity] = useState(cities[0]);
+	const [activeOffer, setActiveOffer] = useState<ServerOffer | null>(null);
+
 	return (
 		<div className="page page--gray page--main">
 			<Helmet>
@@ -23,14 +38,17 @@ function MainPage({offersCount}: MainPageProps): JSX.Element {
 				<div className="tabs">
 					<section className="locations container">
 						<ul className="locations__list tabs__list">
-							{CITIES.map((city) => (
+							{cities.map((city) => (
 								<li className="locations__item" key={city}>
 									<Link
 										className={classNames(
 											'locations__item-link',
-											{'tabs__item': city === 'Amsterdam'},
-											'tabs__item'
+											'tabs__item',
+											{'tabs__item--active': city === activeCity},
 										)}
+										onClick={() => {
+											setActiveCity(city);
+										}}
 										to="#"
 									>
 										<span>{city}</span>
@@ -44,7 +62,7 @@ function MainPage({offersCount}: MainPageProps): JSX.Element {
 					<div className="cities__places-container container">
 						<section className="cities__places places">
 							<h2 className="visually-hidden">Places</h2>
-							<b className="places__found">{offersCount} places to stay in Amsterdam</b>
+							<b className="places__found">{offersByCities[activeCity].length} places to stay in {activeCity}</b>
 							<form className="places__sorting" action="#" method="get">
 								<span className="places__sorting-caption">Sort by</span>{' '}
 								<span className="places__sorting-type" tabIndex={0}>
@@ -72,8 +90,8 @@ function MainPage({offersCount}: MainPageProps): JSX.Element {
 								</ul>
 							</form>
 							<div className="cities__places-list places__list tabs__content">
-								{offers.map((offer) => (
-									<OfferCard {...offer} key={offer.id} />
+								{offersByCities[activeCity].map((offer) => (
+									<OfferCard {...offer} key={offer.id} onMouseEnter={() => setActiveOffer(offer)} />
 								))}
 							</div>
 						</section>
