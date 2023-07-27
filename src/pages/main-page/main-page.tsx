@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import classNames from 'classnames';
 import OfferCard from '../../components/offer-card/offer-card';
-import { ServerOffer } from '../../mocks/offers';
+import { ServerOffer } from '../../types/offer';
 import Header from '../../components/header/header';
 import Map from '../../components/map/map';
 

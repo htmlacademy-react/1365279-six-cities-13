@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import type { ServerOffer } from '../../mocks/offers';
+import type { ServerOffer } from '../../types/offer';
 import { AppRoute } from '../../const';
 import { HTMLAttributes } from 'react';
 

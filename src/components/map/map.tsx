@@ -1,15 +1,14 @@
-import {useRef,useEffect} from 'react';
-import {Marker, layerGroup, Icon} from 'leaflet';
+import { useRef,useEffect } from 'react';
+import { Marker, layerGroup, Icon } from 'leaflet';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
-import { ServerOffer } from '../../mocks/offers';
-import { City } from '../../hooks/use-map';
+import { ServerOffer } from '../../types/offer';
+import { City } from '../../types/offer';
 
 const enum UrlMarker {
   DefaultMarker = '../img/pin.svg',
   CurrentMarker = '../img/pin-active.svg'
 }
-
 
 type MapProps = {
   city: City;
