@@ -1,23 +1,16 @@
 import {useEffect, useState, useRef, MutableRefObject} from 'react';
-import { Map, TileLayer } from 'leaflet';
+import { Map as LeafletMap, TileLayer } from 'leaflet';
+import { ServerOffer } from '../mocks/offers';
 
-// Пробовала Pick<ServerOffer, 'city'>, но тогда в main-page при передаче city вылезала ошибка
-export type City = {
-	name: string;
-	location: {
-		latitude: number;
-		longitude: number;
-		zoom: number;
-	};
-}
+export type City = ServerOffer['city']
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Map | null {
-	const [map, setMap] = useState<Map | null>(null);
+function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): LeafletMap | null {
+	const [map, setMap] = useState<LeafletMap | null>(null);
 	const isRenderedRef = useRef<boolean>(false);
 
 	useEffect(() => {
 		if (mapRef.current !== null && !isRenderedRef.current) {
-			const instance = new Map(mapRef.current, {
+			const instance = new LeafletMap(mapRef.current, {
 				center: {
 					lat: city.location.latitude,
 					lng: city.location.longitude

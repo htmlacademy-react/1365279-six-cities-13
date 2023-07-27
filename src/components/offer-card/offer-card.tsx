@@ -16,12 +16,13 @@ function OfferCard({
 	id,
 	isPremium = false,
 	isFavorite = false,
-	onMouseEnter
+	onMouseEnter,
+	onMouseLeave
 } : OfferCardProps): JSX.Element {
 	const bookmarkClass = classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite}, 'button');
 	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
 	return (
-		<article className="cities__card place-card" onMouseEnter={onMouseEnter}>
+		<article className="cities__card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
 			{isPremium && (
 				<div className="place-card__mark">
 					<span>Premium</span>
