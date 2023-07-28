@@ -1,5 +1,5 @@
 import OfferCard from '../offer-card/offer-card';
-import Map from '../map/map';
+import LeafletMap from '../leaflet-map/leaflet-map';
 import { ServerOffer } from '../../types/offer';
 import { SetStateAction, useState } from 'react';
 
@@ -52,7 +52,7 @@ function OffersList ({currentOffers, activeCity}: OffersListProps) {
 				</div>
 			</section>
 			<div className="cities__right-section">
-				<Map city={currentOffers[0].city} points={currentOffers} activeOffer={activeOffer} />
+				<LeafletMap city={currentOffers[0].city} points={currentOffers} activeOffer={activeOffer} block={'cities'} />
 			</div>
 		</div>
 	);

@@ -2,8 +2,8 @@ import { useEffect, useState, useRef, MutableRefObject } from 'react';
 import { Map as LeafletMap, TileLayer } from 'leaflet';
 import { City } from '../types/offer';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): LeafletMap | null {
-	const [map, setMap] = useState<LeafletMap | null>(null);
+function useLeafletMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): LeafletMap | null {
+	const [leafletMap, setleafletMap] = useState<LeafletMap | null>(null);
 	const isRenderedRef = useRef<boolean>(false);
 
 	useEffect(() => {
@@ -26,12 +26,12 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): Leafl
 
 			instance.addLayer(layer);
 
-			setMap(instance);
+			setleafletMap(instance);
 			isRenderedRef.current = true;
 		}
 	}, [mapRef, city]);
 
-	return map;
+	return leafletMap;
 }
 
-export default useMap;
+export default useLeafletMap;

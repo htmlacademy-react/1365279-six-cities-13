@@ -44,6 +44,6 @@ function mockFullOffer(): ServerOffer & FullOffer {
 	});
 }
 
-const mockOffers = Array.from({length: 50}, mockFullOffer);
+const mockOffers = Array.from({length: 10}, mockFullOffer);
 
 export default mockOffers;

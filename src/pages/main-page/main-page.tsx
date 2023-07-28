@@ -35,7 +35,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 				<title>6 cities</title>
 			</Helmet>
 			<Header />
-			<main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': offers.length === 0})}>
+			<main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': !currentOffers})}>
 				<h1 className="visually-hidden">Cities</h1>
 				<div className="tabs">
 					<section className="locations container">
@@ -61,7 +61,7 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 					</section>
 				</div>
 				<div className="cities">
-					{offers.length > 0 ? (
+					{currentOffers ? (
 						<OffersList currentOffers={currentOffers} activeCity={activeCity} />
 					) : (
 						<div className="cities__places-container cities__places-container--empty container">
