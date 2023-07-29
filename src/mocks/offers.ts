@@ -1,46 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { CITIES, OFFER_TYPES } from '../const';
-
-type ServerLocation = {
-	latitude: number;
-	longitude: number;
-	zoom: number;
-}
-
-type ServerOffer = {
-	id: string;
-	title: string;
-	type: string;
-	price: number;
-	city: {
-		name: string;
-		location: ServerLocation;
-	};
-	location: ServerLocation;
-	isFavorite: boolean;
-	isPremium: boolean;
-	rating: number;
-	previewImage: string;
-};
-
-type FullOffer = Omit<ServerOffer, 'previewImage'> & {
-	description: string;
-	bedrooms: number;
-	goods: string[];
-	host: {
-		name: string;
-		avatarUrl: string;
-		isPro: boolean;
-	};
-	images: string[];
-	maxAdults: number;
-}
+import { ServerLocation, ServerOffer, FullOffer } from '../types/offer';
 
 function mockLocation(): ServerLocation {
 	return({
 		latitude: faker.location.latitude(),
 		longitude: faker.location.longitude(),
-		zoom: faker.number.int({min: 1, max: 10}),
+		zoom: faker.number.int({min: 4, max: 6}),
 	});
 }
 
@@ -78,7 +44,6 @@ function mockFullOffer(): ServerOffer & FullOffer {
 	});
 }
 
-const mockOffers = Array.from({length: 50}, mockFullOffer);
+const mockOffers = Array.from({length: 10}, mockFullOffer);
 
 export default mockOffers;
-export type { ServerOffer, FullOffer };
