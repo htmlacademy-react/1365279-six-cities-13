@@ -3,7 +3,7 @@ import { Map as LeafletMap, TileLayer } from 'leaflet';
 import { City } from '../types/offer';
 
 function useLeafletMap(mapRef: MutableRefObject<HTMLElement | null>, city: City): LeafletMap | null {
-	const [leafletMap, setleafletMap] = useState<LeafletMap | null>(null);
+	const [leafletMap, setLeafletMap] = useState<LeafletMap | null>(null);
 	const isRenderedRef = useRef<boolean>(false);
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ function useLeafletMap(mapRef: MutableRefObject<HTMLElement | null>, city: City)
 
 			instance.addLayer(layer);
 
-			setleafletMap(instance);
+			setLeafletMap(instance);
 			isRenderedRef.current = true;
 		}
 	}, [mapRef, city]);

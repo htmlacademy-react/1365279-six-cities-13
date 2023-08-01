@@ -1,5 +1,5 @@
 import { ChangeEvent, Fragment, useState } from 'react';
-import { MIN_REVIEW_LENGHT, MAX_REVIEW_LENGHT } from '../../const';
+import { MIN_REVIEW_LENGTH, MAX_REVIEW_LENGTH } from '../../const';
 
 function ReviewsForm(): JSX.Element {
 	const ratingValues = {
@@ -13,7 +13,7 @@ function ReviewsForm(): JSX.Element {
 	const [rating, setRating] = useState('');
 	const [review, setReview] = useState('');
 
-	const isValid = review.length >= MIN_REVIEW_LENGHT && review.length <= MAX_REVIEW_LENGHT && rating !== '';
+	const isValid = review.length >= MIN_REVIEW_LENGTH && review.length <= MAX_REVIEW_LENGTH && rating !== '';
 
 	function handleRatingChange(evt: ChangeEvent<HTMLInputElement>) {
 		setRating(evt.target.value);
@@ -64,7 +64,7 @@ function ReviewsForm(): JSX.Element {
 			To submit review please make sure to set{' '}
 					<span className="reviews__star">rating</span> and describe
 			your stay with at least{' '}
-					<b className="reviews__text-amount">{MIN_REVIEW_LENGHT} characters</b>.
+					<b className="reviews__text-amount">{MIN_REVIEW_LENGTH} characters</b>.
 				</p>
 				<button
 					className="reviews__submit form__submit button"
