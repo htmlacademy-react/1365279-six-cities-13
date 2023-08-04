@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 import { ServerOffer } from '../../types/offer';
 import { Cities } from '../../const';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity } from '../../store/actions';
+import { useAppSelector } from '../../hooks';
+import { CitiesList } from '../../components/cities-list/cities-list';
 
 type MainPageProps = {
 	offers: ServerOffer[];
@@ -31,8 +30,6 @@ function MainPage(): JSX.Element {
 	const activeCity = useAppSelector((state) => state.activeCity);
 	const currentOffers = offersByCities[activeCity];
 
-	const dispatch = useAppDispatch();
-
 	return (
 		<div className="page page--gray page--main">
 			<Helmet>
@@ -45,29 +42,7 @@ function MainPage(): JSX.Element {
 				})}
 			>
 				<h1 className="visually-hidden">Cities</h1>
-				<div className="tabs">
-					<section className="locations container">
-						<ul className="locations__list tabs__list">
-							{cities.map((cityName) => (
-								<li className="locations__item" key={cityName}>
-									<Link
-										className={classNames(
-											'locations__item-link',
-											'tabs__item',
-											{ 'tabs__item--active': cityName === activeCity }
-										)}
-										onClick={() => {
-											dispatch(setActiveCity(cityName));
-										}}
-										to="#"
-									>
-										<span>{cityName}</span>
-									</Link>
-								</li>
-							))}
-						</ul>
-					</section>
-				</div>
+				<CitiesList cities={cities} activeCity={activeCity} />
 				<div className="cities">
 					{currentOffers ? (
 						<OffersList currentOffers={currentOffers} activeCity={activeCity} />
