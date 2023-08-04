@@ -1,18 +1,13 @@
-const CITIES = [
-	'Paris',
-	'Cologne',
-	'Brussels',
-	'Amsterdam',
-	'Hamburg',
-	'Dusseldorf',
-] as const;
+const Cities = {
+	Paris: 'Paris',
+	Cologne: 'Cologne',
+	Brussels: 'Brussels',
+	Amsterdam: 'Amsterdam',
+	Hamburg: 'Hamburg',
+	Dusseldorf: 'Dusseldorf',
+} as const;
 
-const OFFER_TYPES = [
-	'Apartment',
-	'Private room',
-	'Villa',
-	'Hotel',
-] as const;
+const OFFER_TYPES = ['Apartment', 'Private room', 'Villa', 'Hotel'] as const;
 
 const AppRoute = {
 	Login: '/login',
@@ -23,11 +18,18 @@ const AppRoute = {
 
 const enum AuthorizationStatus {
 	Auth = 'AUTH',
-	NoAuth ='NO_AUTH',
+	NoAuth = 'NO_AUTH',
 	Unknown = 'UNKNOWN',
 }
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
 
-export { CITIES, OFFER_TYPES, AppRoute, AuthorizationStatus, MIN_REVIEW_LENGTH, MAX_REVIEW_LENGTH };
+export {
+	Cities,
+	OFFER_TYPES,
+	AppRoute,
+	AuthorizationStatus,
+	MIN_REVIEW_LENGTH,
+	MAX_REVIEW_LENGTH,
+};

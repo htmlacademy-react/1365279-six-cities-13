@@ -15,10 +15,7 @@ function App(): JSX.Element {
 		<HelmetProvider>
 			<BrowserRouter>
 				<Routes>
-					<Route
-						path={AppRoute.Main}
-						element={<MainPage offers={mockOffers} />}
-					/>
+					<Route path={AppRoute.Main} element={<MainPage />} />
 					<Route
 						path={AppRoute.Login}
 						element={
