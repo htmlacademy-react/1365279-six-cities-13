@@ -8,7 +8,7 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import mockOffers from '../../mocks/offers';
-
+import mockReviews from '../../mocks/reviews';
 
 function App(): JSX.Element {
 	return (
@@ -22,9 +22,7 @@ function App(): JSX.Element {
 					<Route
 						path={AppRoute.Login}
 						element={
-							<PublicRoute
-								status={AuthorizationStatus.NoAuth}
-							>
+							<PublicRoute status={AuthorizationStatus.NoAuth}>
 								<LoginPage />
 							</PublicRoute>
 						}
@@ -32,21 +30,16 @@ function App(): JSX.Element {
 					<Route
 						path={AppRoute.Favorites}
 						element={
-							<PrivateRoute
-								status={AuthorizationStatus.Auth}
-							>
+							<PrivateRoute status={AuthorizationStatus.Auth}>
 								<FavoritesPage offers={mockOffers} />
 							</PrivateRoute>
 						}
 					/>
 					<Route
 						path={`${AppRoute.Offer}/:offerId`}
-						element={<OfferPage />}
+						element={<OfferPage reviews={mockReviews} offers={mockOffers} />}
 					/>
-					<Route
-						path='*'
-						element={<NotFoundPage />}
-					/>
+					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</BrowserRouter>
 		</HelmetProvider>
