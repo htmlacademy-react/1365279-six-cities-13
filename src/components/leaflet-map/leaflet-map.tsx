@@ -40,6 +40,10 @@ function LeafletMap({
 
 	useEffect(() => {
 		if (leafletMap) {
+			leafletMap.setView(
+				[city.location.latitude, city.location.longitude],
+				city.location.zoom
+			);
 			const markerLayer = layerGroup().addTo(leafletMap);
 
 			points.forEach((point) => {
@@ -61,7 +65,14 @@ function LeafletMap({
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
-	}, [leafletMap, points, activeOffer]);
+	}, [
+		leafletMap,
+		points,
+		activeOffer,
+		city.location.latitude,
+		city.location.longitude,
+		city.location.zoom,
+	]);
 
 	return <section ref={mapRef} className={`${block}__map map`} />;
 }

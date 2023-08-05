@@ -1,17 +1,18 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
 import classNames from 'classnames';
 import { ServerOffer } from '../../types/offer';
-import { CITIES } from '../../const';
+import { Cities } from '../../const';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
+import { useAppSelector } from '../../hooks';
+import { CitiesList } from '../../components/cities-list/cities-list';
 
 type MainPageProps = {
 	offers: ServerOffer[];
-}
+};
 
-function MainPage({offers}: MainPageProps): JSX.Element {
+function MainPage(): JSX.Element {
+	const offers = useAppSelector((state) => state.offers);
 	const offersByCities: Record<string, ServerOffer[]> = {};
 	for (const offer of offers) {
 		const city = offer.city.name;
@@ -25,8 +26,8 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 	}
 
 	const cities = [];
-	cities.push(...CITIES);
-	const [activeCity, setActiveCity] = useState(cities[0]);
+	cities.push(...Object.keys(Cities));
+	const activeCity = useAppSelector((state) => state.activeCity);
 	const currentOffers = offersByCities[activeCity];
 
 	return (
@@ -35,31 +36,13 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 				<title>6 cities</title>
 			</Helmet>
 			<Header />
-			<main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': !currentOffers})}>
+			<main
+				className={classNames('page__main', 'page__main--index', {
+					'page__main--index-empty': !currentOffers,
+				})}
+			>
 				<h1 className="visually-hidden">Cities</h1>
-				<div className="tabs">
-					<section className="locations container">
-						<ul className="locations__list tabs__list">
-							{cities.map((cityName) => (
-								<li className="locations__item" key={cityName}>
-									<Link
-										className={classNames(
-											'locations__item-link',
-											'tabs__item',
-											{'tabs__item--active': cityName === activeCity},
-										)}
-										onClick={() => {
-											setActiveCity(cityName);
-										}}
-										to="#"
-									>
-										<span>{cityName}</span>
-									</Link>
-								</li>
-							))}
-						</ul>
-					</section>
-				</div>
+				<CitiesList cities={cities} activeCity={activeCity} />
 				<div className="cities">
 					{currentOffers ? (
 						<OffersList currentOffers={currentOffers} activeCity={activeCity} />
@@ -69,7 +52,8 @@ function MainPage({offers}: MainPageProps): JSX.Element {
 								<div className="cities__status-wrapper tabs__content">
 									<b className="cities__status">No places to stay available</b>
 									<p className="cities__status-description">
-										We could not find any property available at the moment in {activeCity}
+										We could not find any property available at the moment in{' '}
+										{activeCity}
 									</p>
 								</div>
 							</section>
