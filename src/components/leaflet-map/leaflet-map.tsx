@@ -10,13 +10,6 @@ const enum UrlMarker {
 	CurrentMarker = '../img/pin-active.svg',
 }
 
-type MapProps = {
-	city: City;
-	points: ServerOffer[];
-	activeOffer?: ServerOffer;
-	block: string;
-};
-
 const defaultCustomIcon = new Icon({
 	iconUrl: UrlMarker.DefaultMarker,
 	iconSize: [27, 39],
@@ -29,6 +22,15 @@ const currentCustomIcon = new Icon({
 	iconAnchor: [13.5, 39],
 });
 
+let prevCity: City | null = null;
+
+type MapProps = {
+	city: City;
+	points: ServerOffer[];
+	activeOffer?: ServerOffer;
+	block: string;
+};
+
 function LeafletMap({
 	city,
 	points,
@@ -40,10 +42,12 @@ function LeafletMap({
 
 	useEffect(() => {
 		if (leafletMap) {
-			leafletMap.setView(
-				[city.location.latitude, city.location.longitude],
-				city.location.zoom
-			);
+			if (prevCity && prevCity !== city) {
+				leafletMap.setView(
+					[city.location.latitude, city.location.longitude],
+					city.location.zoom
+				);
+			}
 			const markerLayer = layerGroup().addTo(leafletMap);
 
 			points.forEach((point) => {
@@ -60,19 +64,12 @@ function LeafletMap({
 					)
 					.addTo(markerLayer);
 			});
-
+			prevCity = city;
 			return () => {
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
-	}, [
-		leafletMap,
-		points,
-		activeOffer,
-		city.location.latitude,
-		city.location.longitude,
-		city.location.zoom,
-	]);
+	}, [leafletMap, points, activeOffer, city]);
 
 	return <section ref={mapRef} className={`${block}__map map`} />;
 }
