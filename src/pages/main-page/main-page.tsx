@@ -1,34 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 import { ServerOffer } from '../../types/offer';
-import { Cities } from '../../const';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
-import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
+import { useCurrentOffers } from './hooks/current-offers';
 
 type MainPageProps = {
 	offers: ServerOffer[];
 };
 
 function MainPage(): JSX.Element {
-	const offers = useAppSelector((state) => state.offers);
-	const offersByCities: Record<string, ServerOffer[]> = {};
-	for (const offer of offers) {
-		const city = offer.city.name;
-		if (city in offersByCities) {
-			offersByCities[city].push(offer);
-			continue;
-		}
-
-		offersByCities[city] = [offer];
-		continue;
-	}
-
-	const cities = [];
-	cities.push(...Object.keys(Cities));
-	const activeCity = useAppSelector((state) => state.activeCity);
-	const currentOffers = offersByCities[activeCity];
+	const { currentOffers, activeCity } = useCurrentOffers();
 
 	return (
 		<div className="page page--gray page--main">
@@ -42,7 +25,7 @@ function MainPage(): JSX.Element {
 				})}
 			>
 				<h1 className="visually-hidden">Cities</h1>
-				<CitiesList cities={cities} activeCity={activeCity} />
+				<CitiesList />
 				<div className="cities">
 					{currentOffers ? (
 						<OffersList currentOffers={currentOffers} activeCity={activeCity} />

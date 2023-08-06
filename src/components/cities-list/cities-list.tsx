@@ -1,21 +1,17 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActiveCity } from '../../store/actions';
-import { City } from '../../types/offer';
+import { CITIES } from '../../const';
 
-type CitiesListProps = {
-	cities: City['name'][];
-	activeCity: City['name'];
-};
-
-export function CitiesList({ cities, activeCity }: CitiesListProps) {
+export function CitiesList() {
+	const activeCity = useAppSelector((state) => state.activeCity);
 	const dispatch = useAppDispatch();
 	return (
 		<div className="tabs">
 			<section className="locations container">
 				<ul className="locations__list tabs__list">
-					{cities.map((cityName) => (
+					{CITIES.map((cityName) => (
 						<li className="locations__item" key={cityName}>
 							<Link
 								className={classNames('locations__item-link', 'tabs__item', {

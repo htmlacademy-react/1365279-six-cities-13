@@ -1,11 +1,11 @@
-const Cities = {
-	Paris: 'Paris',
-	Cologne: 'Cologne',
-	Brussels: 'Brussels',
-	Amsterdam: 'Amsterdam',
-	Hamburg: 'Hamburg',
-	Dusseldorf: 'Dusseldorf',
-} as const;
+const CITIES = [
+	'Paris',
+	'Cologne',
+	'Brussels',
+	'Amsterdam',
+	'Hamburg',
+	'Dusseldorf',
+] as const;
 
 const OFFER_TYPES = ['Apartment', 'Private room', 'Villa', 'Hotel'] as const;
 
@@ -26,7 +26,7 @@ const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
 
 export {
-	Cities,
+	CITIES,
 	OFFER_TYPES,
 	AppRoute,
 	AuthorizationStatus,

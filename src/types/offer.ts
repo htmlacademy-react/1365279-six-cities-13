@@ -1,13 +1,17 @@
+import { CITIES } from '../const';
+
+type CityName = (typeof CITIES)[number];
+
 type ServerLocation = {
 	latitude: number;
 	longitude: number;
 	zoom: number;
-}
+};
 
 type City = {
-  name: string;
-  location: ServerLocation;
-}
+	name: CityName;
+	location: ServerLocation;
+};
 
 type ServerOffer = {
 	id: string;
@@ -33,6 +37,6 @@ type FullOffer = Omit<ServerOffer, 'previewImage'> & {
 	};
 	images: string[];
 	maxAdults: number;
-}
+};
 
-export type { ServerLocation, City, ServerOffer, FullOffer };
+export type { ServerLocation, City, CityName, ServerOffer, FullOffer };

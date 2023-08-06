@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { setActiveCity, fetchOffers } from './actions';
-import { Cities } from '../const';
+import { CITIES } from '../const';
 import { ServerOffer, City } from '../types/offer';
 import mockOffers from '../mocks/offers';
 
@@ -8,7 +8,7 @@ const initialState: {
 	activeCity: City['name'];
 	offers: ServerOffer[];
 } = {
-	activeCity: Cities.Paris,
+	activeCity: CITIES[0],
 	offers: mockOffers,
 };
 
