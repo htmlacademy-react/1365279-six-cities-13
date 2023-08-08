@@ -6,7 +6,8 @@ import { Review } from '../../types/review';
 import { ServerOffer } from '../../types/offer';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
 import OfferCard from '../../components/offer-card/offer-card';
-import { SetStateAction, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setActiveOffer } from '../../store/actions';
 
 type ReviewsListProps = {
 	reviews: Review[];
@@ -14,14 +15,11 @@ type ReviewsListProps = {
 };
 
 function OfferPage({ reviews, offers }: ReviewsListProps): JSX.Element {
+	const dispatch = useAppDispatch();
 	const nearbyOffers = offers.slice(0, 3);
-	const [activeOffer, setActiveOffer] = useState<ServerOffer | undefined>(
-		undefined
-	);
-	const handleActiveOfferChange = (
-		offer: SetStateAction<ServerOffer | undefined>
-	) => {
-		setActiveOffer(offer);
+	const activeOffer = useAppSelector((state) => state.activeOffer);
+	const handleActiveOfferChange = (offer: ServerOffer | null) => {
+		dispatch(setActiveOffer(offer));
 	};
 	return (
 		<div className="page">
@@ -186,7 +184,7 @@ function OfferPage({ reviews, offers }: ReviewsListProps): JSX.Element {
 									{...offer}
 									key={offer.id}
 									onMouseEnter={() => handleActiveOfferChange(offer)}
-									onMouseLeave={() => handleActiveOfferChange(undefined)}
+									onMouseLeave={() => handleActiveOfferChange(null)}
 								/>
 							))}
 						</div>

@@ -25,6 +25,13 @@ const enum AuthorizationStatus {
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
 
+const SortingTypes = {
+	Popular: 'Popular',
+	PriceToHigh: 'Price: low to high',
+	PriceToLow: 'Price: high to low',
+	Rating: 'Top rated first',
+} as const;
+
 export {
 	CITIES,
 	OFFER_TYPES,
@@ -32,4 +39,5 @@ export {
 	AuthorizationStatus,
 	MIN_REVIEW_LENGTH,
 	MAX_REVIEW_LENGTH,
+	SortingTypes,
 };

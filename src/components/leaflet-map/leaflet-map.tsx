@@ -27,7 +27,7 @@ let prevCity: City | null = null;
 type MapProps = {
 	city: City;
 	points: ServerOffer[];
-	activeOffer?: ServerOffer;
+	activeOffer: ServerOffer | null;
 	block: string;
 };
 
@@ -58,7 +58,7 @@ function LeafletMap({
 
 				marker
 					.setIcon(
-						activeOffer !== undefined && point.title === activeOffer.title
+						activeOffer !== null && point.title === activeOffer.title
 							? currentCustomIcon
 							: defaultCustomIcon
 					)
