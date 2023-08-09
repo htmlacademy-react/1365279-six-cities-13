@@ -9,6 +9,10 @@ export function SortingForm(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const activeSorting = useAppSelector((state) => state.sorting);
 	const [isOpened, setIsOpened] = useState(false);
+	const iconStyle = {
+		transform: `translateY(-50%) ${isOpened ? 'rotate(180deg)' : ''}`,
+		transition: '.2s',
+	};
 
 	function handleSortingClick(type: Sorting) {
 		setIsOpened(false);
@@ -44,7 +48,12 @@ export function SortingForm(): JSX.Element {
 				onClick={() => setIsOpened(!isOpened)}
 			>
 				{SortingTypes[activeSorting]}
-				<svg className="places__sorting-arrow" width={7} height={4}>
+				<svg
+					style={iconStyle}
+					className="places__sorting-arrow"
+					width={7}
+					height={4}
+				>
 					<use xlinkHref="#icon-arrow-select" />
 				</svg>
 			</span>
@@ -54,19 +63,14 @@ export function SortingForm(): JSX.Element {
 					'places__options--opened': isOpened,
 				})}
 			>
-				{(
-					Object.entries(SortingTypes) as [
-						Sorting,
-						(typeof SortingTypes)[Sorting]
-					][]
-				).map(([type, title]) => (
+				{Object.entries(SortingTypes).map(([type, title]) => (
 					<li
 						key={type}
 						className={classNames('places__option', {
 							'places__option--active': activeSorting === type,
 						})}
 						tabIndex={0}
-						onClick={() => handleSortingClick(type)}
+						onClick={() => handleSortingClick(type as Sorting)}
 					>
 						{title}
 					</li>

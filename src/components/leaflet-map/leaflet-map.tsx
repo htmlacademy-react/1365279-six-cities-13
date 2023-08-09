@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Marker, layerGroup, Icon } from 'leaflet';
-import { useLeafletMap } from '../../hooks/';
+import { useAppSelector, useLeafletMap } from '../../hooks/';
 import 'leaflet/dist/leaflet.css';
 import { ServerOffer } from '../../types/offer';
 import { City } from '../../types/offer';
@@ -22,32 +22,23 @@ const currentCustomIcon = new Icon({
 	iconAnchor: [13.5, 39],
 });
 
-let prevCity: City | null = null;
-
 type MapProps = {
 	city: City;
 	points: ServerOffer[];
-	activeOffer: ServerOffer | null;
 	block: string;
 };
 
 function LeafletMap({
 	city,
 	points,
-	activeOffer,
 	block,
 }: MapProps): JSX.Element {
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
+	const activeOffer = useAppSelector((state) => state.activeOffer);
 
 	useEffect(() => {
 		if (leafletMap) {
-			if (prevCity && prevCity !== city) {
-				leafletMap.setView(
-					[city.location.latitude, city.location.longitude],
-					city.location.zoom
-				);
-			}
 			const markerLayer = layerGroup().addTo(leafletMap);
 
 			points.forEach((point) => {
@@ -64,12 +55,18 @@ function LeafletMap({
 					)
 					.addTo(markerLayer);
 			});
-			prevCity = city;
 			return () => {
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
 	}, [leafletMap, points, activeOffer, city]);
+
+	useEffect(()=> {
+		leafletMap?.setView(
+			[city.location.latitude, city.location.longitude],
+			city.location.zoom
+		);
+	}, [city, leafletMap]);
 
 	return <section ref={mapRef} className={`${block}__map map`} />;
 }

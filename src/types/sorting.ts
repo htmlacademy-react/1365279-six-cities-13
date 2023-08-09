@@ -1,1 +1,3 @@
-export type Sorting = 'Popular' | 'PriceToHigh' | 'PriceToLow' | 'Rating';
+import { SortingTypes } from '../const';
+
+export type Sorting = keyof typeof SortingTypes;

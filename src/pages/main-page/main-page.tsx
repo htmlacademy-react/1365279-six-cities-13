@@ -7,7 +7,6 @@ import { CitiesList } from '../../components/cities-list/cities-list';
 import { useCurrentOffers } from './hooks/current-offers';
 import { SortingForm } from '../../components/sorting-form/sorting-form';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
-import { useAppSelector } from '../../hooks';
 
 type MainPageProps = {
 	offers: ServerOffer[];
@@ -15,7 +14,6 @@ type MainPageProps = {
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
-	const activeOffer = useAppSelector((state) => state.activeOffer);
 
 	return (
 		<div className="page page--gray page--main">
@@ -50,7 +48,6 @@ function MainPage(): JSX.Element {
 									<LeafletMap
 										city={currentOffers[0].city}
 										points={currentOffers}
-										activeOffer={activeOffer}
 										block={'cities'}
 									/>
 								</div>
