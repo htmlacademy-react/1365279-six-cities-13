@@ -11,13 +11,12 @@ import { setActiveOffer } from '../../store/actions';
 
 type ReviewsListProps = {
 	reviews: Review[];
-	offers: ServerOffer[];
 };
 
-function OfferPage({ reviews, offers }: ReviewsListProps): JSX.Element {
+function OfferPage({ reviews }: ReviewsListProps): JSX.Element {
+	const offers = useAppSelector((state) => state.offers);
 	const dispatch = useAppDispatch();
 	const nearbyOffers = offers.slice(0, 3);
-	const activeOffer = useAppSelector((state) => state.activeOffer);
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
 		dispatch(setActiveOffer(offer));
 	};
@@ -169,7 +168,6 @@ function OfferPage({ reviews, offers }: ReviewsListProps): JSX.Element {
 					<LeafletMap
 						city={nearbyOffers[0].city}
 						points={nearbyOffers}
-						activeOffer={activeOffer}
 						block={'offer'}
 					/>
 				</section>
