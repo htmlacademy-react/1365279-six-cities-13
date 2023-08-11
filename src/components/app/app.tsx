@@ -8,8 +8,18 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import mockReviews from '../../mocks/reviews';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../../pages/loading-page/loading-page';
 
 function App(): JSX.Element {
+	const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
+
+	if (isOffersLoading) {
+		return (
+			<LoadingScreen />
+		);
+	}
+
 	return (
 		<HelmetProvider>
 			<BrowserRouter>
