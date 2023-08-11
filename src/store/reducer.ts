@@ -1,13 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import {
 	setActiveCity,
-	fetchOffers,
 	setSorting,
 	setActiveOffer,
+	loadOffers,
 } from './actions';
 import { CITIES } from '../const';
-import { ServerOffer, City } from '../types/offer';
-import mockOffers from '../mocks/offers';
+import { City, ServerOffer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 
 const initialState: {
@@ -17,7 +16,7 @@ const initialState: {
 	sorting: Sorting;
 } = {
 	activeCity: CITIES[0],
-	offers: mockOffers,
+	offers: [],
 	activeOffer: null,
 	sorting: 'Popular',
 };
@@ -27,14 +26,14 @@ const reducer = createReducer(initialState, (builder) => {
 		.addCase(setActiveCity, (state, action) => {
 			state.activeCity = action.payload;
 		})
-		.addCase(fetchOffers, (state) => {
-			state.offers = mockOffers;
-		})
 		.addCase(setSorting, (state, action) => {
 			state.sorting = action.payload;
 		})
 		.addCase(setActiveOffer, (state, action) => {
 			state.activeOffer = action.payload;
+		})
+		.addCase(loadOffers, (state, action) => {
+			state.offers = action.payload;
 		});
 });
 

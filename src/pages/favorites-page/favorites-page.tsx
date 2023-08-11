@@ -4,16 +4,14 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { ServerOffer } from '../../types/offer';
 import FavoritesOfferCard from '../../components/favorites-offer-card/favorites-offer-card';
+import { useAppSelector } from '../../hooks';
 
-type FavoritesPageProps = {
-	offers: ServerOffer[];
-}
-
-function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
+function FavoritesPage(): JSX.Element {
+	const offers = useAppSelector((state) => state.offers);
 	const favoritesOffers = offers.slice(0, 10);
 	const favoritesOffersByCities: Record<string, ServerOffer[]> = {};
 	for (const offer of favoritesOffers) {
-		const city = offer.city.name;
+		const city: string = offer.city.name;
 		if (city in favoritesOffersByCities) {
 			favoritesOffersByCities[city].push(offer);
 			continue;
@@ -58,7 +56,6 @@ function FavoritesPage({offers}: FavoritesPageProps): JSX.Element {
 			</main>
 			<Footer />
 		</div>
-
 	);
 }
 
