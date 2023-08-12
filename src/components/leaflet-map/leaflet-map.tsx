@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import { Marker, layerGroup, Icon } from 'leaflet';
-import useLeafletMap from '../../hooks/use-leaflet-map';
+import { useAppSelector, useLeafletMap } from '../../hooks/';
 import 'leaflet/dist/leaflet.css';
 import { ServerOffer } from '../../types/offer';
 import { City } from '../../types/offer';
@@ -9,13 +9,6 @@ const enum UrlMarker {
 	DefaultMarker = '../img/pin.svg',
 	CurrentMarker = '../img/pin-active.svg',
 }
-
-type MapProps = {
-	city: City;
-	points: ServerOffer[];
-	activeOffer?: ServerOffer;
-	block: string;
-};
 
 const defaultCustomIcon = new Icon({
 	iconUrl: UrlMarker.DefaultMarker,
@@ -29,21 +22,23 @@ const currentCustomIcon = new Icon({
 	iconAnchor: [13.5, 39],
 });
 
+type MapProps = {
+	city: City;
+	points: ServerOffer[];
+	block: string;
+};
+
 function LeafletMap({
 	city,
 	points,
-	activeOffer,
 	block,
 }: MapProps): JSX.Element {
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
+	const activeOffer = useAppSelector((state) => state.activeOffer);
 
 	useEffect(() => {
 		if (leafletMap) {
-			leafletMap.setView(
-				[city.location.latitude, city.location.longitude],
-				city.location.zoom
-			);
 			const markerLayer = layerGroup().addTo(leafletMap);
 
 			points.forEach((point) => {
@@ -54,25 +49,24 @@ function LeafletMap({
 
 				marker
 					.setIcon(
-						activeOffer !== undefined && point.title === activeOffer.title
+						activeOffer !== null && point.title === activeOffer.title
 							? currentCustomIcon
 							: defaultCustomIcon
 					)
 					.addTo(markerLayer);
 			});
-
 			return () => {
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
-	}, [
-		leafletMap,
-		points,
-		activeOffer,
-		city.location.latitude,
-		city.location.longitude,
-		city.location.zoom,
-	]);
+	}, [leafletMap, points, activeOffer, city]);
+
+	useEffect(()=> {
+		leafletMap?.setView(
+			[city.location.latitude, city.location.longitude],
+			city.location.zoom
+		);
+	}, [city, leafletMap]);
 
 	return <section ref={mapRef} className={`${block}__map map`} />;
 }

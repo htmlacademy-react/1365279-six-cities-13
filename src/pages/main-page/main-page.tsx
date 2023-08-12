@@ -1,34 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 import { ServerOffer } from '../../types/offer';
-import { Cities } from '../../const';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
-import { useAppSelector } from '../../hooks';
 import { CitiesList } from '../../components/cities-list/cities-list';
+import { useCurrentOffers } from './hooks/current-offers';
+import { SortingForm } from '../../components/sorting-form/sorting-form';
+import LeafletMap from '../../components/leaflet-map/leaflet-map';
 
 type MainPageProps = {
 	offers: ServerOffer[];
 };
 
 function MainPage(): JSX.Element {
-	const offers = useAppSelector((state) => state.offers);
-	const offersByCities: Record<string, ServerOffer[]> = {};
-	for (const offer of offers) {
-		const city = offer.city.name;
-		if (city in offersByCities) {
-			offersByCities[city].push(offer);
-			continue;
-		}
-
-		offersByCities[city] = [offer];
-		continue;
-	}
-
-	const cities = [];
-	cities.push(...Object.keys(Cities));
-	const activeCity = useAppSelector((state) => state.activeCity);
-	const currentOffers = offersByCities[activeCity];
+	const { currentOffers, activeCity } = useCurrentOffers();
 
 	return (
 		<div className="page page--gray page--main">
@@ -42,24 +27,48 @@ function MainPage(): JSX.Element {
 				})}
 			>
 				<h1 className="visually-hidden">Cities</h1>
-				<CitiesList cities={cities} activeCity={activeCity} />
+				<CitiesList />
 				<div className="cities">
-					{currentOffers ? (
-						<OffersList currentOffers={currentOffers} activeCity={activeCity} />
-					) : (
-						<div className="cities__places-container cities__places-container--empty container">
-							<section className="cities__no-places">
-								<div className="cities__status-wrapper tabs__content">
-									<b className="cities__status">No places to stay available</b>
-									<p className="cities__status-description">
-										We could not find any property available at the moment in{' '}
-										{activeCity}
-									</p>
+					<div
+						className={classNames('cities__places-container', 'container', {
+							'cities__places-container--empty': !currentOffers,
+						})}
+					>
+						{currentOffers ? (
+							<>
+								<section className="cities__places places">
+									<h2 className="visually-hidden">Places</h2>
+									<b className="places__found">
+										{currentOffers.length} places to stay in {activeCity}
+									</b>
+									<SortingForm />
+									<OffersList currentOffers={currentOffers} />
+								</section>
+								<div className="cities__right-section">
+									<LeafletMap
+										city={currentOffers[0].city}
+										points={currentOffers}
+										block={'cities'}
+									/>
 								</div>
-							</section>
-							<div className="cities__right-section" />
-						</div>
-					)}
+							</>
+						) : (
+							<>
+								<section className="cities__no-places">
+									<div className="cities__status-wrapper tabs__content">
+										<b className="cities__status">
+											No places to stay available
+										</b>
+										<p className="cities__status-description">
+											We could not find any property available at the moment in{' '}
+											{activeCity}
+										</p>
+									</div>
+								</section>
+								<div className="cities__right-section" />
+							</>
+						)}
+					</div>
 				</div>
 			</main>
 		</div>

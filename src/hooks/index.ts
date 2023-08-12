@@ -1,6 +1,2 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, State } from '../types/state';
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-
-export const useAppSelector: TypedUseSelectorHook<State> = useSelector;
+export { useLeafletMap } from './use-leaflet-map';
+export { useAppSelector, useAppDispatch } from './store-hooks';

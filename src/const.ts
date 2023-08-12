@@ -1,11 +1,11 @@
-const Cities = {
-	Paris: 'Paris',
-	Cologne: 'Cologne',
-	Brussels: 'Brussels',
-	Amsterdam: 'Amsterdam',
-	Hamburg: 'Hamburg',
-	Dusseldorf: 'Dusseldorf',
-} as const;
+const CITIES = [
+	'Paris',
+	'Cologne',
+	'Brussels',
+	'Amsterdam',
+	'Hamburg',
+	'Dusseldorf',
+] as const;
 
 const OFFER_TYPES = ['Apartment', 'Private room', 'Villa', 'Hotel'] as const;
 
@@ -25,11 +25,19 @@ const enum AuthorizationStatus {
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
 
+const SortingTypes = {
+	Popular: 'Popular',
+	PriceToHigh: 'Price: low to high',
+	PriceToLow: 'Price: high to low',
+	Rating: 'Top rated first',
+} as const;
+
 export {
-	Cities,
+	CITIES,
 	OFFER_TYPES,
 	AppRoute,
 	AuthorizationStatus,
 	MIN_REVIEW_LENGTH,
 	MAX_REVIEW_LENGTH,
+	SortingTypes,
 };

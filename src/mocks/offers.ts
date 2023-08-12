@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Cities, OFFER_TYPES } from '../const';
+import { CITIES, OFFER_TYPES } from '../const';
 import { ServerLocation, ServerOffer, FullOffer } from '../types/offer';
 
 function mockLocation(): ServerLocation {
@@ -17,7 +17,7 @@ function mockOffer(): ServerOffer {
 		type: faker.helpers.arrayElement(OFFER_TYPES),
 		price: faker.number.int({ min: 100, max: 1000 }),
 		city: {
-			name: faker.helpers.arrayElement(Object.keys(Cities)),
+			name: faker.helpers.arrayElement(CITIES),
 			location: mockLocation(),
 		},
 		location: mockLocation(),
