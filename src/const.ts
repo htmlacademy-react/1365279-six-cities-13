@@ -13,12 +13,12 @@ const CITIES = [
 
 const OFFER_TYPES = ['Apartment', 'Private room', 'Villa', 'Hotel'] as const;
 
-const AppRoute = {
-	Login: '/login',
-	Favorites: '/favorites',
-	Offer: '/offer',
-	Main: '/',
-} as const;
+const enum AppRoute {
+	Login = '/login',
+	Favorites = '/favorites',
+	Offer = '/offer',
+	Main = '/',
+}
 
 const enum AuthorizationStatus {
 	Auth = 'AUTH',
@@ -36,7 +36,7 @@ const SortingTypes = {
 const enum APIRoute {
 	Offers = '/offers',
 	Login = '/login',
-  Logout = '/logout',
+	Logout = '/logout',
 }
 
 export {

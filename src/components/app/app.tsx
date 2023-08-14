@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { PrivateRoute, PublicRoute } from '../access-route/access-route';
 import MainPage from '../../pages/main-page/main-page';
@@ -10,20 +10,22 @@ import { AppRoute } from '../../const';
 import mockReviews from '../../mocks/reviews';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-page/loading-page';
+import HistoryRouter from '../history-router/history-router';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
-	const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+	const authorizationStatus = useAppSelector(
+		(state) => state.authorizationStatus
+	);
 	const isOffersLoading = useAppSelector((state) => state.isOffersLoading);
 
 	if (isOffersLoading) {
-		return (
-			<LoadingScreen />
-		);
+		return <LoadingScreen />;
 	}
 
 	return (
 		<HelmetProvider>
-			<BrowserRouter>
+			<HistoryRouter history={browserHistory}>
 				<Routes>
 					<Route path={AppRoute.Main} element={<MainPage />} />
 					<Route
@@ -48,7 +50,7 @@ function App(): JSX.Element {
 					/>
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
-			</BrowserRouter>
+			</HistoryRouter>
 		</HelmetProvider>
 	);
 }
