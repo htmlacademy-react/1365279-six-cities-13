@@ -15,5 +15,4 @@ export const setSorting = createAction<Sorting>('offers/setSorting');
 export const requireAuthorization = createAction<AuthorizationStatus>(
 	'user/requireAuthorization'
 );
-export const setError = createAction<string | null>('offer/setError');
 export const redirectToRoute = createAction<AppRoute>('offer/redirectToRoute');

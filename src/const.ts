@@ -1,6 +1,5 @@
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
-const TIMEOUT_SHOW_ERROR = 2000;
 
 const CITIES = [
 	'Paris',
@@ -44,7 +43,6 @@ export {
 	OFFER_TYPES,
 	MIN_REVIEW_LENGTH,
 	MAX_REVIEW_LENGTH,
-	TIMEOUT_SHOW_ERROR,
 	AppRoute,
 	SortingTypes,
 	AuthorizationStatus,
