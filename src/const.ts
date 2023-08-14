@@ -1,3 +1,7 @@
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 400;
+const TIMEOUT_SHOW_ERROR = 2000;
+
 const CITIES = [
 	'Paris',
 	'Cologne',
@@ -22,9 +26,6 @@ const enum AuthorizationStatus {
 	Unknown = 'UNKNOWN',
 }
 
-const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 400;
-
 const SortingTypes = {
 	Popular: 'Popular',
 	PriceToHigh: 'Price: low to high',
@@ -32,16 +33,20 @@ const SortingTypes = {
 	Rating: 'Top rated first',
 } as const;
 
-export enum APIRoute {
+const enum APIRoute {
 	Offers = '/offers',
+	Login = '/login',
+  Logout = '/logout',
 }
 
 export {
 	CITIES,
 	OFFER_TYPES,
-	AppRoute,
-	AuthorizationStatus,
 	MIN_REVIEW_LENGTH,
 	MAX_REVIEW_LENGTH,
+	TIMEOUT_SHOW_ERROR,
+	AppRoute,
 	SortingTypes,
+	AuthorizationStatus,
+	APIRoute,
 };
