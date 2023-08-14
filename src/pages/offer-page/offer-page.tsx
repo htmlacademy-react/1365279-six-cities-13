@@ -25,7 +25,7 @@ function OfferPage({ reviews }: ReviewsListProps): JSX.Element {
 			<Helmet>
 				<title>6 cities - Offer</title>
 			</Helmet>
-			<Header isAuthorized={false} />
+			<Header />
 			<main className="page__main page__main--offer">
 				<section className="offer">
 					<div className="offer__gallery-container container">
