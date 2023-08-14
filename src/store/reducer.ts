@@ -18,7 +18,6 @@ const initialState: {
 	isOffersLoading: boolean;
 	activeOffer: ServerOffer | null;
 	sorting: Sorting;
-	error: string | null;
 } = {
 	authorizationStatus: AuthorizationStatus.Unknown,
 	activeCity: CITIES[0],
@@ -26,7 +25,6 @@ const initialState: {
 	isOffersLoading: true,
 	activeOffer: null,
 	sorting: 'Popular',
-	error: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
