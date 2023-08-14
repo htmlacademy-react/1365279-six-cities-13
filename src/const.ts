@@ -32,6 +32,10 @@ const SortingTypes = {
 	Rating: 'Top rated first',
 } as const;
 
+export enum APIRoute {
+	Offers = '/offers',
+}
+
 export {
 	CITIES,
 	OFFER_TYPES,

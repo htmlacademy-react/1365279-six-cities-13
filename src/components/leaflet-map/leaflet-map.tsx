@@ -28,11 +28,7 @@ type MapProps = {
 	block: string;
 };
 
-function LeafletMap({
-	city,
-	points,
-	block,
-}: MapProps): JSX.Element {
+function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
 	const activeOffer = useAppSelector((state) => state.activeOffer);
@@ -40,16 +36,15 @@ function LeafletMap({
 	useEffect(() => {
 		if (leafletMap) {
 			const markerLayer = layerGroup().addTo(leafletMap);
-
 			points.forEach((point) => {
 				const marker = new Marker({
 					lat: point.location.latitude,
-					lng: point.location.latitude,
+					lng: point.location.longitude,
 				});
 
 				marker
 					.setIcon(
-						activeOffer !== null && point.title === activeOffer.title
+						activeOffer !== null && point.id === activeOffer.id
 							? currentCustomIcon
 							: defaultCustomIcon
 					)
@@ -61,7 +56,7 @@ function LeafletMap({
 		}
 	}, [leafletMap, points, activeOffer, city]);
 
-	useEffect(()=> {
+	useEffect(() => {
 		leafletMap?.setView(
 			[city.location.latitude, city.location.longitude],
 			city.location.zoom
