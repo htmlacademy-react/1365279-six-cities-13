@@ -10,10 +10,13 @@ import {
 	redirectToRoute,
 	loadFullOffer,
 	setFullOfferLoadingStatus,
+	setReviewsLoadingStatus,
+	loadReviews,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
+import { Review } from '../types/review';
 
 export const fetchOffersAction = createAsyncThunk<
 	void,
@@ -43,6 +46,21 @@ export const fetchFullOfferAction = createAsyncThunk<
 	const { data } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
 	dispatch(setFullOfferLoadingStatus(false));
 	dispatch(loadFullOffer(data));
+});
+
+export const fetchReviewsAction = createAsyncThunk<
+	void,
+	string,
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
+	}
+>('data/fetchReviewsAction', async (offerId, { dispatch, extra: api }) => {
+	dispatch(setReviewsLoadingStatus(true));
+	const { data } = await api.get<Review[]>(`${APIRoute.Reviews}/${offerId}`);
+	dispatch(setReviewsLoadingStatus(false));
+	dispatch(loadReviews(data));
 });
 
 export const checkAuthAction = createAsyncThunk<

@@ -2,7 +2,12 @@ import { Review } from '../../types/review';
 
 type ReviewItemProps = Review;
 
-function ReviewsItem ({date, user, comment, rating}: ReviewItemProps) {
+function ReviewsItem({ date, user, comment, rating }: ReviewItemProps) {
+	const formattedDate = new Date(date).toLocaleDateString('en-US', {
+		month: 'long',
+		year: 'numeric',
+	});
+
 	return (
 		<li className="reviews__item">
 			<div className="reviews__user user">
@@ -24,11 +29,9 @@ function ReviewsItem ({date, user, comment, rating}: ReviewItemProps) {
 						<span className="visually-hidden">Rating</span>
 					</div>
 				</div>
-				<p className="reviews__text">
-					{comment}
-				</p>
-				<time className="reviews__time" dateTime="2019-04-24">
-					{date}
+				<p className="reviews__text">{comment}</p>
+				<time className="reviews__time" dateTime={date.split('T')[0]}>
+					{formattedDate}
 				</time>
 			</div>
 		</li>
