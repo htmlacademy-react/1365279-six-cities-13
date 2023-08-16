@@ -1,3 +1,6 @@
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 400;
+
 const CITIES = [
 	'Paris',
 	'Cologne',
@@ -9,21 +12,18 @@ const CITIES = [
 
 const OFFER_TYPES = ['Apartment', 'Private room', 'Villa', 'Hotel'] as const;
 
-const AppRoute = {
-	Login: '/login',
-	Favorites: '/favorites',
-	Offer: '/offer',
-	Main: '/',
-} as const;
+const enum AppRoute {
+	Login = '/login',
+	Favorites = '/favorites',
+	Offer = '/offer',
+	Main = '/',
+}
 
 const enum AuthorizationStatus {
 	Auth = 'AUTH',
 	NoAuth = 'NO_AUTH',
 	Unknown = 'UNKNOWN',
 }
-
-const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 400;
 
 const SortingTypes = {
 	Popular: 'Popular',
@@ -32,16 +32,19 @@ const SortingTypes = {
 	Rating: 'Top rated first',
 } as const;
 
-export enum APIRoute {
+const enum APIRoute {
 	Offers = '/offers',
+	Login = '/login',
+	Logout = '/logout',
 }
 
 export {
 	CITIES,
 	OFFER_TYPES,
-	AppRoute,
-	AuthorizationStatus,
 	MIN_REVIEW_LENGTH,
 	MAX_REVIEW_LENGTH,
+	AppRoute,
 	SortingTypes,
+	AuthorizationStatus,
+	APIRoute,
 };

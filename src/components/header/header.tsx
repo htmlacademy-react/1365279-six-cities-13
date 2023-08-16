@@ -1,17 +1,20 @@
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutAction } from '../../store/api-actions';
 
 type HeaderProps = {
 	withNavigation?: boolean;
-	isAuthorized?: boolean;
 };
 
-function Header({
-	withNavigation = true,
-	isAuthorized = true,
-}: HeaderProps): JSX.Element {
+function Header({ withNavigation = true }: HeaderProps): JSX.Element {
+	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
+	const authorizationStatus = useAppSelector(
+		(state) => state.authorizationStatus
+	);
+
 	return (
 		<header className="header">
 			<div className="container">
@@ -34,7 +37,7 @@ function Header({
 					</div>
 					{withNavigation && (
 						<nav className="header__nav">
-							{isAuthorized ? (
+							{authorizationStatus === AuthorizationStatus.Auth ? (
 								<ul className="header__nav-list">
 									<li className="header__nav-item user">
 										<Link
@@ -49,7 +52,14 @@ function Header({
 										</Link>
 									</li>
 									<li className="header__nav-item">
-										<Link className="header__nav-link" to={AppRoute.Main}>
+										<Link
+											className="header__nav-link"
+											to={AppRoute.Main}
+											onClick={(evt) => {
+												evt.preventDefault();
+												dispatch(logoutAction());
+											}}
+										>
 											<span className="header__signout">Sign out</span>
 										</Link>
 									</li>

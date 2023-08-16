@@ -5,18 +5,21 @@ import {
 	setActiveOffer,
 	loadOffers,
 	setOffersLoadingStatus,
+	requireAuthorization,
 } from './actions';
-import { CITIES } from '../const';
+import { AuthorizationStatus, CITIES } from '../const';
 import { City, ServerOffer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 
 const initialState: {
+	authorizationStatus: AuthorizationStatus;
 	activeCity: City['name'];
 	offers: ServerOffer[];
 	isOffersLoading: boolean;
 	activeOffer: ServerOffer | null;
 	sorting: Sorting;
 } = {
+	authorizationStatus: AuthorizationStatus.Unknown,
 	activeCity: CITIES[0],
 	offers: [],
 	isOffersLoading: true,
@@ -40,6 +43,9 @@ const reducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(setActiveOffer, (state, action) => {
 			state.activeOffer = action.payload;
+		})
+		.addCase(requireAuthorization, (state, action) => {
+			state.authorizationStatus = action.payload;
 		});
 });
 
