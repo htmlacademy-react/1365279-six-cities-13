@@ -12,6 +12,8 @@ import {
 	setFullOfferLoadingStatus,
 	setReviewsLoadingStatus,
 	loadReviews,
+	setNearbyLoadingStatus,
+	loadNearby,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
@@ -61,6 +63,23 @@ export const fetchReviewsAction = createAsyncThunk<
 	const { data } = await api.get<Review[]>(`${APIRoute.Reviews}/${offerId}`);
 	dispatch(setReviewsLoadingStatus(false));
 	dispatch(loadReviews(data));
+});
+
+export const fetchNearbyAction = createAsyncThunk<
+	void,
+	string,
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
+	}
+>('data/fetchNearbyAction', async (offerId, { dispatch, extra: api }) => {
+	dispatch(setNearbyLoadingStatus(true));
+	const { data } = await api.get<ServerOffer[]>(
+		`${APIRoute.Offers}/${offerId}/nearby`
+	);
+	dispatch(setNearbyLoadingStatus(false));
+	dispatch(loadNearby(data));
 });
 
 export const checkAuthAction = createAsyncThunk<

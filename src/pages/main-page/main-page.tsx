@@ -6,7 +6,7 @@ import { CitiesList } from '../../components/cities-list/cities-list';
 import { useCurrentOffers } from './hooks/current-offers';
 import { SortingForm } from '../../components/sorting-form/sorting-form';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
-
+import { MapTypes } from '../../const';
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
@@ -44,7 +44,7 @@ function MainPage(): JSX.Element {
 									<LeafletMap
 										city={currentOffers[0].city}
 										points={currentOffers}
-										block={'cities'}
+										block={MapTypes.Cities}
 									/>
 								</div>
 							</>

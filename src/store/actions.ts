@@ -7,6 +7,7 @@ import { Review } from '../types/review';
 export const loadOffers = createAction<ServerOffer[]>('offers/loadOffers');
 export const loadFullOffer = createAction<FullOffer>('offers/loadFullOffer');
 export const loadReviews = createAction<Review[]>('offers/loadReviews');
+export const loadNearby = createAction<ServerOffer[]>('offers/loadNearby');
 export const setOffersLoadingStatus = createAction<boolean>(
 	'data/setOffersLoadingStatus'
 );
@@ -16,6 +17,9 @@ export const setFullOfferLoadingStatus = createAction<boolean>(
 export const setReviewsLoadingStatus = createAction<boolean>(
 	'data/setReviewsLoadingStatus'
 );
+export const setNearbyLoadingStatus = createAction<boolean>(
+	'data/setNearbyLoadingStatus'
+);
 export const setActiveCity = createAction<City['name']>('offers/setActiveCity');
 export const setActiveOffer = createAction<ServerOffer | null>(
 	'offers/setActiveOffer'
@@ -24,4 +28,4 @@ export const setSorting = createAction<Sorting>('offers/setSorting');
 export const requireAuthorization = createAction<AuthorizationStatus>(
 	'user/requireAuthorization'
 );
-export const redirectToRoute = createAction<AppRoute>('offer/redirectToRoute');
+export const redirectToRoute = createAction<AppRoute>('redirectToRoute');

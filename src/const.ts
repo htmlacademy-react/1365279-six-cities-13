@@ -39,6 +39,11 @@ const enum APIRoute {
 	Reviews = '/comments',
 }
 
+const enum MapTypes {
+	Cities = 'cities',
+	Offer = 'offer',
+}
+
 export {
 	CITIES,
 	OFFER_TYPES,
@@ -48,4 +53,5 @@ export {
 	SortingTypes,
 	AuthorizationStatus,
 	APIRoute,
+	MapTypes,
 };

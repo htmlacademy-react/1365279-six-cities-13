@@ -10,26 +10,31 @@ import { setActiveOffer } from '../../store/actions';
 import { useEffect } from 'react';
 import {
 	fetchFullOfferAction,
+	fetchNearbyAction,
 	fetchReviewsAction,
 } from '../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-page/loading-page';
+import { getRandomSlice } from '../../utils/common';
+import { MapTypes } from '../../const';
 
 function OfferPage(): JSX.Element {
 	const params = useParams();
 	const dispatch = useAppDispatch();
 
-	const offers = useAppSelector((state) => state.offers);
 	const fullOffer = useAppSelector((state) => state.fullOffer);
 	const reviews = useAppSelector((state) => state.reviews);
+	const nearby = useAppSelector((state) => state.nearby);
 	const newReviews = reviews.slice(-10);
 	const isFullOfferLoading = useAppSelector(
 		(state) => state.isFullOfferLoading
 	);
 	const isReviewsLoading = useAppSelector((state) => state.isReviewsLoading);
-	const nearbyOffers = offers.slice(0, 3);
+	const isNearbyLoading = useAppSelector((state) => state.isNearbyLoading);
+	const nearbyOffers = getRandomSlice(3, nearby);
+
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
 		dispatch(setActiveOffer(offer));
 	};
@@ -37,9 +42,10 @@ function OfferPage(): JSX.Element {
 	useEffect(() => {
 		dispatch(fetchFullOfferAction(params.offerId as string));
 		dispatch(fetchReviewsAction(params.offerId as string));
+		dispatch(fetchNearbyAction(params.offerId as string));
 	}, [dispatch, params.offerId]);
 
-	if (isFullOfferLoading && isReviewsLoading) {
+	if (isFullOfferLoading && isReviewsLoading && isNearbyLoading) {
 		return <LoadingScreen />;
 	}
 
@@ -177,7 +183,11 @@ function OfferPage(): JSX.Element {
 							</section>
 						</div>
 					</div>
-					<LeafletMap city={city} points={nearbyOffers} block={'offer'} />
+					<LeafletMap
+						city={city}
+						points={[...nearbyOffers, fullOffer]}
+						block={MapTypes.Offer}
+					/>
 				</section>
 				<div className="container">
 					<section className="near-places places">

@@ -10,6 +10,8 @@ import {
 	setFullOfferLoadingStatus,
 	loadReviews,
 	setReviewsLoadingStatus,
+	loadNearby,
+	setNearbyLoadingStatus,
 } from './actions';
 import { AuthorizationStatus, CITIES } from '../const';
 import { City, FullOffer, ServerOffer } from '../types/offer';
@@ -22,9 +24,11 @@ const initialState: {
 	offers: ServerOffer[];
 	fullOffer: FullOffer | null;
 	reviews: Review[];
+	nearby: ServerOffer[];
 	isOffersLoading: boolean;
 	isFullOfferLoading: boolean;
 	isReviewsLoading: boolean;
+	isNearbyLoading: boolean;
 	activeOffer: ServerOffer | null;
 	sorting: Sorting;
 } = {
@@ -33,9 +37,11 @@ const initialState: {
 	offers: [],
 	fullOffer: null,
 	reviews: [],
+	nearby: [],
 	isOffersLoading: true,
 	isFullOfferLoading: true,
 	isReviewsLoading: true,
+	isNearbyLoading: true,
 	activeOffer: null,
 	sorting: 'Popular',
 };
@@ -51,6 +57,9 @@ const reducer = createReducer(initialState, (builder) => {
 		.addCase(loadReviews, (state, action) => {
 			state.reviews = action.payload;
 		})
+		.addCase(loadNearby, (state, action) => {
+			state.nearby = action.payload;
+		})
 		.addCase(setOffersLoadingStatus, (state, action) => {
 			state.isOffersLoading = action.payload;
 		})
@@ -59,6 +68,9 @@ const reducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(setReviewsLoadingStatus, (state, action) => {
 			state.isReviewsLoading = action.payload;
+		})
+		.addCase(setNearbyLoadingStatus, (state, action) => {
+			state.isNearbyLoading = action.payload;
 		})
 		.addCase(setActiveCity, (state, action) => {
 			state.activeCity = action.payload;
