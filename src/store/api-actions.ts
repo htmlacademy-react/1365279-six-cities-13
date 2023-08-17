@@ -14,11 +14,13 @@ import {
 	loadReviews,
 	setNearbyLoadingStatus,
 	loadNearby,
+	sendReview,
+	setUserName,
 } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
-import { Review } from '../types/review';
+import { Review, ReviewData } from '../types/review';
 
 export const fetchOffersAction = createAsyncThunk<
 	void,
@@ -82,6 +84,25 @@ export const fetchNearbyAction = createAsyncThunk<
 	dispatch(loadNearby(data));
 });
 
+export const sendReviewAction = createAsyncThunk<
+	void,
+	ReviewData,
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
+	}
+>(
+	'data/sendReview',
+	async ({ id, comment, rating }, { dispatch, extra: api }) => {
+		const { data } = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {
+			comment,
+			rating,
+		});
+		dispatch(sendReview(data));
+	}
+);
+
 export const checkAuthAction = createAsyncThunk<
 	void,
 	undefined,
@@ -131,4 +152,17 @@ export const logoutAction = createAsyncThunk<
 	await api.delete(APIRoute.Logout);
 	dropToken();
 	dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+});
+
+export const fetchUserNameAction = createAsyncThunk<
+	void,
+	undefined,
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
+	}
+>('user/fetchUserName', async (_arg, { dispatch, extra: api }) => {
+	const { data } = await api.get<UserData>(APIRoute.Login);
+	dispatch(setUserName(data.email));
 });

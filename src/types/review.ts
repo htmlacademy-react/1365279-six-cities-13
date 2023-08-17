@@ -8,6 +8,12 @@ type Review = {
 	};
 	comment: string;
 	rating: number;
-}
+};
 
-export type { Review };
+type ReviewData = {
+	id: string;
+	comment: string;
+	rating: number;
+};
+
+export type { Review, ReviewData };

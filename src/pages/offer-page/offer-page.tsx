@@ -18,16 +18,23 @@ import classNames from 'classnames';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-page/loading-page';
 import { getRandomSlice } from '../../utils/common';
-import { MapTypes } from '../../const';
+import {
+	AuthorizationStatus,
+	MAX_REVIEWS_QUANTITY,
+	MapTypes,
+} from '../../const';
 
 function OfferPage(): JSX.Element {
 	const params = useParams();
 	const dispatch = useAppDispatch();
 
+	const authorizationStatus = useAppSelector(
+		(state) => state.authorizationStatus
+	);
 	const fullOffer = useAppSelector((state) => state.fullOffer);
 	const reviews = useAppSelector((state) => state.reviews);
 	const nearby = useAppSelector((state) => state.nearby);
-	const newReviews = reviews.slice(-10);
+	const newReviews = reviews.slice(-MAX_REVIEWS_QUANTITY);
 	const isFullOfferLoading = useAppSelector(
 		(state) => state.isFullOfferLoading
 	);
@@ -179,7 +186,9 @@ function OfferPage(): JSX.Element {
 									<span className="reviews__amount">{reviews.length}</span>
 								</h2>
 								<ReviewsList reviews={newReviews} />
-								<ReviewsForm />
+								{authorizationStatus === AuthorizationStatus.Auth && (
+									<ReviewsForm />
+								)}
 							</section>
 						</div>
 					</div>

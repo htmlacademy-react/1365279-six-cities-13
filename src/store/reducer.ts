@@ -9,9 +9,11 @@ import {
 	loadFullOffer,
 	setFullOfferLoadingStatus,
 	loadReviews,
+	sendReview,
 	setReviewsLoadingStatus,
 	loadNearby,
 	setNearbyLoadingStatus,
+	setUserName,
 } from './actions';
 import { AuthorizationStatus, CITIES } from '../const';
 import { City, FullOffer, ServerOffer } from '../types/offer';
@@ -31,6 +33,7 @@ const initialState: {
 	isNearbyLoading: boolean;
 	activeOffer: ServerOffer | null;
 	sorting: Sorting;
+	userName: string | null;
 } = {
 	authorizationStatus: AuthorizationStatus.Unknown,
 	activeCity: CITIES[0],
@@ -44,6 +47,7 @@ const initialState: {
 	isNearbyLoading: true,
 	activeOffer: null,
 	sorting: 'Popular',
+	userName: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -56,6 +60,9 @@ const reducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(loadReviews, (state, action) => {
 			state.reviews = action.payload;
+		})
+		.addCase(sendReview, (state, action) => {
+			state.reviews.push(action.payload);
 		})
 		.addCase(loadNearby, (state, action) => {
 			state.nearby = action.payload;
@@ -80,6 +87,9 @@ const reducer = createReducer(initialState, (builder) => {
 		})
 		.addCase(setActiveOffer, (state, action) => {
 			state.activeOffer = action.payload;
+		})
+		.addCase(setUserName, (state, action) => {
+			state.userName = action.payload;
 		})
 		.addCase(requireAuthorization, (state, action) => {
 			state.authorizationStatus = action.payload;

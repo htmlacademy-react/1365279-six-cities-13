@@ -2,7 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { fetchUserNameAction, logoutAction } from '../../store/api-actions';
+import { useEffect } from 'react';
 
 type HeaderProps = {
 	withNavigation?: boolean;
@@ -14,6 +15,11 @@ function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 	const authorizationStatus = useAppSelector(
 		(state) => state.authorizationStatus
 	);
+	const userName = useAppSelector((state) => state.userName);
+
+	useEffect(() => {
+		dispatch(fetchUserNameAction());
+	}, [dispatch]);
 
 	return (
 		<header className="header">
@@ -46,7 +52,7 @@ function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 										>
 											<div className="header__avatar-wrapper user__avatar-wrapper"></div>
 											<span className="header__user-name user__name">
-												Oliver.conner@gmail.com
+												{userName}
 											</span>
 											<span className="header__favorite-count">3</span>
 										</Link>
