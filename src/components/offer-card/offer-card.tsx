@@ -4,8 +4,18 @@ import type { ServerOffer } from '../../types/offer';
 import { AppRoute } from '../../const';
 import { HTMLAttributes } from 'react';
 
-type OfferCardProps = Pick<ServerOffer, 'id' | 'title' | 'type' | 'price' | 'isFavorite' | 'isPremium' | 'rating' | 'previewImage'> &
-Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'>
+type OfferCardProps = Pick<
+	ServerOffer,
+	| 'id'
+	| 'title'
+	| 'type'
+	| 'price'
+	| 'isFavorite'
+	| 'isPremium'
+	| 'rating'
+	| 'previewImage'
+> &
+	Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'>;
 
 function OfferCard({
 	previewImage,
@@ -17,12 +27,21 @@ function OfferCard({
 	isPremium = false,
 	isFavorite = false,
 	onMouseEnter,
-	onMouseLeave
-} : OfferCardProps): JSX.Element {
-	const bookmarkClass = classNames('place-card__bookmark-button', {'place-card__bookmark-button--active': isFavorite}, 'button');
+	onMouseLeave,
+}: OfferCardProps): JSX.Element {
+	const bookmarkClass = classNames(
+		'place-card__bookmark-button',
+		{ 'place-card__bookmark-button--active': isFavorite },
+		'button'
+	);
 	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
 	return (
-		<article className="cities__card place-card" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+		<article
+			className="cities__card place-card"
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			onClick={onMouseLeave}
+		>
 			{isPremium && (
 				<div className="place-card__mark">
 					<span>Premium</span>
@@ -45,15 +64,8 @@ function OfferCard({
 						<b className="place-card__price-value">€{price}</b>
 						<span className="place-card__price-text">/&nbsp;night</span>
 					</div>
-					<button
-						className={bookmarkClass}
-						type="button"
-					>
-						<svg
-							className="place-card__bookmark-icon"
-							width={18}
-							height={19}
-						>
+					<button className={bookmarkClass} type="button">
+						<svg className="place-card__bookmark-icon" width={18} height={19}>
 							<use xlinkHref="#icon-bookmark" />
 						</svg>
 						<span className="visually-hidden">{bookmarkLabel}</span>
@@ -61,14 +73,16 @@ function OfferCard({
 				</div>
 				<div className="place-card__rating rating">
 					<div className="place-card__stars rating__stars">
-						<span style={{ width: `${rating * 20}%` }} />
+						<span style={{ width: `${Math.round(rating) * 20}%` }} />
 						<span className="visually-hidden">Rating</span>
 					</div>
 				</div>
 				<h2 className="place-card__name">
 					<Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
 				</h2>
-				<p className="place-card__type">{type}</p>
+				<p className="place-card__type">
+					{type.charAt(0).toUpperCase() + type.slice(1)}
+				</p>
 			</div>
 		</article>
 	);

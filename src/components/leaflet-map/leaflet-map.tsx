@@ -2,8 +2,9 @@ import { useRef, useEffect } from 'react';
 import { Marker, layerGroup, Icon } from 'leaflet';
 import { useAppSelector, useLeafletMap } from '../../hooks/';
 import 'leaflet/dist/leaflet.css';
-import { ServerOffer } from '../../types/offer';
+import { FullOffer, ServerOffer } from '../../types/offer';
 import { City } from '../../types/offer';
+import { MapTypes } from '../../const';
 
 const enum UrlMarker {
 	DefaultMarker = '../img/pin.svg',
@@ -24,7 +25,7 @@ const currentCustomIcon = new Icon({
 
 type MapProps = {
 	city: City;
-	points: ServerOffer[];
+	points: (ServerOffer | FullOffer)[];
 	block: string;
 };
 
@@ -32,6 +33,7 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
 	const activeOffer = useAppSelector((state) => state.activeOffer);
+	const currentPoint = useAppSelector((state) => state.fullOffer);
 
 	useEffect(() => {
 		if (leafletMap) {
@@ -44,7 +46,10 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 
 				marker
 					.setIcon(
-						activeOffer !== null && point.id === activeOffer.id
+						(activeOffer !== null && point.id === activeOffer.id) ||
+							(currentPoint !== null &&
+								point.id === currentPoint?.id &&
+								block === MapTypes.Offer)
 							? currentCustomIcon
 							: defaultCustomIcon
 					)
@@ -54,7 +59,7 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
-	}, [leafletMap, points, activeOffer, city]);
+	}, [leafletMap, points, activeOffer, city, currentPoint, block]);
 
 	useEffect(() => {
 		leafletMap?.setView(

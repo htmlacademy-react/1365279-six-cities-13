@@ -7,7 +7,6 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute } from '../../const';
-import mockReviews from '../../mocks/reviews';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../../pages/loading-page/loading-page';
 import HistoryRouter from '../history-router/history-router';
@@ -44,10 +43,7 @@ function App(): JSX.Element {
 							</PrivateRoute>
 						}
 					/>
-					<Route
-						path={`${AppRoute.Offer}/:offerId`}
-						element={<OfferPage reviews={mockReviews} />}
-					/>
+					<Route path={`${AppRoute.Offer}/:offerId`} element={<OfferPage />} />
 					<Route path="*" element={<NotFoundPage />} />
 				</Routes>
 			</HistoryRouter>
