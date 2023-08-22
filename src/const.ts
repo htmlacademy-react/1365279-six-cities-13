@@ -45,15 +45,23 @@ const enum MapTypes {
 	Offer = 'offer',
 }
 
+const enum NameSpace {
+	Offer = 'offer',
+	Offers = 'offers',
+	User = 'user',
+	Data = 'data',
+}
+
 export {
 	CITIES,
 	OFFER_TYPES,
 	MIN_REVIEW_LENGTH,
 	MAX_REVIEW_LENGTH,
 	MAX_REVIEWS_QUANTITY,
-	AppRoute,
 	SortingTypes,
+	AppRoute,
 	AuthorizationStatus,
 	APIRoute,
 	MapTypes,
+	NameSpace,
 };

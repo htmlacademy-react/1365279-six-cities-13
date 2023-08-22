@@ -4,7 +4,6 @@ import Header from '../../components/header/header';
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { setUserName } from '../../store/actions';
 
 function LoginPage(): JSX.Element {
 	const loginRef = useRef<HTMLInputElement | null>(null);
@@ -22,7 +21,6 @@ function LoginPage(): JSX.Element {
 					password: passwordRef.current.value,
 				})
 			);
-			dispatch(setUserName(loginRef.current.value));
 		}
 	};
 

@@ -1,11 +1,12 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity } from '../../store/actions';
+import { setActiveCity } from '../../store/offers-data/offers-data';
 import { CITIES } from '../../const';
+import { getActiveCity } from '../../store/offers-data/selector';
 
 export function CitiesList() {
-	const activeCity = useAppSelector((state) => state.activeCity);
+	const activeCity = useAppSelector(getActiveCity);
 	const dispatch = useAppDispatch();
 	return (
 		<div className="tabs">

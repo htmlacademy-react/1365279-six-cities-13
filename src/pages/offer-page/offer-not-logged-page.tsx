@@ -8,7 +8,7 @@ function OfferNotLogged(): JSX.Element {
 			<Helmet>
 				<title>6 cities - Offer</title>
 			</Helmet>
-			<Header isAuthorized={false} />
+			<Header />
 			<main className="page__main page__main--offer">
 				<section className="offer">
 					<div className="offer__gallery-container container">
@@ -81,7 +81,9 @@ function OfferNotLogged(): JSX.Element {
 								<span className="offer__rating-value rating__value">4.8</span>
 							</div>
 							<ul className="offer__features">
-								<li className="offer__feature offer__feature--entire">Apartment</li>
+								<li className="offer__feature offer__feature--entire">
+									Apartment
+								</li>
 								<li className="offer__feature offer__feature--bedrooms">
 									3 Bedrooms
 								</li>
@@ -125,9 +127,9 @@ function OfferNotLogged(): JSX.Element {
 								</div>
 								<div className="offer__description">
 									<p className="offer__text">
-										A quiet cozy and picturesque that hides behind a a river by the
-										unique lightness of Amsterdam. The building is green and from
-										18th century.
+										A quiet cozy and picturesque that hides behind a a river by
+										the unique lightness of Amsterdam. The building is green and
+										from 18th century.
 									</p>
 									<p className="offer__text">
 										An independent House, strategically located between Rembrand
@@ -162,9 +164,9 @@ function OfferNotLogged(): JSX.Element {
 												</div>
 											</div>
 											<p className="reviews__text">
-												A quiet cozy and picturesque that hides behind a a river by
-												the unique lightness of Amsterdam. The building is green and
-												from 18th century.
+												A quiet cozy and picturesque that hides behind a a river
+												by the unique lightness of Amsterdam. The building is
+												green and from 18th century.
 											</p>
 											<time className="reviews__time" dateTime="2019-04-24">
 												April 2019
@@ -199,7 +201,9 @@ function OfferNotLogged(): JSX.Element {
 									<div className="place-card__price-wrapper">
 										<div className="place-card__price">
 											<b className="place-card__price-value">€80</b>
-											<span className="place-card__price-text">/&nbsp;night</span>
+											<span className="place-card__price-text">
+												/&nbsp;night
+											</span>
 										</div>
 										<button
 											className="place-card__bookmark-button place-card__bookmark-button--active button"
@@ -243,7 +247,9 @@ function OfferNotLogged(): JSX.Element {
 									<div className="place-card__price-wrapper">
 										<div className="place-card__price">
 											<b className="place-card__price-value">€132</b>
-											<span className="place-card__price-text">/&nbsp;night</span>
+											<span className="place-card__price-text">
+												/&nbsp;night
+											</span>
 										</div>
 										<button
 											className="place-card__bookmark-button button"
@@ -290,7 +296,9 @@ function OfferNotLogged(): JSX.Element {
 									<div className="place-card__price-wrapper">
 										<div className="place-card__price">
 											<b className="place-card__price-value">€180</b>
-											<span className="place-card__price-text">/&nbsp;night</span>
+											<span className="place-card__price-text">
+												/&nbsp;night
+											</span>
 										</div>
 										<button
 											className="place-card__bookmark-button button"
