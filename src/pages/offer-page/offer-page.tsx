@@ -6,7 +6,7 @@ import { ServerOffer } from '../../types/offer';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
 import OfferCard from '../../components/offer-card/offer-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveOffer } from '../../store/actions';
+import { setActiveOffer } from '../../store/offers-data/offers-data';
 import { useEffect } from 'react';
 import {
 	fetchFullOfferAction,
@@ -23,23 +23,28 @@ import {
 	MAX_REVIEWS_QUANTITY,
 	MapTypes,
 } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import {
+	getCurrentOffer,
+	getFullOfferLoadingStatus,
+	getNearby,
+	getNearbyLoadingStatus,
+	getReviews,
+	getReviewsLoadingStatus,
+} from '../../store/offer-data/selector';
 
 function OfferPage(): JSX.Element {
 	const params = useParams();
 	const dispatch = useAppDispatch();
 
-	const authorizationStatus = useAppSelector(
-		(state) => state.authorizationStatus
-	);
-	const fullOffer = useAppSelector((state) => state.fullOffer);
-	const reviews = useAppSelector((state) => state.reviews);
-	const nearby = useAppSelector((state) => state.nearby);
+	const authorizationStatus = useAppSelector(getAuthorizationStatus);
+	const fullOffer = useAppSelector(getCurrentOffer);
+	const reviews = useAppSelector(getReviews);
+	const nearby = useAppSelector(getNearby);
 	const newReviews = reviews.slice(-MAX_REVIEWS_QUANTITY);
-	const isFullOfferLoading = useAppSelector(
-		(state) => state.isFullOfferLoading
-	);
-	const isReviewsLoading = useAppSelector((state) => state.isReviewsLoading);
-	const isNearbyLoading = useAppSelector((state) => state.isNearbyLoading);
+	const isFullOfferLoading = useAppSelector(getFullOfferLoadingStatus);
+	const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
+	const isNearbyLoading = useAppSelector(getNearbyLoadingStatus);
 	const nearbyOffers = getRandomSlice(3, nearby);
 
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {

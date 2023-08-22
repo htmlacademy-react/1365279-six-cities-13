@@ -1,9 +1,10 @@
 import { useAppSelector } from '../../../hooks';
+import { getActiveCity, getOffers } from '../../../store/offers-data/selector';
 import { ServerOffer } from '../../../types/offer';
 
 export function useCurrentOffers() {
-	const offers = useAppSelector((state) => state.offers);
-	const activeCity = useAppSelector((state) => state.activeCity);
+	const offers = useAppSelector(getOffers);
+	const activeCity = useAppSelector(getActiveCity);
 	const offersByCities: Record<string, ServerOffer[]> = {};
 	for (const offer of offers) {
 		const city = offer.city.name;

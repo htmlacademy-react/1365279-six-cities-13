@@ -5,9 +5,10 @@ import Footer from '../../components/footer/footer';
 import { ServerOffer } from '../../types/offer';
 import FavoritesOfferCard from '../../components/favorites-offer-card/favorites-offer-card';
 import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/offers-data/selector';
 
 function FavoritesPage(): JSX.Element {
-	const offers = useAppSelector((state) => state.offers);
+	const offers = useAppSelector(getOffers);
 	const favoritesOffers = offers.slice(0, 10);
 	const favoritesOffersByCities: Record<string, ServerOffer[]> = {};
 	for (const offer of favoritesOffers) {

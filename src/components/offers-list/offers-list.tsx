@@ -2,7 +2,8 @@ import OfferCard from '../offer-card/offer-card';
 import { ServerOffer } from '../../types/offer';
 import { sorting } from '../../utils/common';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveOffer } from '../../store/actions';
+import { setActiveOffer } from '../../store/offers-data/offers-data';
+import { getActiveSort } from '../../store/offers-data/selector';
 
 type OffersListProps = {
 	currentOffers: ServerOffer[];
@@ -10,7 +11,7 @@ type OffersListProps = {
 
 function OffersList({ currentOffers }: OffersListProps) {
 	const dispatch = useAppDispatch();
-	const activeSorting = useAppSelector((state) => state.sorting);
+	const activeSorting = useAppSelector(getActiveSort);
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
 		dispatch(setActiveOffer(offer));
 	};

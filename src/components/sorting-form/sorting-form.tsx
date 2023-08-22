@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Sorting } from '../../types/sorting';
 import { SortingTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSorting } from '../../store/actions';
+import { setSorting } from '../../store/offers-data/offers-data';
+import { getActiveSort } from '../../store/offers-data/selector';
 
 export function SortingForm(): JSX.Element {
 	const dispatch = useAppDispatch();
-	const activeSorting = useAppSelector((state) => state.sorting);
+	const activeSorting = useAppSelector(getActiveSort);
 	const [isOpened, setIsOpened] = useState(false);
 	const iconStyle = {
 		transform: `translateY(-50%) ${isOpened ? 'rotate(180deg)' : ''}`,

@@ -5,6 +5,8 @@ import 'leaflet/dist/leaflet.css';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { City } from '../../types/offer';
 import { MapTypes } from '../../const';
+import { getActiveOffer } from '../../store/offers-data/selector';
+import { getCurrentOffer } from '../../store/offer-data/selector';
 
 const enum UrlMarker {
 	DefaultMarker = '../img/pin.svg',
@@ -32,8 +34,8 @@ type MapProps = {
 function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
-	const activeOffer = useAppSelector((state) => state.activeOffer);
-	const currentPoint = useAppSelector((state) => state.fullOffer);
+	const activeOffer = useAppSelector(getActiveOffer);
+	const currentPoint = useAppSelector(getCurrentOffer);
 
 	useEffect(() => {
 		if (leafletMap) {

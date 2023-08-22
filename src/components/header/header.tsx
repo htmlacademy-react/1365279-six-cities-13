@@ -2,8 +2,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchUserNameAction, logoutAction } from '../../store/api-actions';
-import { useEffect } from 'react';
+import { logoutAction } from '../../store/api-actions';
+import {
+	getAuthorizationStatus,
+	getUserName,
+} from '../../store/user-process/selector';
 
 type HeaderProps = {
 	withNavigation?: boolean;
@@ -12,14 +15,8 @@ type HeaderProps = {
 function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
-	const authorizationStatus = useAppSelector(
-		(state) => state.authorizationStatus
-	);
-	const userName = useAppSelector((state) => state.userName);
-
-	useEffect(() => {
-		dispatch(fetchUserNameAction());
-	}, [dispatch]);
+	const authorizationStatus = useAppSelector(getAuthorizationStatus);
+	const userName = useAppSelector(getUserName);
 
 	return (
 		<header className="header">
