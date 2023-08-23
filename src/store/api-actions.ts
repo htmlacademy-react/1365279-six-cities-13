@@ -16,7 +16,7 @@ export const fetchOffersAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('data/fetchOffersAction', async (_arg, { extra: api }) => {
+>(`${NameSpace.Offers}/fetchOffersAction`, async (_arg, { extra: api }) => {
 	const { data } = await api.get<ServerOffer[]>(APIRoute.Offers);
 	return data;
 });
@@ -29,7 +29,7 @@ export const fetchFullOfferAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('data/fetchFullOfferAction', async (offerId, { extra: api }) => {
+>(`${NameSpace.Offer}/fetchFullOfferAction`, async (offerId, { extra: api }) => {
 	const { data } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
 	return data;
 });
@@ -42,7 +42,7 @@ export const fetchReviewsAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('data/fetchReviewsAction', async (offerId, { extra: api }) => {
+>(`${NameSpace.Offer}/fetchReviewsAction`, async (offerId, { extra: api }) => {
 	const { data } = await api.get<Review[]>(`${APIRoute.Reviews}/${offerId}`);
 	return data;
 });
@@ -55,7 +55,7 @@ export const fetchNearbyAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('data/fetchNearbyAction', async (offerId, { extra: api }) => {
+>(`${NameSpace.Offer}/fetchNearbyAction`, async (offerId, { extra: api }) => {
 	const { data } = await api.get<ServerOffer[]>(
 		`${APIRoute.Offers}/${offerId}/nearby`
 	);
@@ -70,7 +70,7 @@ export const sendReviewAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('data/sendReview', async ({ id, comment, rating }, { extra: api }) => {
+>(`${NameSpace.Offer}/sendReview`, async ({ id, comment, rating }, { extra: api }) => {
 	const { data } = await api.post<Review>(`${APIRoute.Reviews}/${id}`, {
 		comment,
 		rating,
@@ -86,7 +86,7 @@ export const checkAuthAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('user/checkAuth', async (_arg, { extra: api }) => {
+>(`${NameSpace.User}/checkAuth`, async (_arg, { extra: api }) => {
 	const { data } = await api.get<UserData>(APIRoute.Login);
 	return data;
 });
@@ -99,17 +99,14 @@ export const loginAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->(
-	'user/login',
-	async ({ login: email, password }, { extra: api }) => {
-		const { data } = await api.post<UserData>(APIRoute.Login, {
-			email,
-			password,
-		});
-		saveToken(data.token);
-		return data;
-	}
-);
+>(`${NameSpace.User}/login`, async ({ login: email, password }, { extra: api }) => {
+	const { data } = await api.post<UserData>(APIRoute.Login, {
+		email,
+		password,
+	});
+	saveToken(data.token);
+	return data;
+});
 
 export const logoutAction = createAsyncThunk<
 	void,
@@ -119,46 +116,53 @@ export const logoutAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->('user/logout', async (_arg, { extra: api }) => {
+>(`${NameSpace.User}/logout`, async (_arg, { extra: api }) => {
 	await api.delete(APIRoute.Logout);
 	dropToken();
 });
 
-export const fetchFavoritesAction = createAsyncThunk<ServerOffer[], undefined, {
-	dispatch: AppDispatch;
-	state: State;
-	extra: AxiosInstance;
-}>(
-	`${NameSpace.Favorites}/fetchFavorites`,
-	async (_arg, {extra: api}) => {
-		const { data } = await api.get<ServerOffer[]>(APIRoute.Favorite);
-
-		return data;
+export const fetchFavoritesAction = createAsyncThunk<
+	ServerOffer[],
+	undefined,
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
 	}
-);
+>(`${NameSpace.Favorites}/fetchFavorites`, async (_arg, { extra: api }) => {
+	const { data } = await api.get<ServerOffer[]>(APIRoute.Favorite);
 
-export const addFavoriteAction = createAsyncThunk<ServerOffer, ServerOffer['id'], {
-	dispatch: AppDispatch;
-	state: State;
-	extra: AxiosInstance;
-}>(
-	`${NameSpace.Favorites}/addFavorite`,
-	async (id, {extra: api}) => {
-		const { data } = await api.post<ServerOffer>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Add}`);
+	return data;
+});
 
-		return data;
+export const addFavoriteAction = createAsyncThunk<
+	ServerOffer,
+	ServerOffer['id'],
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
 	}
-);
+>(`${NameSpace.Favorites}/addFavorite`, async (id, { extra: api }) => {
+	const { data } = await api.post<ServerOffer>(
+		`${APIRoute.Favorite}/${id}/${FavoriteStatus.Add}`
+	);
 
-export const deleteFavoriteAction = createAsyncThunk<ServerOffer, ServerOffer['id'], {
-	dispatch: AppDispatch;
-	state: State;
-	extra: AxiosInstance;
-}>(
-	`${NameSpace.Favorites}/deleteFavorite`,
-	async (id, {extra: api}) => {
-		const { data } = await api.post<ServerOffer>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Delete}`);
+	return data;
+});
 
-		return data;
+export const deleteFavoriteAction = createAsyncThunk<
+	ServerOffer,
+	ServerOffer['id'],
+	{
+		dispatch: AppDispatch;
+		state: State;
+		extra: AxiosInstance;
 	}
-);
+>(`${NameSpace.Favorites}/deleteFavorite`, async (id, { extra: api }) => {
+	const { data } = await api.post<ServerOffer>(
+		`${APIRoute.Favorite}/${id}/${FavoriteStatus.Delete}`
+	);
+
+	return data;
+});

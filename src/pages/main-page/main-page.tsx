@@ -6,10 +6,42 @@ import { CitiesList } from '../../components/cities-list/cities-list';
 import { useCurrentOffers } from './hooks/current-offers';
 import { SortingForm } from '../../components/sorting-form/sorting-form';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
-import { MapTypes } from '../../const';
+import { AuthorizationStatus, MapTypes } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getOffersLoadingStatus } from '../../store/offers-data/selector';
+import LoadingScreen from '../loading-page/loading-page';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { useEffect } from 'react';
+import {
+	fetchFavoritesAction,
+	fetchOffersAction,
+} from '../../store/api-actions';
+import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
+	const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+	const isFavoritesLoading = useAppSelector(getFavoritesLoadingStatus);
+	const authorizationStatus = useAppSelector(getAuthorizationStatus);
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(fetchOffersAction());
+	}, [dispatch]);
+
+	useEffect(()=>{
+		if (authorizationStatus === AuthorizationStatus.Auth) {
+			dispatch(fetchFavoritesAction());
+		}
+	}, [authorizationStatus, dispatch]);
+
+	if (
+		isOffersLoading ||
+		isFavoritesLoading ||
+		authorizationStatus === AuthorizationStatus.Unknown
+	) {
+		return <LoadingScreen />;
+	}
 
 	return (
 		<div className="page page--gray page--main">

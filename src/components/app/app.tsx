@@ -8,19 +8,12 @@ import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import LoadingScreen from '../../pages/loading-page/loading-page';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
-import { getOffersLoadingStatus } from '../../store/offers-data/selector';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 
 function App(): JSX.Element {
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
-	const isOffersLoading = useAppSelector(getOffersLoadingStatus);
-
-	if (isOffersLoading) {
-		return <LoadingScreen />;
-	}
 
 	return (
 		<HelmetProvider>
