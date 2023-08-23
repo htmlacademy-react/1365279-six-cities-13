@@ -29,7 +29,7 @@ function MainPage(): JSX.Element {
 		dispatch(fetchOffersAction());
 	}, [dispatch]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		if (authorizationStatus === AuthorizationStatus.Auth) {
 			dispatch(fetchFavoritesAction());
 		}
@@ -67,7 +67,8 @@ function MainPage(): JSX.Element {
 								<section className="cities__places places">
 									<h2 className="visually-hidden">Places</h2>
 									<b className="places__found">
-										{currentOffers.length} places to stay in {activeCity}
+										{currentOffers.length} place
+										{currentOffers.length > 1 && 's'} to stay in {activeCity}
 									</b>
 									<SortingForm />
 									<OffersList currentOffers={currentOffers} />
