@@ -3,13 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { ServerOffer } from '../../types/offer';
-import FavoritesOfferCard from '../../components/favorites-offer-card/favorites-offer-card';
 import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/offers-data/selector';
+import { getFavorites } from '../../store/favorites-data/selector';
+import OfferCard from '../../components/offer-card/offer-card';
 
 function FavoritesPage(): JSX.Element {
-	const offers = useAppSelector(getOffers);
-	const favoritesOffers = offers.slice(0, 10);
+	const favoritesOffers = useAppSelector(getFavorites);
 	const favoritesOffersByCities: Record<string, ServerOffer[]> = {};
 	for (const offer of favoritesOffers) {
 		const city: string = offer.city.name;
@@ -46,7 +45,7 @@ function FavoritesPage(): JSX.Element {
 									</div>
 									<div className="favorites__places">
 										{favoritesOffersByCities[cityName].map((offer) => (
-											<FavoritesOfferCard {...offer} key={offer.id} />
+											<OfferCard favorite {...offer} key={offer.id} />
 										))}
 									</div>
 								</li>

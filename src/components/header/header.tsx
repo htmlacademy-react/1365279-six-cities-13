@@ -2,11 +2,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
+import { fetchFavoritesAction, logoutAction } from '../../store/api-actions';
 import {
 	getAuthorizationStatus,
 	getUserName,
 } from '../../store/user-process/selector';
+import { getFavorites } from '../../store/favorites-data/selector';
+import { useEffect } from 'react';
 
 type HeaderProps = {
 	withNavigation?: boolean;
@@ -17,6 +19,11 @@ function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 	const { pathname } = useLocation();
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
 	const userName = useAppSelector(getUserName);
+	const favorites = useAppSelector(getFavorites);
+
+	useEffect(() => {
+		dispatch(fetchFavoritesAction());
+	}, [dispatch]);
 
 	return (
 		<header className="header">
@@ -51,7 +58,7 @@ function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 											<span className="header__user-name user__name">
 												{userName}
 											</span>
-											<span className="header__favorite-count">3</span>
+											<span className="header__favorite-count">{favorites.length}</span>
 										</Link>
 									</li>
 									<li className="header__nav-item">

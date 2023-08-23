@@ -38,6 +38,7 @@ const enum APIRoute {
 	Login = '/login',
 	Logout = '/logout',
 	Reviews = '/comments',
+	Favorite = '/favorite',
 }
 
 const enum MapTypes {
@@ -49,6 +50,12 @@ const enum NameSpace {
 	Offer = 'offer',
 	Offers = 'offers',
 	User = 'user',
+	Favorites = 'favorites'
+}
+
+const enum FavoriteStatus {
+	Add = 1,
+	Delete = 0,
 }
 
 export {
@@ -63,4 +70,5 @@ export {
 	APIRoute,
 	MapTypes,
 	NameSpace,
+	FavoriteStatus,
 };

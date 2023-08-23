@@ -27,6 +27,11 @@ export type OfferData = {
 	isNearbyLoading: boolean;
 };
 
+export type FavoritesData = {
+	favorites: ServerOffer[];
+  isFavoritesLoading: boolean;
+}
+
 export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;

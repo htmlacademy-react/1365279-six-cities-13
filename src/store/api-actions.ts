@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { FullOffer, ServerOffer } from '../types/offer';
-import { APIRoute } from '../const';
+import { APIRoute, FavoriteStatus, NameSpace } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -123,3 +123,42 @@ export const logoutAction = createAsyncThunk<
 	await api.delete(APIRoute.Logout);
 	dropToken();
 });
+
+export const fetchFavoritesAction = createAsyncThunk<ServerOffer[], undefined, {
+	dispatch: AppDispatch;
+	state: State;
+	extra: AxiosInstance;
+}>(
+	`${NameSpace.Favorites}/fetchFavorites`,
+	async (_arg, {extra: api}) => {
+		const { data } = await api.get<ServerOffer[]>(APIRoute.Favorite);
+
+		return data;
+	}
+);
+
+export const addFavoriteAction = createAsyncThunk<ServerOffer, ServerOffer['id'], {
+	dispatch: AppDispatch;
+	state: State;
+	extra: AxiosInstance;
+}>(
+	`${NameSpace.Favorites}/addFavorite`,
+	async (id, {extra: api}) => {
+		const { data } = await api.post<ServerOffer>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Add}`);
+
+		return data;
+	}
+);
+
+export const deleteFavoriteAction = createAsyncThunk<ServerOffer, ServerOffer['id'], {
+	dispatch: AppDispatch;
+	state: State;
+	extra: AxiosInstance;
+}>(
+	`${NameSpace.Favorites}/deleteFavorite`,
+	async (id, {extra: api}) => {
+		const { data } = await api.post<ServerOffer>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Delete}`);
+
+		return data;
+	}
+);

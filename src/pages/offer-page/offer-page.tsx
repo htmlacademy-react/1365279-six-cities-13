@@ -32,6 +32,7 @@ import {
 	getReviews,
 	getReviewsLoadingStatus,
 } from '../../store/offer-data/selector';
+import { OfferDetails } from '../../components/offer-details/offer-datails';
 
 function OfferPage(): JSX.Element {
 	const params = useParams();
@@ -66,26 +67,11 @@ function OfferPage(): JSX.Element {
 	}
 
 	const {
-		title,
 		description,
-		type,
-		price,
-		bedrooms,
-		maxAdults,
-		rating,
-		isPremium,
-		isFavorite,
-		goods,
 		host,
 		images,
 		city,
 	} = fullOffer;
-	const bookmarkClass = classNames(
-		'offer__bookmark-button',
-		{ 'offer__bookmark-button--active': isFavorite },
-		'button'
-	);
-	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
 
 	return (
 		<div className="page">
@@ -110,54 +96,7 @@ function OfferPage(): JSX.Element {
 					</div>
 					<div className="offer__container container">
 						<div className="offer__wrapper">
-							{isPremium && (
-								<div className="offer__mark">
-									<span>Premium</span>
-								</div>
-							)}
-							<div className="offer__name-wrapper">
-								<h1 className="offer__name">{title}</h1>
-								<button className={bookmarkClass} type="button">
-									<svg className="offer__bookmark-icon" width={31} height={33}>
-										<use xlinkHref="#icon-bookmark" />
-									</svg>
-									<span className="visually-hidden">{bookmarkLabel}</span>
-								</button>
-							</div>
-							<div className="offer__rating rating">
-								<div className="offer__stars rating__stars">
-									<span style={{ width: `${Math.round(rating) * 20}%` }} />
-									<span className="visually-hidden">Rating</span>
-								</div>
-								<span className="offer__rating-value rating__value">
-									{rating}
-								</span>
-							</div>
-							<ul className="offer__features">
-								<li className="offer__feature offer__feature--entire">
-									{type.charAt(0).toUpperCase() + type.slice(1)}
-								</li>
-								<li className="offer__feature offer__feature--bedrooms">
-									{bedrooms} Bedrooms
-								</li>
-								<li className="offer__feature offer__feature--adults">
-									Max {maxAdults} adults
-								</li>
-							</ul>
-							<div className="offer__price">
-								<b className="offer__price-value">€{price}</b>
-								<span className="offer__price-text">&nbsp;night</span>
-							</div>
-							<div className="offer__inside">
-								<h2 className="offer__inside-title">What&apos;s inside</h2>
-								<ul className="offer__inside-list">
-									{goods.map((value) => (
-										<li key={value} className="offer__inside-item">
-											{value}
-										</li>
-									))}
-								</ul>
-							</div>
+							<OfferDetails offer={fullOffer} />
 							<div className="offer__host">
 								<h2 className="offer__host-title">Meet the host</h2>
 								<div className="offer__host-user user">
