@@ -3,10 +3,10 @@ import { FullOffer } from '../../types/offer';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 
 type OfferDetailsProps = {
-  offer: FullOffer;
-}
+	offer: FullOffer;
+};
 
-export function OfferDetails({offer}: OfferDetailsProps): JSX.Element {
+export function OfferDetails({ offer }: OfferDetailsProps): JSX.Element {
 	const {
 		title,
 		type,
