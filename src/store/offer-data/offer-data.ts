@@ -15,6 +15,7 @@ const initialState: OfferData = {
 	isFullOfferLoading: false,
 	isReviewsLoading: false,
 	isNearbyLoading: false,
+	isReviewSending: false,
 };
 
 export const offerData = createSlice({
@@ -44,8 +45,12 @@ export const offerData = createSlice({
 				state.nearby = action.payload;
 				state.isNearbyLoading = false;
 			})
+			.addCase(sendReviewAction.pending, (state) => {
+				state.isReviewSending = true;
+			})
 			.addCase(sendReviewAction.fulfilled, (state, action) => {
 				state.reviews.push(action.payload);
+				state.isReviewSending = false;
 			});
 	},
 });

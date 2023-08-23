@@ -19,3 +19,6 @@ export const getReviewsLoadingStatus = (
 export const getNearbyLoadingStatus = (
 	state: Pick<State, NameSpace.Offer>
 ): boolean => state[NameSpace.Offer].isNearbyLoading;
+export const getReviewSendingStatus = (
+	state: Pick<State, NameSpace.Offer>
+): boolean => state[NameSpace.Offer].isReviewSending;

@@ -42,11 +42,14 @@ function OfferPage(): JSX.Element {
 	const fullOffer = useAppSelector(getCurrentOffer);
 	const reviews = useAppSelector(getReviews);
 	const nearby = useAppSelector(getNearby);
-	const newReviews = reviews.slice(-MAX_REVIEWS_QUANTITY);
 	const isFullOfferLoading = useAppSelector(getFullOfferLoadingStatus);
 	const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
 	const isNearbyLoading = useAppSelector(getNearbyLoadingStatus);
 	const nearbyOffers = getRandomSlice(3, nearby);
+	const newReviews = reviews
+		.slice()
+		.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+		.slice(0, MAX_REVIEWS_QUANTITY);
 
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
 		dispatch(offersActions.setActiveOffer(offer));
@@ -66,12 +69,7 @@ function OfferPage(): JSX.Element {
 		return <NotFoundPage />;
 	}
 
-	const {
-		description,
-		host,
-		images,
-		city,
-	} = fullOffer;
+	const { description, host, images, city } = fullOffer;
 
 	return (
 		<div className="page">

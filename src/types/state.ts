@@ -25,12 +25,13 @@ export type OfferData = {
 	isFullOfferLoading: boolean;
 	isReviewsLoading: boolean;
 	isNearbyLoading: boolean;
+	isReviewSending: boolean;
 };
 
 export type FavoritesData = {
 	favorites: ServerOffer[];
-  isFavoritesLoading: boolean;
-}
+	isFavoritesLoading: boolean;
+};
 
 export type State = ReturnType<typeof store.getState>;
 
