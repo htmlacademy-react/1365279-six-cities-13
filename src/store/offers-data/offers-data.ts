@@ -11,6 +11,7 @@ const initialState: OffersData = {
 	isOffersLoading: true,
 	activeOffer: null,
 	sorting: 'Popular',
+	hasError: false,
 };
 
 export const offersData = createSlice({
@@ -31,12 +32,17 @@ export const offersData = createSlice({
 		builder
 			.addCase(fetchOffersAction.pending, (state) => {
 				state.isOffersLoading = true;
+				state.hasError = false;
 			})
 			.addCase(fetchOffersAction.fulfilled, (state, action) => {
 				state.offers = action.payload;
 				state.isOffersLoading = false;
+			})
+			.addCase(fetchOffersAction.rejected, (state) => {
+				state.isOffersLoading = false;
+				state.hasError = true;
 			});
 	},
 });
 
-export const offersActions = {...offersData.actions};
+export const offersActions = { ...offersData.actions };

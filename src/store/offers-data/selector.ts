@@ -16,3 +16,5 @@ export const getActiveOffer = (
 ): ServerOffer | null => state[NameSpace.Offers].activeOffer;
 export const getActiveSort = (state: State): Sorting =>
 	state[NameSpace.Offers].sorting;
+export const getErrorStatus = (state: State): boolean =>
+	state[NameSpace.Offers].hasError;

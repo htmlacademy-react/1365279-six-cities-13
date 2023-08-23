@@ -16,6 +16,7 @@ export type OffersData = {
 	isOffersLoading: boolean;
 	activeOffer: ServerOffer | null;
 	sorting: Sorting;
+	hasError: boolean;
 };
 
 export type OfferData = {

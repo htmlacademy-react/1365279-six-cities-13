@@ -11,9 +11,16 @@ import { useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getErrorStatus } from '../../store/offers-data/selector';
+import { ErrorScreen } from '../../pages/error-page/error-page';
 
 function App(): JSX.Element {
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
+	const hasError = useAppSelector(getErrorStatus);
+
+	if (hasError) {
+		return <ErrorScreen />;
+	}
 
 	return (
 		<HelmetProvider>
