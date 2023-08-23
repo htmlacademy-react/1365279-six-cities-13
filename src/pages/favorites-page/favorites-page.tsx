@@ -7,8 +7,9 @@ import {
 	getFavoritesLoadingStatus,
 } from '../../store/favorites-data/selector';
 import { FavoritesOffers } from '../../components/favorites-offers/favorites-offers';
-import { FavoritesEmpty } from '../../components/favorites-empty/favorites-empty';
 import LoadingScreen from '../loading-page/loading-page';
+import { FavoritesPageEmpty } from './favorites-page-empty';
+import classNames from 'classnames';
 
 function FavoritesPage(): JSX.Element {
 	const favoritesOffers = useAppSelector(getFavorites);
@@ -19,17 +20,21 @@ function FavoritesPage(): JSX.Element {
 	}
 
 	return (
-		<div className="page">
+		<div className={classNames('page', {'page--favorites-empty': !favoritesOffers.length})}>
 			<Helmet>
 				<title>6 cities - Favorites</title>
 			</Helmet>
 			<Header />
-			<main className="page__main page__main--favorites">
+			<main
+				className={classNames('page__main', 'page__main--favorites', {
+					'page__main--favorites-empty': !favoritesOffers.length,
+				})}
+			>
 				<div className="page__favorites-container container">
 					{favoritesOffers.length > 0 ? (
 						<FavoritesOffers favoritesOffers={favoritesOffers} />
 					) : (
-						<FavoritesEmpty />
+						<FavoritesPageEmpty />
 					)}
 				</div>
 			</main>

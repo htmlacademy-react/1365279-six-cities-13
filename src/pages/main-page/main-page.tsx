@@ -17,6 +17,7 @@ import {
 	fetchOffersAction,
 } from '../../store/api-actions';
 import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
+import { MainPageEmpty } from './main-page-empty';
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
@@ -82,20 +83,7 @@ function MainPage(): JSX.Element {
 								</div>
 							</>
 						) : (
-							<>
-								<section className="cities__no-places">
-									<div className="cities__status-wrapper tabs__content">
-										<b className="cities__status">
-											No places to stay available
-										</b>
-										<p className="cities__status-description">
-											We could not find any property available at the moment in{' '}
-											{activeCity}
-										</p>
-									</div>
-								</section>
-								<div className="cities__right-section" />
-							</>
+							<MainPageEmpty activeCity={activeCity} />
 						)}
 					</div>
 				</div>
