@@ -39,4 +39,4 @@ export const offersData = createSlice({
 	},
 });
 
-export const { setActiveCity, setSorting, setActiveOffer } = offersData.actions;
+export const offersActions = {...offersData.actions};

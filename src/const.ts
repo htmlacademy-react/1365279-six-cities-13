@@ -49,7 +49,6 @@ const enum NameSpace {
 	Offer = 'offer',
 	Offers = 'offers',
 	User = 'user',
-	Data = 'data',
 }
 
 export {

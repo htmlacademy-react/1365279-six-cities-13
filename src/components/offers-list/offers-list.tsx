@@ -2,7 +2,7 @@ import OfferCard from '../offer-card/offer-card';
 import { ServerOffer } from '../../types/offer';
 import { sorting } from '../../utils/common';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveOffer } from '../../store/offers-data/offers-data';
+import { offersActions } from '../../store/offers-data/offers-data';
 import { getActiveSort } from '../../store/offers-data/selector';
 
 type OffersListProps = {
@@ -13,7 +13,7 @@ function OffersList({ currentOffers }: OffersListProps) {
 	const dispatch = useAppDispatch();
 	const activeSorting = useAppSelector(getActiveSort);
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
-		dispatch(setActiveOffer(offer));
+		dispatch(offersActions.setActiveOffer(offer));
 	};
 
 	return (

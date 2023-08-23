@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCity } from '../../store/offers-data/offers-data';
+import { offersActions } from '../../store/offers-data/offers-data';
 import { CITIES } from '../../const';
 import { getActiveCity } from '../../store/offers-data/selector';
 
@@ -19,7 +19,7 @@ export function CitiesList() {
 									'tabs__item--active': cityName === activeCity,
 								})}
 								onClick={() => {
-									dispatch(setActiveCity(cityName));
+									dispatch(offersActions.setActiveCity(cityName));
 								}}
 								to="#"
 							>

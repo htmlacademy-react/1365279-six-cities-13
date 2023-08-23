@@ -2,8 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { FullOffer, ServerOffer } from '../types/offer';
-import { APIRoute, AppRoute } from '../const';
-import { redirectToRoute } from './actions';
+import { APIRoute } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
@@ -102,13 +101,12 @@ export const loginAction = createAsyncThunk<
 	}
 >(
 	'user/login',
-	async ({ login: email, password }, { dispatch, extra: api }) => {
+	async ({ login: email, password }, { extra: api }) => {
 		const { data } = await api.post<UserData>(APIRoute.Login, {
 			email,
 			password,
 		});
 		saveToken(data.token);
-		dispatch(redirectToRoute(AppRoute.Main));
 		return data;
 	}
 );

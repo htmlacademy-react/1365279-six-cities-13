@@ -6,7 +6,7 @@ import { ServerOffer } from '../../types/offer';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
 import OfferCard from '../../components/offer-card/offer-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveOffer } from '../../store/offers-data/offers-data';
+import { offersActions } from '../../store/offers-data/offers-data';
 import { useEffect } from 'react';
 import {
 	fetchFullOfferAction,
@@ -48,7 +48,7 @@ function OfferPage(): JSX.Element {
 	const nearbyOffers = getRandomSlice(3, nearby);
 
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
-		dispatch(setActiveOffer(offer));
+		dispatch(offersActions.setActiveOffer(offer));
 	};
 
 	useEffect(() => {
