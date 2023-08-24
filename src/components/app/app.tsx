@@ -6,20 +6,34 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { AppRoute } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getErrorStatus } from '../../store/offers-data/selector';
 import { ErrorScreen } from '../../pages/error-page/error-page';
+import { useEffect } from 'react';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import LoadingScreen from '../../pages/loading-page/loading-page';
 
 function App(): JSX.Element {
+	const dispatch = useAppDispatch();
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
 	const hasError = useAppSelector(getErrorStatus);
 
+	useEffect(() => {
+		if (authorizationStatus === AuthorizationStatus.Auth) {
+			dispatch(fetchFavoritesAction());
+		}
+	}, [authorizationStatus, dispatch]);
+
 	if (hasError) {
 		return <ErrorScreen />;
+	}
+
+	if (authorizationStatus === AuthorizationStatus.Unknown) {
+		return <LoadingScreen />;
 	}
 
 	return (

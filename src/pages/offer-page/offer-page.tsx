@@ -148,6 +148,7 @@ function OfferPage(): JSX.Element {
 						<div className="near-places__list places__list">
 							{nearbyOffers.map((offer) => (
 								<OfferCard
+									block={'near-places'}
 									{...offer}
 									key={offer.id}
 									onMouseEnter={() => handleActiveOfferChange(offer)}

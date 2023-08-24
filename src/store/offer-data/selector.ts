@@ -22,3 +22,5 @@ export const getNearbyLoadingStatus = (
 export const getReviewSendingStatus = (
 	state: Pick<State, NameSpace.Offer>
 ): boolean => state[NameSpace.Offer].isReviewSending;
+export const getErrorSubmitStatus = (state: State): boolean =>
+	state[NameSpace.Offer].hasErrorSubmit;

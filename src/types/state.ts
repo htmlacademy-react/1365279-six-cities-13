@@ -27,6 +27,7 @@ export type OfferData = {
 	isReviewsLoading: boolean;
 	isNearbyLoading: boolean;
 	isReviewSending: boolean;
+	hasErrorSubmit: boolean;
 };
 
 export type FavoritesData = {

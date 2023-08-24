@@ -3,11 +3,12 @@ import { MIN_REVIEW_LENGTH, MAX_REVIEW_LENGTH } from '../../const';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
-import { getReviewSendingStatus } from '../../store/offer-data/selector';
+import { getErrorSubmitStatus, getReviewSendingStatus } from '../../store/offer-data/selector';
 
 function ReviewsForm(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const isReviewSending = useAppSelector(getReviewSendingStatus);
+	const hasError = useAppSelector(getErrorSubmitStatus);
 	const offerId = useParams().offerId;
 	const ratingValues = {
 		'1': 'terribly',
@@ -43,7 +44,11 @@ function ReviewsForm(): JSX.Element {
 				comment: formData.review,
 				rating: formData.rating,
 			};
-			dispatch(sendReviewAction(reviewForm)).then(resetForm);
+			dispatch(sendReviewAction(reviewForm)).then(() => {
+				if(!hasError) {
+					resetForm();
+				}
+			});
 		}
 	};
 

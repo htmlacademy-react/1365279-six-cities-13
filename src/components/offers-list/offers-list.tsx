@@ -20,6 +20,7 @@ function OffersList({ currentOffers }: OffersListProps) {
 		<div className="cities__places-list places__list tabs__content">
 			{sorting[activeSorting](currentOffers).map((offer) => (
 				<OfferCard
+					block={'cities'}
 					{...offer}
 					key={offer.id}
 					onMouseEnter={() => handleActiveOfferChange(offer)}

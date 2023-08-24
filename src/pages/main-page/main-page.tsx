@@ -12,10 +12,7 @@ import { getOffersLoadingStatus } from '../../store/offers-data/selector';
 import LoadingScreen from '../loading-page/loading-page';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { useEffect } from 'react';
-import {
-	fetchFavoritesAction,
-	fetchOffersAction,
-} from '../../store/api-actions';
+import { fetchOffersAction } from '../../store/api-actions';
 import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
 import { MainPageEmpty } from './main-page-empty';
 
@@ -29,12 +26,6 @@ function MainPage(): JSX.Element {
 	useEffect(() => {
 		dispatch(fetchOffersAction());
 	}, [dispatch]);
-
-	useEffect(() => {
-		if (authorizationStatus === AuthorizationStatus.Auth) {
-			dispatch(fetchFavoritesAction());
-		}
-	}, [authorizationStatus, dispatch]);
 
 	if (
 		isOffersLoading ||

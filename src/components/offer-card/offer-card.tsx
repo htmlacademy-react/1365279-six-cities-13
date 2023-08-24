@@ -17,11 +17,11 @@ type OfferCardProps = Pick<
 	| 'previewImage'
 > &
 	Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'> & {
-		favorite?: boolean;
+		block: string;
 	};
 
 function OfferCard({
-	favorite,
+	block,
 	previewImage,
 	price,
 	rating,
@@ -34,13 +34,14 @@ function OfferCard({
 	onMouseLeave,
 }: OfferCardProps): JSX.Element {
 	const [activeFavorite, setActiveFavorite] = useState(isFavorite);
+	let isFavoriteCard = false;
+	if (block === 'favorites') {
+		isFavoriteCard = true;
+	}
 
 	return (
 		<article
-			className={classNames('place-card', {
-				'cities__card': !favorite,
-				'favorites__card': favorite,
-			})}
+			className={`place-card ${block}__card`}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
 			onClick={onMouseLeave}
@@ -51,22 +52,19 @@ function OfferCard({
 				</div>
 			)}
 			<div
-				className={classNames('place-card__image-wrapper', {
-					'cities__image-wrapper': !favorite,
-					'favorites__image-wrapper': favorite,
-				})}
+				className={`place-card__image-wrapper ${block}__image-wrapper`}
 			>
 				<Link to={`${AppRoute.Offer}/${id}`}>
 					<img
 						className="place-card__image"
 						src={previewImage}
-						width={favorite ? '150' : '260'}
-						height={favorite ? '110' : '200'}
+						width={isFavoriteCard ? '150' : '260'}
+						height={isFavoriteCard ? '110' : '200'}
 						alt="Place image"
 					/>
 				</Link>
 			</div>
-			<div className={classNames('place-card__info', {'favorites__card-info': favorite})}>
+			<div className={classNames('place-card__info', {'favorites__card-info': isFavoriteCard})}>
 				<div className="place-card__price-wrapper">
 					<div className="place-card__price">
 						<b className="place-card__price-value">€{price}</b>

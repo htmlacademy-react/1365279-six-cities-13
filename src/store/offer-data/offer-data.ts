@@ -16,6 +16,7 @@ const initialState: OfferData = {
 	isReviewsLoading: false,
 	isNearbyLoading: false,
 	isReviewSending: false,
+	hasErrorSubmit: false,
 };
 
 export const offerData = createSlice({
@@ -47,10 +48,15 @@ export const offerData = createSlice({
 			})
 			.addCase(sendReviewAction.pending, (state) => {
 				state.isReviewSending = true;
+				state.hasErrorSubmit = false;
 			})
 			.addCase(sendReviewAction.fulfilled, (state, action) => {
 				state.reviews.push(action.payload);
 				state.isReviewSending = false;
+			})
+			.addCase(sendReviewAction.rejected, (state) => {
+				state.isReviewSending = false;
+				state.hasErrorSubmit = true;
 			});
 	},
 });
