@@ -29,7 +29,7 @@ const getRandomInteger = (min: number, max: number) => {
 	return Math.floor(result);
 };
 
-const randomElement = <El>(elements: El[] | readonly El[]) =>
+export const getRandomElement = <El>(elements: El[] | readonly El[]) =>
 	elements[getRandomInteger(0, elements.length - 1)];
 
 export const getRandomSlice = <El>(size: number, elements: El[]) => {
@@ -39,9 +39,9 @@ export const getRandomSlice = <El>(size: number, elements: El[]) => {
 	const result: El[] = [];
 
 	while (result.length < size) {
-		let element = randomElement(elements);
+		let element = getRandomElement(elements);
 		while (result.includes(element)) {
-			element = randomElement(elements);
+			element = getRandomElement(elements);
 		}
 		result.push(element);
 	}
