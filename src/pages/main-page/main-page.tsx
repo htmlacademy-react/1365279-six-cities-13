@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { fetchOffersAction } from '../../store/api-actions';
 import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
 import { MainPageEmpty } from './main-page-empty';
+import { offersActions } from '../../store/offers-data/offers-data';
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
@@ -25,6 +26,7 @@ function MainPage(): JSX.Element {
 
 	useEffect(() => {
 		dispatch(fetchOffersAction());
+		dispatch(offersActions.setActiveOffer(null));
 	}, [dispatch]);
 
 	if (

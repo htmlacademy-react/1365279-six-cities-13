@@ -44,16 +44,13 @@ function OfferCard({
 			className={`place-card ${block}__card`}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			onClick={onMouseLeave}
 		>
 			{isPremium && (
 				<div className="place-card__mark">
 					<span>Premium</span>
 				</div>
 			)}
-			<div
-				className={`place-card__image-wrapper ${block}__image-wrapper`}
-			>
+			<div className={`place-card__image-wrapper ${block}__image-wrapper`}>
 				<Link to={`${AppRoute.Offer}/${id}`}>
 					<img
 						className="place-card__image"
@@ -64,7 +61,11 @@ function OfferCard({
 					/>
 				</Link>
 			</div>
-			<div className={classNames('place-card__info', {'favorites__card-info': isFavoriteCard})}>
+			<div
+				className={classNames('place-card__info', {
+					'favorites__card-info': isFavoriteCard,
+				})}
+			>
 				<div className="place-card__price-wrapper">
 					<div className="place-card__price">
 						<b className="place-card__price-value">€{price}</b>

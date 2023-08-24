@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { OffersData } from '../../types/state';
 import { CITIES, NameSpace } from '../../const';
 import { fetchOffersAction } from '../api-actions';
-import { CityName, ServerOffer } from '../../types/offer';
+import { CityName, FullOffer, ServerOffer } from '../../types/offer';
 import { Sorting } from '../../types/sorting';
 
 const initialState: OffersData = {
@@ -24,7 +24,10 @@ export const offersData = createSlice({
 		setSorting: (state, action: PayloadAction<Sorting>) => {
 			state.sorting = action.payload;
 		},
-		setActiveOffer: (state, action: PayloadAction<ServerOffer | null>) => {
+		setActiveOffer: (
+			state,
+			action: PayloadAction<FullOffer | ServerOffer | null>
+		) => {
 			state.activeOffer = action.payload;
 		},
 	},

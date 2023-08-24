@@ -46,13 +46,18 @@ function OfferPage(): JSX.Element {
 	const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
 	const isNearbyLoading = useAppSelector(getNearbyLoadingStatus);
 	const nearbyOffers = getRandomSlice(3, nearby);
+	const currentOffer = useAppSelector(getCurrentOffer);
 	const newReviews = reviews
 		.slice()
 		.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 		.slice(0, MAX_REVIEWS_QUANTITY);
 
 	const handleActiveOfferChange = (offer: ServerOffer | null) => {
-		dispatch(offersActions.setActiveOffer(offer));
+		if (!offer) {
+			dispatch(offersActions.setActiveOffer(currentOffer));
+		} else {
+			dispatch(offersActions.setActiveOffer(offer));
+		}
 	};
 
 	useEffect(() => {

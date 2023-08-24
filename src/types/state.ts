@@ -14,7 +14,7 @@ export type OffersData = {
 	activeCity: City['name'];
 	offers: ServerOffer[];
 	isOffersLoading: boolean;
-	activeOffer: ServerOffer | null;
+	activeOffer: FullOffer | ServerOffer | null;
 	sorting: Sorting;
 	hasError: boolean;
 };
