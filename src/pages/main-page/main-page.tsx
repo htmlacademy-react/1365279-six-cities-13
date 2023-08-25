@@ -1,33 +1,24 @@
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
+import { useAppSelector } from '../../hooks';
+import { useCurrentOffers } from './hooks/use-current-offers';
+import { AuthorizationStatus, MapTypes } from '../../const';
+import { getOffersLoadingStatus } from '../../store/offers-data/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
+import LoadingScreen from '../loading-page/loading-page';
+import { MainPageEmpty } from './main-page-empty';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import { CitiesList } from '../../components/cities-list/cities-list';
-import { useCurrentOffers } from './hooks/current-offers';
 import { SortingForm } from '../../components/sorting-form/sorting-form';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
-import { AuthorizationStatus, MapTypes } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getOffersLoadingStatus } from '../../store/offers-data/selector';
-import LoadingScreen from '../loading-page/loading-page';
-import { getAuthorizationStatus } from '../../store/user-process/selector';
-import { useEffect } from 'react';
-import { fetchOffersAction } from '../../store/api-actions';
-import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
-import { MainPageEmpty } from './main-page-empty';
-import { offersActions } from '../../store/offers-data/offers-data';
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
 	const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 	const isFavoritesLoading = useAppSelector(getFavoritesLoadingStatus);
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
-	const dispatch = useAppDispatch();
-
-	useEffect(() => {
-		dispatch(fetchOffersAction());
-		dispatch(offersActions.setActiveOffer(null));
-	}, [dispatch]);
 
 	if (
 		isOffersLoading ||

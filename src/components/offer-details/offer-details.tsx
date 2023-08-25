@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FullOffer } from '../../types/offer';
-import BookmarkButton from '../bookmark-button/bookmark-button';
+import { BookmarkButtonMemo } from '../bookmark-button/bookmark-button';
 
 type OfferDetailsProps = {
 	offer: FullOffer;
@@ -21,6 +21,11 @@ export function OfferDetails({ offer }: OfferDetailsProps): JSX.Element {
 	} = offer;
 
 	const [activeFavorite, setActiveFavorite] = useState(isFavorite);
+	const handleActiveFavoriteToggle = useCallback(
+		() => setActiveFavorite((prev) => !prev),
+		[]
+	);
+
 	return (
 		<>
 			{isPremium && (
@@ -30,11 +35,11 @@ export function OfferDetails({ offer }: OfferDetailsProps): JSX.Element {
 			)}
 			<div className="offer__name-wrapper">
 				<h1 className="offer__name">{title}</h1>
-				<BookmarkButton
+				<BookmarkButtonMemo
 					id={id}
 					isFavorite={activeFavorite}
 					block={'offer'}
-					onClick={() => setActiveFavorite((prev) => !prev)}
+					onClick={handleActiveFavoriteToggle}
 					large
 				/>
 			</div>

@@ -4,73 +4,46 @@ import ReviewsForm from '../../components/reviews-form/reviews-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import { ServerOffer } from '../../types/offer';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
-import OfferCard from '../../components/offer-card/offer-card';
+import { OfferCardMemo } from '../../components/offer-card/offer-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { offersActions } from '../../store/offers-data/offers-data';
-import { useEffect } from 'react';
-import {
-	fetchFullOfferAction,
-	fetchNearbyAction,
-	fetchReviewsAction,
-} from '../../store/api-actions';
-import { useParams } from 'react-router-dom';
+import { useCallback } from 'react';
 import classNames from 'classnames';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingScreen from '../loading-page/loading-page';
-import { getRandomSlice } from '../../utils/common';
-import {
-	AuthorizationStatus,
-	MAX_REVIEWS_QUANTITY,
-	MapTypes,
-} from '../../const';
+import { AuthorizationStatus, MapTypes } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
-import {
-	getCurrentOffer,
-	getFullOfferLoadingStatus,
-	getNearby,
-	getNearbyLoadingStatus,
-	getReviews,
-	getReviewsLoadingStatus,
-} from '../../store/offer-data/selector';
-import { OfferDetails } from '../../components/offer-details/offer-datails';
+import { OfferDetails } from '../../components/offer-details/offer-details';
+import { useFullOfferData } from './hooks/use-full-offer-data';
 
 function OfferPage(): JSX.Element {
-	const params = useParams();
 	const dispatch = useAppDispatch();
-
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
-	const fullOffer = useAppSelector(getCurrentOffer);
-	const reviews = useAppSelector(getReviews);
-	const nearby = useAppSelector(getNearby);
-	const isFullOfferLoading = useAppSelector(getFullOfferLoadingStatus);
-	const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
-	const isNearbyLoading = useAppSelector(getNearbyLoadingStatus);
-	const nearbyOffers = getRandomSlice(3, nearby);
-	const currentOffer = useAppSelector(getCurrentOffer);
-	const newReviews = reviews
-		.slice()
-		.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-		.slice(0, MAX_REVIEWS_QUANTITY);
+	const {
+		fullOffer,
+		reviews,
+		newReviews,
+		nearbyOffers,
+		isDataLoading,
+		hasErrorOfferLoading,
+	} = useFullOfferData();
 
-	const handleActiveOfferChange = (offer: ServerOffer | null) => {
-		if (!offer) {
-			dispatch(offersActions.setActiveOffer(currentOffer));
-		} else {
-			dispatch(offersActions.setActiveOffer(offer));
-		}
-	};
+	const handleActiveOfferChange = useCallback(
+		(offer: ServerOffer | null) => {
+			if (!offer) {
+				dispatch(offersActions.setActiveOffer(fullOffer));
+			} else {
+				dispatch(offersActions.setActiveOffer(offer));
+			}
+		},
+		[dispatch, fullOffer]
+	);
 
-	useEffect(() => {
-		dispatch(fetchFullOfferAction(params.offerId as string));
-		dispatch(fetchReviewsAction(params.offerId as string));
-		dispatch(fetchNearbyAction(params.offerId as string));
-	}, [dispatch, params.offerId]);
-
-	if (isFullOfferLoading && isReviewsLoading && isNearbyLoading) {
+	if (isDataLoading) {
 		return <LoadingScreen />;
 	}
 
-	if (!fullOffer) {
+	if (!fullOffer || hasErrorOfferLoading) {
 		return <NotFoundPage />;
 	}
 
@@ -152,7 +125,7 @@ function OfferPage(): JSX.Element {
 						</h2>
 						<div className="near-places__list places__list">
 							{nearbyOffers.map((offer) => (
-								<OfferCard
+								<OfferCardMemo
 									block={'near-places'}
 									{...offer}
 									key={offer.id}

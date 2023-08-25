@@ -1,9 +1,10 @@
-import OfferCard from '../offer-card/offer-card';
-import { FullOffer, ServerOffer } from '../../types/offer';
+import { OfferCardMemo } from '../offer-card/offer-card';
+import { ServerOffer } from '../../types/offer';
 import { sorting } from '../../utils/common';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { offersActions } from '../../store/offers-data/offers-data';
 import { getActiveSort } from '../../store/offers-data/selector';
+import { useCallback } from 'react';
 
 type OffersListProps = {
 	currentOffers: ServerOffer[];
@@ -12,14 +13,17 @@ type OffersListProps = {
 function OffersList({ currentOffers }: OffersListProps) {
 	const dispatch = useAppDispatch();
 	const activeSorting = useAppSelector(getActiveSort);
-	const handleActiveOfferChange = (offer: FullOffer | ServerOffer | null) => {
-		dispatch(offersActions.setActiveOffer(offer));
-	};
+	const handleActiveOfferChange = useCallback(
+		(offer: ServerOffer | null) => {
+			dispatch(offersActions.setActiveOffer(offer));
+		},
+		[dispatch]
+	);
 
 	return (
 		<div className="cities__places-list places__list tabs__content">
 			{sorting[activeSorting](currentOffers).map((offer) => (
-				<OfferCard
+				<OfferCardMemo
 					block={'cities'}
 					{...offer}
 					key={offer.id}

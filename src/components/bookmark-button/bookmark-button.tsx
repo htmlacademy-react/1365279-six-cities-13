@@ -1,10 +1,14 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FullOffer } from '../../types/offer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import classNames from 'classnames';
-import { addFavoriteAction, deleteFavoriteAction } from '../../store/api-actions';
+import {
+	addFavoriteAction,
+	deleteFavoriteAction,
+} from '../../store/api-actions';
 
 type BookmarkButtonProps = {
 	id: FullOffer['id'];
@@ -27,7 +31,10 @@ function BookmarkButton({
 
 	const bookmarkClass = classNames(
 		`${block}__bookmark-button`,
-		{ [`${block}__bookmark-button--active`] : isFavorite && authorizationStatus === AuthorizationStatus.Auth },
+		{
+			[`${block}__bookmark-button--active`]:
+				isFavorite && authorizationStatus === AuthorizationStatus.Auth,
+		},
 		'button'
 	);
 	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
@@ -64,4 +71,4 @@ function BookmarkButton({
 	);
 }
 
-export default BookmarkButton;
+export const BookmarkButtonMemo = memo(BookmarkButton);

@@ -3,11 +3,8 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import {
-	getAuthorizationStatus,
-	getUserName,
-} from '../../store/user-process/selector';
-import { getFavorites } from '../../store/favorites-data/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { UserProfile } from '../user-profile/user-profile';
 
 type HeaderProps = {
 	withNavigation?: boolean;
@@ -17,8 +14,6 @@ function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
-	const userName = useAppSelector(getUserName);
-	const favorites = useAppSelector(getFavorites);
 
 	return (
 		<header className="header">
@@ -44,20 +39,7 @@ function Header({ withNavigation = true }: HeaderProps): JSX.Element {
 						<nav className="header__nav">
 							{authorizationStatus === AuthorizationStatus.Auth ? (
 								<ul className="header__nav-list">
-									<li className="header__nav-item user">
-										<Link
-											className="header__nav-link header__nav-link--profile"
-											to={AppRoute.Favorites}
-										>
-											<div className="header__avatar-wrapper user__avatar-wrapper"></div>
-											<span className="header__user-name user__name">
-												{userName}
-											</span>
-											<span className="header__favorite-count">
-												{favorites.length}
-											</span>
-										</Link>
-									</li>
+									<UserProfile />
 									<li className="header__nav-item">
 										<Link
 											className="header__nav-link"
