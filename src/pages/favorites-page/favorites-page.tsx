@@ -8,7 +8,7 @@ import {
 } from '../../store/favorites-data/selector';
 import { FavoritesOffers } from '../../components/favorites-offers/favorites-offers';
 import LoadingScreen from '../loading-page/loading-page';
-import { FavoritesPageEmpty } from './favorites-page-empty';
+import { FavoritesPageEmpty } from '../favorites-page-empty/favorites-page-empty';
 import classNames from 'classnames';
 
 function FavoritesPage(): JSX.Element {

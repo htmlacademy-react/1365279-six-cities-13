@@ -6,7 +6,7 @@ import { MapTypes } from '../../const';
 import { getOffersLoadingStatus } from '../../store/offers-data/selector';
 import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
 import LoadingScreen from '../loading-page/loading-page';
-import { MainPageEmpty } from './main-page-empty';
+import { MainPageEmpty } from '../main-page-empty/main-page-empty';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import { CitiesList } from '../../components/cities-list/cities-list';
