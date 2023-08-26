@@ -33,6 +33,7 @@ export type OfferData = {
 
 export type FavoritesData = {
 	favorites: ServerOffer[];
+	isIdle: boolean;
 	isFavoritesLoading: boolean;
 };
 

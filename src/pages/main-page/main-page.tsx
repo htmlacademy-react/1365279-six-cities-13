@@ -2,9 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks';
 import { useCurrentOffers } from './hooks/use-current-offers';
-import { AuthorizationStatus, MapTypes } from '../../const';
+import { MapTypes } from '../../const';
 import { getOffersLoadingStatus } from '../../store/offers-data/selector';
-import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
 import LoadingScreen from '../loading-page/loading-page';
 import { MainPageEmpty } from './main-page-empty';
@@ -18,13 +17,8 @@ function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
 	const isOffersLoading = useAppSelector(getOffersLoadingStatus);
 	const isFavoritesLoading = useAppSelector(getFavoritesLoadingStatus);
-	const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-	if (
-		isOffersLoading ||
-		isFavoritesLoading ||
-		authorizationStatus === AuthorizationStatus.Unknown
-	) {
+	if (isOffersLoading || isFavoritesLoading) {
 		return <LoadingScreen />;
 	}
 

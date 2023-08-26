@@ -1,13 +1,10 @@
 import { useRef, useEffect } from 'react';
 import { Marker, layerGroup, Icon } from 'leaflet';
-import { useAppDispatch, useAppSelector, useLeafletMap } from '../../hooks/';
+import { useAppSelector, useLeafletMap } from '../../hooks/';
 import 'leaflet/dist/leaflet.css';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { City } from '../../types/offer';
 import { getActiveOffer } from '../../store/offers-data/selector';
-import { getCurrentOffer } from '../../store/offer-data/selector';
-import { offersActions } from '../../store/offers-data/offers-data';
-
 const enum UrlMarker {
 	DefaultMarker = '../img/pin.svg',
 	CurrentMarker = '../img/pin-active.svg',
@@ -32,15 +29,9 @@ type MapProps = {
 };
 
 function LeafletMap({ city, points, block }: MapProps): JSX.Element {
-	const dispatch = useAppDispatch();
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
 	const activeOffer = useAppSelector(getActiveOffer);
-	const currentPoint = useAppSelector(getCurrentOffer);
-
-	useEffect(() => {
-		dispatch(offersActions.setActiveOffer(currentPoint));
-	}, [currentPoint, dispatch]);
 
 	useEffect(() => {
 		if (leafletMap) {
@@ -63,7 +54,7 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
-	}, [leafletMap, points, activeOffer, city, block, currentPoint]);
+	}, [leafletMap, points, activeOffer, city, block]);
 
 	useEffect(() => {
 		leafletMap?.setView(
