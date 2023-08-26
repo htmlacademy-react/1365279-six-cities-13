@@ -15,6 +15,9 @@ const initialState: OfferData = {
 	isFullOfferLoading: false,
 	isReviewsLoading: false,
 	isNearbyLoading: false,
+	isReviewSending: false,
+	hasErrorOfferLoading: false,
+	hasErrorSubmit: false,
 };
 
 export const offerData = createSlice({
@@ -25,10 +28,15 @@ export const offerData = createSlice({
 		builder
 			.addCase(fetchFullOfferAction.pending, (state) => {
 				state.isFullOfferLoading = true;
+				state.hasErrorOfferLoading = false;
 			})
 			.addCase(fetchFullOfferAction.fulfilled, (state, action) => {
 				state.fullOffer = action.payload;
 				state.isFullOfferLoading = false;
+			})
+			.addCase(fetchFullOfferAction.rejected, (state) => {
+				state.isFullOfferLoading = false;
+				state.hasErrorOfferLoading = true;
 			})
 			.addCase(fetchReviewsAction.pending, (state) => {
 				state.isReviewsLoading = true;
@@ -44,8 +52,17 @@ export const offerData = createSlice({
 				state.nearby = action.payload;
 				state.isNearbyLoading = false;
 			})
+			.addCase(sendReviewAction.pending, (state) => {
+				state.isReviewSending = true;
+				state.hasErrorSubmit = false;
+			})
 			.addCase(sendReviewAction.fulfilled, (state, action) => {
 				state.reviews.push(action.payload);
+				state.isReviewSending = false;
+			})
+			.addCase(sendReviewAction.rejected, (state) => {
+				state.isReviewSending = false;
+				state.hasErrorSubmit = true;
 			});
 	},
 });

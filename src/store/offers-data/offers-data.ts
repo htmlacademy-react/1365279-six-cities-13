@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { OffersData } from '../../types/state';
 import { CITIES, NameSpace } from '../../const';
 import { fetchOffersAction } from '../api-actions';
-import { CityName, ServerOffer } from '../../types/offer';
+import { CityName, FullOffer, ServerOffer } from '../../types/offer';
 import { Sorting } from '../../types/sorting';
 
 const initialState: OffersData = {
@@ -11,6 +11,7 @@ const initialState: OffersData = {
 	isOffersLoading: true,
 	activeOffer: null,
 	sorting: 'Popular',
+	hasError: false,
 };
 
 export const offersData = createSlice({
@@ -23,7 +24,10 @@ export const offersData = createSlice({
 		setSorting: (state, action: PayloadAction<Sorting>) => {
 			state.sorting = action.payload;
 		},
-		setActiveOffer: (state, action: PayloadAction<ServerOffer | null>) => {
+		setActiveOffer: (
+			state,
+			action: PayloadAction<FullOffer | ServerOffer | null>
+		) => {
 			state.activeOffer = action.payload;
 		},
 	},
@@ -31,12 +35,17 @@ export const offersData = createSlice({
 		builder
 			.addCase(fetchOffersAction.pending, (state) => {
 				state.isOffersLoading = true;
+				state.hasError = false;
 			})
 			.addCase(fetchOffersAction.fulfilled, (state, action) => {
 				state.offers = action.payload;
 				state.isOffersLoading = false;
+			})
+			.addCase(fetchOffersAction.rejected, (state) => {
+				state.isOffersLoading = false;
+				state.hasError = true;
 			});
 	},
 });
 
-export const { setActiveCity, setSorting, setActiveOffer } = offersData.actions;
+export const offersActions = { ...offersData.actions };

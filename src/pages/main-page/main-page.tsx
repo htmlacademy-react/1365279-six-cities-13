@@ -1,15 +1,32 @@
 import { Helmet } from 'react-helmet-async';
 import classNames from 'classnames';
+import { useAppSelector } from '../../hooks';
+import { useCurrentOffers } from './hooks/use-current-offers';
+import { AuthorizationStatus, MapTypes } from '../../const';
+import { getOffersLoadingStatus } from '../../store/offers-data/selector';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
+import LoadingScreen from '../loading-page/loading-page';
+import { MainPageEmpty } from './main-page-empty';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
 import { CitiesList } from '../../components/cities-list/cities-list';
-import { useCurrentOffers } from './hooks/current-offers';
 import { SortingForm } from '../../components/sorting-form/sorting-form';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
-import { MapTypes } from '../../const';
 
 function MainPage(): JSX.Element {
 	const { currentOffers, activeCity } = useCurrentOffers();
+	const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+	const isFavoritesLoading = useAppSelector(getFavoritesLoadingStatus);
+	const authorizationStatus = useAppSelector(getAuthorizationStatus);
+
+	if (
+		isOffersLoading ||
+		isFavoritesLoading ||
+		authorizationStatus === AuthorizationStatus.Unknown
+	) {
+		return <LoadingScreen />;
+	}
 
 	return (
 		<div className="page page--gray page--main">
@@ -35,7 +52,8 @@ function MainPage(): JSX.Element {
 								<section className="cities__places places">
 									<h2 className="visually-hidden">Places</h2>
 									<b className="places__found">
-										{currentOffers.length} places to stay in {activeCity}
+										{currentOffers.length} place
+										{currentOffers.length > 1 && 's'} to stay in {activeCity}
 									</b>
 									<SortingForm />
 									<OffersList currentOffers={currentOffers} />
@@ -49,20 +67,7 @@ function MainPage(): JSX.Element {
 								</div>
 							</>
 						) : (
-							<>
-								<section className="cities__no-places">
-									<div className="cities__status-wrapper tabs__content">
-										<b className="cities__status">
-											No places to stay available
-										</b>
-										<p className="cities__status-description">
-											We could not find any property available at the moment in{' '}
-											{activeCity}
-										</p>
-									</div>
-								</section>
-								<div className="cities__right-section" />
-							</>
+							<MainPageEmpty activeCity={activeCity} />
 						)}
 					</div>
 				</div>

@@ -1,58 +1,41 @@
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import { ServerOffer } from '../../types/offer';
-import FavoritesOfferCard from '../../components/favorites-offer-card/favorites-offer-card';
 import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/offers-data/selector';
+import {
+	getFavorites,
+	getFavoritesLoadingStatus,
+} from '../../store/favorites-data/selector';
+import { FavoritesOffers } from '../../components/favorites-offers/favorites-offers';
+import LoadingScreen from '../loading-page/loading-page';
+import { FavoritesPageEmpty } from './favorites-page-empty';
+import classNames from 'classnames';
 
 function FavoritesPage(): JSX.Element {
-	const offers = useAppSelector(getOffers);
-	const favoritesOffers = offers.slice(0, 10);
-	const favoritesOffersByCities: Record<string, ServerOffer[]> = {};
-	for (const offer of favoritesOffers) {
-		const city: string = offer.city.name;
-		if (city in favoritesOffersByCities) {
-			favoritesOffersByCities[city].push(offer);
-			continue;
-		}
+	const favoritesOffers = useAppSelector(getFavorites);
+	const isFavoriteLoading = useAppSelector(getFavoritesLoadingStatus);
 
-		favoritesOffersByCities[city] = [offer];
-		continue;
+	if (isFavoriteLoading) {
+		return <LoadingScreen />;
 	}
 
-	const cities = Object.keys(favoritesOffersByCities);
-
 	return (
-		<div className="page">
+		<div className={classNames('page', {'page--favorites-empty': !favoritesOffers.length})}>
 			<Helmet>
 				<title>6 cities - Favorites</title>
 			</Helmet>
 			<Header />
-			<main className="page__main page__main--favorites">
+			<main
+				className={classNames('page__main', 'page__main--favorites', {
+					'page__main--favorites-empty': !favoritesOffers.length,
+				})}
+			>
 				<div className="page__favorites-container container">
-					<section className="favorites">
-						<h1 className="favorites__title">Saved listing</h1>
-						<ul className="favorites__list">
-							{cities.map((cityName) => (
-								<li className="favorites__locations-items" key={cityName}>
-									<div className="favorites__locations locations locations--current">
-										<div className="locations__item">
-											<Link className="locations__item-link" to="#">
-												<span>{cityName}</span>
-											</Link>
-										</div>
-									</div>
-									<div className="favorites__places">
-										{favoritesOffersByCities[cityName].map((offer) => (
-											<FavoritesOfferCard {...offer} key={offer.id} />
-										))}
-									</div>
-								</li>
-							))}
-						</ul>
-					</section>
+					{favoritesOffers.length > 0 ? (
+						<FavoritesOffers favoritesOffers={favoritesOffers} />
+					) : (
+						<FavoritesPageEmpty />
+					)}
 				</div>
 			</main>
 			<Footer />

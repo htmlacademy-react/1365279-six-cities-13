@@ -14,8 +14,9 @@ export type OffersData = {
 	activeCity: City['name'];
 	offers: ServerOffer[];
 	isOffersLoading: boolean;
-	activeOffer: ServerOffer | null;
+	activeOffer: FullOffer | ServerOffer | null;
 	sorting: Sorting;
+	hasError: boolean;
 };
 
 export type OfferData = {
@@ -25,6 +26,14 @@ export type OfferData = {
 	isFullOfferLoading: boolean;
 	isReviewsLoading: boolean;
 	isNearbyLoading: boolean;
+	isReviewSending: boolean;
+	hasErrorOfferLoading: boolean;
+	hasErrorSubmit: boolean;
+};
+
+export type FavoritesData = {
+	favorites: ServerOffer[];
+	isFavoritesLoading: boolean;
 };
 
 export type State = ReturnType<typeof store.getState>;

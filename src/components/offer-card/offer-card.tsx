@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 import type { ServerOffer } from '../../types/offer';
 import { AppRoute } from '../../const';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useState, memo, useCallback } from 'react';
+import { BookmarkButtonMemo } from '../bookmark-button/bookmark-button';
+import classNames from 'classnames';
 
 type OfferCardProps = Pick<
 	ServerOffer,
@@ -15,9 +16,12 @@ type OfferCardProps = Pick<
 	| 'rating'
 	| 'previewImage'
 > &
-	Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'>;
+	Pick<HTMLAttributes<HTMLElement>, 'onMouseEnter' | 'onMouseLeave'> & {
+		block: string;
+	};
 
 function OfferCard({
+	block,
 	previewImage,
 	price,
 	rating,
@@ -29,47 +33,55 @@ function OfferCard({
 	onMouseEnter,
 	onMouseLeave,
 }: OfferCardProps): JSX.Element {
-	const bookmarkClass = classNames(
-		'place-card__bookmark-button',
-		{ 'place-card__bookmark-button--active': isFavorite },
-		'button'
+	const [activeFavorite, setActiveFavorite] = useState(isFavorite);
+	const handleActiveFavoriteToggle = useCallback(
+		() => setActiveFavorite((prev) => !prev),
+		[]
 	);
-	const bookmarkLabel = `${isFavorite ? 'In' : 'To'} bookmarks`;
+
+	let isFavoriteCard = false;
+	if (block === 'favorites') {
+		isFavoriteCard = true;
+	}
+
 	return (
 		<article
-			className="cities__card place-card"
+			className={`place-card ${block}__card`}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
-			onClick={onMouseLeave}
 		>
 			{isPremium && (
 				<div className="place-card__mark">
 					<span>Premium</span>
 				</div>
 			)}
-			<div className="cities__image-wrapper place-card__image-wrapper">
+			<div className={`place-card__image-wrapper ${block}__image-wrapper`}>
 				<Link to={`${AppRoute.Offer}/${id}`}>
 					<img
 						className="place-card__image"
 						src={previewImage}
-						width={260}
-						height={200}
+						width={isFavoriteCard ? '150' : '260'}
+						height={isFavoriteCard ? '110' : '200'}
 						alt="Place image"
 					/>
 				</Link>
 			</div>
-			<div className="place-card__info">
+			<div
+				className={classNames('place-card__info', {
+					'favorites__card-info': isFavoriteCard,
+				})}
+			>
 				<div className="place-card__price-wrapper">
 					<div className="place-card__price">
 						<b className="place-card__price-value">€{price}</b>
 						<span className="place-card__price-text">/&nbsp;night</span>
 					</div>
-					<button className={bookmarkClass} type="button">
-						<svg className="place-card__bookmark-icon" width={18} height={19}>
-							<use xlinkHref="#icon-bookmark" />
-						</svg>
-						<span className="visually-hidden">{bookmarkLabel}</span>
-					</button>
+					<BookmarkButtonMemo
+						id={id}
+						isFavorite={activeFavorite}
+						block={'place-card'}
+						onClick={handleActiveFavoriteToggle}
+					/>
 				</div>
 				<div className="place-card__rating rating">
 					<div className="place-card__stars rating__stars">
@@ -88,4 +100,4 @@ function OfferCard({
 	);
 }
 
-export default OfferCard;
+export const OfferCardMemo = memo(OfferCard);

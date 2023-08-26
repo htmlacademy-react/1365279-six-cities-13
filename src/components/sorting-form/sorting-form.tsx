@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Sorting } from '../../types/sorting';
 import { SortingTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSorting } from '../../store/offers-data/offers-data';
+import { offersActions } from '../../store/offers-data/offers-data';
 import { getActiveSort } from '../../store/offers-data/selector';
 
 export function SortingForm(): JSX.Element {
@@ -17,7 +17,7 @@ export function SortingForm(): JSX.Element {
 
 	function handleSortingClick(type: Sorting) {
 		setIsOpened(false);
-		dispatch(setSorting(type));
+		dispatch(offersActions.setSorting(type));
 	}
 
 	const sortingListElement = useRef<HTMLUListElement | null>(null);

@@ -1,12 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { Marker, layerGroup, Icon } from 'leaflet';
-import { useAppSelector, useLeafletMap } from '../../hooks/';
+import { useAppDispatch, useAppSelector, useLeafletMap } from '../../hooks/';
 import 'leaflet/dist/leaflet.css';
 import { FullOffer, ServerOffer } from '../../types/offer';
 import { City } from '../../types/offer';
-import { MapTypes } from '../../const';
 import { getActiveOffer } from '../../store/offers-data/selector';
 import { getCurrentOffer } from '../../store/offer-data/selector';
+import { offersActions } from '../../store/offers-data/offers-data';
 
 const enum UrlMarker {
 	DefaultMarker = '../img/pin.svg',
@@ -32,10 +32,15 @@ type MapProps = {
 };
 
 function LeafletMap({ city, points, block }: MapProps): JSX.Element {
+	const dispatch = useAppDispatch();
 	const mapRef = useRef(null);
 	const leafletMap = useLeafletMap(mapRef, city);
 	const activeOffer = useAppSelector(getActiveOffer);
 	const currentPoint = useAppSelector(getCurrentOffer);
+
+	useEffect(() => {
+		dispatch(offersActions.setActiveOffer(currentPoint));
+	}, [currentPoint, dispatch]);
 
 	useEffect(() => {
 		if (leafletMap) {
@@ -48,10 +53,7 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 
 				marker
 					.setIcon(
-						(activeOffer !== null && point.id === activeOffer.id) ||
-							(currentPoint !== null &&
-								point.id === currentPoint?.id &&
-								block === MapTypes.Offer)
+						activeOffer !== null && point.id === activeOffer.id
 							? currentCustomIcon
 							: defaultCustomIcon
 					)
@@ -61,7 +63,7 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 				leafletMap.removeLayer(markerLayer);
 			};
 		}
-	}, [leafletMap, points, activeOffer, city, currentPoint, block]);
+	}, [leafletMap, points, activeOffer, city, block, currentPoint]);
 
 	useEffect(() => {
 		leafletMap?.setView(

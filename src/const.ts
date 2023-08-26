@@ -1,5 +1,5 @@
 const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 400;
+const MAX_REVIEW_LENGTH = 300;
 const MAX_REVIEWS_QUANTITY = 10;
 
 const CITIES = [
@@ -38,6 +38,7 @@ const enum APIRoute {
 	Login = '/login',
 	Logout = '/logout',
 	Reviews = '/comments',
+	Favorite = '/favorite',
 }
 
 const enum MapTypes {
@@ -49,7 +50,12 @@ const enum NameSpace {
 	Offer = 'offer',
 	Offers = 'offers',
 	User = 'user',
-	Data = 'data',
+	Favorites = 'favorites'
+}
+
+const enum FavoriteStatus {
+	Add = 1,
+	Delete = 0,
 }
 
 export {
@@ -64,4 +70,5 @@ export {
 	APIRoute,
 	MapTypes,
 	NameSpace,
+	FavoriteStatus,
 };
