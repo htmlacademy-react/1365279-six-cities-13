@@ -21,14 +21,17 @@ export type OffersData = {
 
 export type OfferData = {
 	fullOffer: FullOffer | null;
-	reviews: Review[];
 	nearby: ServerOffer[];
 	isFullOfferLoading: boolean;
-	isReviewsLoading: boolean;
 	isNearbyLoading: boolean;
-	isReviewSending: boolean;
 	hasErrorOfferLoading: boolean;
-	hasErrorSubmit: boolean;
+};
+
+export type ReviewsData = {
+	reviews: Review[];
+	isReviewsLoading: boolean;
+	isReviewSending: boolean;
+	isSuccessPost: boolean;
 };
 
 export type FavoritesData = {

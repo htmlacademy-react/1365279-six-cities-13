@@ -1,14 +1,18 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
 import { MIN_REVIEW_LENGTH, MAX_REVIEW_LENGTH } from '../../const';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
-import { getErrorSubmitStatus, getReviewSendingStatus } from '../../store/offer-data/selector';
+import {
+	getReviewSendingStatus,
+	getSuccessPostStatus,
+} from '../../store/reviews-data/selector';
+import { reviewsData } from '../../store/reviews-data/reviews-data';
 
 function ReviewsForm(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const isReviewSending = useAppSelector(getReviewSendingStatus);
-	const hasError = useAppSelector(getErrorSubmitStatus);
+	const isSuccess = useAppSelector(getSuccessPostStatus);
 	const offerId = useParams().offerId;
 	const ratingValues = {
 		'1': 'terribly',
@@ -35,6 +39,13 @@ function ReviewsForm(): JSX.Element {
 		});
 	};
 
+	useEffect(() => {
+		if (isSuccess) {
+			resetForm();
+			dispatch(reviewsData.actions.resetSuccessPost());
+		}
+	}, [dispatch, isSuccess]);
+
 	const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 
@@ -44,11 +55,7 @@ function ReviewsForm(): JSX.Element {
 				comment: formData.review,
 				rating: formData.rating,
 			};
-			dispatch(sendReviewAction(reviewForm)).then(() => {
-				if(!hasError) {
-					resetForm();
-				}
-			});
+			dispatch(sendReviewAction(reviewForm));
 		}
 	};
 

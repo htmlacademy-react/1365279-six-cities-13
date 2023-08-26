@@ -50,7 +50,8 @@ const enum NameSpace {
 	Offer = 'offer',
 	Offers = 'offers',
 	User = 'user',
-	Favorites = 'favorites'
+	Favorites = 'favorites',
+	Reviews = 'reviews',
 }
 
 const enum FavoriteStatus {
