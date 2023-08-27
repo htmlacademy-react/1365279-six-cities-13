@@ -7,7 +7,7 @@ import {
 	fetchFavoritesAction,
 } from '../api-actions';
 
-const initialState: FavoritesData = {
+export const initialState: FavoritesData = {
 	favorites: [],
 	isIdle: true,
 	isFavoritesLoading: false,

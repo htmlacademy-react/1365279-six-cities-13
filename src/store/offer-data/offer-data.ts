@@ -3,7 +3,7 @@ import { OfferData } from '../../types/state';
 import { NameSpace } from '../../const';
 import { fetchFullOfferAction, fetchNearbyAction } from '../api-actions';
 
-const initialState: OfferData = {
+export const initialState: OfferData = {
 	fullOffer: null,
 	nearby: [],
 	isFullOfferLoading: false,

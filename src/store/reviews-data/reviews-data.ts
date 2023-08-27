@@ -3,7 +3,7 @@ import { ReviewsData } from '../../types/state';
 import { NameSpace } from '../../const';
 import { fetchReviewsAction, sendReviewAction } from '../api-actions';
 
-const initialState: ReviewsData = {
+export const initialState: ReviewsData = {
 	reviews: [],
 	isReviewsLoading: false,
 	isReviewSending: false,

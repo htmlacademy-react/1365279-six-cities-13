@@ -5,7 +5,7 @@ import { fetchOffersAction } from '../api-actions';
 import { CityName, FullOffer, ServerOffer } from '../../types/offer';
 import { Sorting } from '../../types/sorting';
 
-const initialState: OffersData = {
+export const initialState: OffersData = {
 	activeCity: CITIES[0],
 	offers: [],
 	isOffersLoading: true,
