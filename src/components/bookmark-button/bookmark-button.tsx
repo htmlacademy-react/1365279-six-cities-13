@@ -55,9 +55,10 @@ function BookmarkButton({
 
 	return (
 		<button
+			className={bookmarkClass}
 			type="button"
 			onClick={handleBookmarkButtonClick}
-			className={bookmarkClass}
+			data-testid="bookmark-button"
 		>
 			<svg
 				className={classNames(`${block}__bookmark-icon`)}

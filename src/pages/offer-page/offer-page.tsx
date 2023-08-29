@@ -7,18 +7,20 @@ import LeafletMap from '../../components/leaflet-map/leaflet-map';
 import { OfferCardMemo } from '../../components/offer-card/offer-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { offersActions } from '../../store/offers-data/offers-data';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import NotFoundPage from '../not-found-page/not-found-page';
-import LoadingScreen from '../loading-page/loading-page';
+import LoadingPage from '../loading-page/loading-page';
 import { AuthorizationStatus, MapTypes } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { OfferDetails } from '../../components/offer-details/offer-details';
 import { useFullOfferData } from './hooks/use-full-offer-data';
+import { getCurrentOffer } from '../../store/offer-data/selector';
 
 function OfferPage(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
+	const currentPoint = useAppSelector(getCurrentOffer);
 	const {
 		fullOffer,
 		reviews,
@@ -27,6 +29,13 @@ function OfferPage(): JSX.Element {
 		isDataLoading,
 		hasErrorOfferLoading,
 	} = useFullOfferData();
+
+	useEffect(() => {
+		dispatch(offersActions.setActiveOffer(currentPoint));
+		return () => {
+			dispatch(offersActions.setActiveOffer(null));
+		};
+	}, [currentPoint, dispatch]);
 
 	const handleActiveOfferChange = useCallback(
 		(offer: ServerOffer | null) => {
@@ -40,7 +49,7 @@ function OfferPage(): JSX.Element {
 	);
 
 	if (isDataLoading) {
-		return <LoadingScreen />;
+		return <LoadingPage />;
 	}
 
 	if (!fullOffer || hasErrorOfferLoading) {
@@ -55,7 +64,7 @@ function OfferPage(): JSX.Element {
 				<title>6 cities - Offer</title>
 			</Helmet>
 			<Header />
-			<main className="page__main page__main--offer">
+			<main data-testid="offer-page" className="page__main page__main--offer">
 				<section className="offer">
 					<div className="offer__gallery-container container">
 						<div className="offer__gallery">

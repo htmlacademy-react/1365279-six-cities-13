@@ -7,8 +7,9 @@ import {
 	fetchFavoritesAction,
 } from '../api-actions';
 
-const initialState: FavoritesData = {
+export const initialState: FavoritesData = {
 	favorites: [],
+	isIdle: true,
 	isFavoritesLoading: false,
 };
 
@@ -20,6 +21,7 @@ export const favoritesData = createSlice({
 		builder
 			.addCase(fetchFavoritesAction.pending, (state) => {
 				state.isFavoritesLoading = true;
+				state.isIdle = false;
 			})
 			.addCase(fetchFavoritesAction.fulfilled, (state, action) => {
 				state.isFavoritesLoading = false;

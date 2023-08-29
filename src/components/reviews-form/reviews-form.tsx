@@ -1,39 +1,40 @@
-import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { MIN_REVIEW_LENGTH, MAX_REVIEW_LENGTH } from '../../const';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendReviewAction } from '../../store/api-actions';
-import { getErrorSubmitStatus, getReviewSendingStatus } from '../../store/offer-data/selector';
+import {
+	getReviewSendingStatus,
+	getSuccessPostStatus,
+} from '../../store/reviews-data/selector';
+import { reviewsData } from '../../store/reviews-data/reviews-data';
+import Rating from '../rating/rating';
 
 function ReviewsForm(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const isReviewSending = useAppSelector(getReviewSendingStatus);
-	const hasError = useAppSelector(getErrorSubmitStatus);
+	const isSuccess = useAppSelector(getSuccessPostStatus);
 	const offerId = useParams().offerId;
-	const ratingValues = {
-		'1': 'terribly',
-		'2': 'badly',
-		'3': 'not bad',
-		'4': 'good',
-		'5': 'perfect',
-	};
 
-	const [formData, setFormData] = useState({
-		rating: 0,
-		review: '',
-	});
+	const [rating, setRating] = useState(0);
+	const [review, setReview] = useState('');
 
 	const isValid =
-		formData.review.length >= MIN_REVIEW_LENGTH &&
-		formData.review.length <= MAX_REVIEW_LENGTH &&
-		formData.rating !== 0;
+		review.length >= MIN_REVIEW_LENGTH &&
+		review.length <= MAX_REVIEW_LENGTH &&
+		rating !== 0;
 
 	const resetForm = () => {
-		setFormData({
-			rating: 0,
-			review: '',
-		});
+		setRating(0);
+		setReview('');
 	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			resetForm();
+			dispatch(reviewsData.actions.resetSuccessPost());
+		}
+	}, [dispatch, isSuccess]);
 
 	const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
@@ -41,22 +42,19 @@ function ReviewsForm(): JSX.Element {
 		if (offerId) {
 			const reviewForm = {
 				id: offerId,
-				comment: formData.review,
-				rating: formData.rating,
+				comment: review,
+				rating: rating,
 			};
-			dispatch(sendReviewAction(reviewForm)).then(() => {
-				if(!hasError) {
-					resetForm();
-				}
-			});
+			dispatch(sendReviewAction(reviewForm));
 		}
 	};
 
 	function handleRatingChange(evt: ChangeEvent<HTMLInputElement>) {
-		setFormData({ ...formData, rating: Number(evt.target.value) });
+		setRating(+evt.target.value);
 	}
+
 	function handleReviewChange(evt: ChangeEvent<HTMLTextAreaElement>) {
-		setFormData({ ...formData, review: evt.target.value });
+		setReview(evt.target.value);
 	}
 
 	return (
@@ -65,45 +63,25 @@ function ReviewsForm(): JSX.Element {
 			action="#"
 			method="post"
 			onSubmit={handleFormSubmit}
+			data-testid="ReviewsForm"
 		>
 			<label className="reviews__label form__label" htmlFor="review">
 				Your review
 			</label>
-			<div className="reviews__rating-form form__rating">
-				{Object.entries(ratingValues)
-					.reverse()
-					.map(([score, title]) => (
-						<Fragment key={score}>
-							<input
-								className="form__rating-input visually-hidden"
-								name="rating"
-								value={score}
-								id={`${score}-stars`}
-								type="radio"
-								checked={formData.rating === Number(score)}
-								onChange={handleRatingChange}
-								disabled={isReviewSending === true}
-							/>
-							<label
-								htmlFor={`${score}-stars`}
-								className="reviews__rating-label form__rating-label"
-								title={title}
-							>
-								<svg className="form__star-image" width={37} height={33}>
-									<use xlinkHref="#icon-star" />
-								</svg>
-							</label>
-						</Fragment>
-					))}
-			</div>
+			<Rating
+				onRatingChange={handleRatingChange}
+				disabled={isReviewSending}
+				rating={rating}
+			/>
 			<textarea
 				className="reviews__textarea form__textarea"
 				id="review"
 				name="review"
 				placeholder="Tell how was your stay, what you like and what can be improved"
-				value={formData.review}
+				value={review}
 				onChange={handleReviewChange}
 				disabled={isReviewSending === true}
+				data-testid="reviews-textarea"
 			/>
 			<div className="reviews__button-wrapper">
 				<p className="reviews__help">

@@ -49,6 +49,7 @@ function OfferCard({
 			className={`place-card ${block}__card`}
 			onMouseEnter={onMouseEnter}
 			onMouseLeave={onMouseLeave}
+			data-testid="offerCard"
 		>
 			{isPremium && (
 				<div className="place-card__mark">
@@ -70,6 +71,7 @@ function OfferCard({
 				className={classNames('place-card__info', {
 					'favorites__card-info': isFavoriteCard,
 				})}
+				data-testid="card-info"
 			>
 				<div className="place-card__price-wrapper">
 					<div className="place-card__price">

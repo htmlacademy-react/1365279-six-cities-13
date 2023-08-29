@@ -7,8 +7,6 @@ import {
 	getFullOfferLoadingStatus,
 	getNearby,
 	getNearbyLoadingStatus,
-	getReviews,
-	getReviewsLoadingStatus,
 } from '../../../store/offer-data/selector';
 import {
 	fetchFullOfferAction,
@@ -17,6 +15,10 @@ import {
 } from '../../../store/api-actions';
 import { useParams } from 'react-router-dom';
 import { getRandomSlice } from '../../../utils/common';
+import {
+	getReviews,
+	getReviewsLoadingStatus,
+} from '../../../store/reviews-data/selector';
 
 export function useFullOfferData() {
 	const dispatch = useAppDispatch();
