@@ -3,19 +3,20 @@ import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 
 export function LoginForm() {
-	const [AuthInfo, setAuthInfo] = useState({ login: '', password: '' });
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 	const dispatch = useAppDispatch();
 
 	const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]+$/;
-	const isValidPassword = passwordRegex.test(AuthInfo.password);
-	const isNeedDisable = !AuthInfo.login || !isValidPassword;
+	const isValidPassword = passwordRegex.test(password);
+	const isNeedDisable = !email || !isValidPassword;
 
 	const handleLoginChange = (evt: ChangeEvent<HTMLInputElement>) => {
-		setAuthInfo({ ...AuthInfo, login: evt.target.value });
+		setEmail(evt.target.value);
 	};
 
 	const handlePasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
-		setAuthInfo({ ...AuthInfo, password: evt.target.value });
+		setPassword(evt.target.value);
 	};
 
 	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -23,8 +24,8 @@ export function LoginForm() {
 
 		dispatch(
 			loginAction({
-				login: AuthInfo.login,
-				password: AuthInfo.password,
+				email: email,
+				password: password,
 			})
 		);
 	};
@@ -39,25 +40,27 @@ export function LoginForm() {
 			<div className="login__input-wrapper form__input-wrapper">
 				<label className="visually-hidden">E-mail</label>
 				<input
-					value={AuthInfo.login}
+					value={email}
 					onChange={handleLoginChange}
 					className="login__input form__input"
 					type="email"
 					name="email"
 					placeholder="Email"
 					required
+					data-testid="loginElement"
 				/>
 			</div>
 			<div className="login__input-wrapper form__input-wrapper">
 				<label className="visually-hidden">Password</label>
 				<input
-					value={AuthInfo.password}
+					value={password}
 					onChange={handlePasswordChange}
 					className="login__input form__input"
 					type="password"
 					name="password"
 					placeholder="Password"
 					required
+					data-testid="passwordElement"
 				/>
 			</div>
 			<button
@@ -67,7 +70,7 @@ export function LoginForm() {
 			>
 				Sign in
 			</button>
-			{isNeedDisable && AuthInfo.password !== '' && (
+			{isNeedDisable && password !== '' && (
 				<p style={{ color: 'red' }}>
 					Password must contain at least one number and one letter
 				</p>

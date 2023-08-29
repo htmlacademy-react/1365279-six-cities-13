@@ -10,7 +10,7 @@ import { offersActions } from '../../store/offers-data/offers-data';
 import { useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import NotFoundPage from '../not-found-page/not-found-page';
-import LoadingScreen from '../loading-page/loading-page';
+import LoadingPage from '../loading-page/loading-page';
 import { AuthorizationStatus, MapTypes } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { OfferDetails } from '../../components/offer-details/offer-details';
@@ -49,7 +49,7 @@ function OfferPage(): JSX.Element {
 	);
 
 	if (isDataLoading) {
-		return <LoadingScreen />;
+		return <LoadingPage />;
 	}
 
 	if (!fullOffer || hasErrorOfferLoading) {
@@ -64,7 +64,7 @@ function OfferPage(): JSX.Element {
 				<title>6 cities - Offer</title>
 			</Helmet>
 			<Header />
-			<main className="page__main page__main--offer">
+			<main data-testid="offer-page" className="page__main page__main--offer">
 				<section className="offer">
 					<div className="offer__gallery-container container">
 						<div className="offer__gallery">

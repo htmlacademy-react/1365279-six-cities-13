@@ -67,7 +67,7 @@ describe('Async actions', () => {
 
 	describe('loginAction', () => {
 		it('should dispatch "loginAction.pending", "loginAction.fulfilled" when server response 200', async () => {
-			const fakeUser: AuthData = { login: 'test@test.ru', password: '123456' };
+			const fakeUser: AuthData = { email: 'test@test.ru', password: '123456' };
 			const fakeServerReplay = { token: 'secret' };
 			mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
 
@@ -81,7 +81,7 @@ describe('Async actions', () => {
 		});
 
 		it('should call "saveToken" once with the received token', async () => {
-			const fakeUser: AuthData = { login: 'test@test.ru', password: '123456' };
+			const fakeUser: AuthData = { email: 'test@test.ru', password: '123456' };
 			const fakeServerReplay = { token: 'secret' };
 			mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
 			const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');

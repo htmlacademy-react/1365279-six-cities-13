@@ -29,17 +29,14 @@ export const loginAction = createAsyncThunk<
 		state: State;
 		extra: AxiosInstance;
 	}
->(
-	`${NameSpace.User}/login`,
-	async ({ login: email, password }, { extra: api }) => {
-		const { data } = await api.post<UserData>(APIRoute.Login, {
-			email,
-			password,
-		});
-		saveToken(data.token);
-		return data;
-	}
-);
+>(`${NameSpace.User}/login`, async ({ email, password }, { extra: api }) => {
+	const { data } = await api.post<UserData>(APIRoute.Login, {
+		email,
+		password,
+	});
+	saveToken(data.token);
+	return data;
+});
 
 export const logoutAction = createAsyncThunk<
 	void,

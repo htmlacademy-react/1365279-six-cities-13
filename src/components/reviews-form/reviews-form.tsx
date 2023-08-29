@@ -63,6 +63,7 @@ function ReviewsForm(): JSX.Element {
 			action="#"
 			method="post"
 			onSubmit={handleFormSubmit}
+			data-testid="ReviewsForm"
 		>
 			<label className="reviews__label form__label" htmlFor="review">
 				Your review
@@ -80,6 +81,7 @@ function ReviewsForm(): JSX.Element {
 				value={review}
 				onChange={handleReviewChange}
 				disabled={isReviewSending === true}
+				data-testid="reviews-textarea"
 			/>
 			<div className="reviews__button-wrapper">
 				<p className="reviews__help">

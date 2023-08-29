@@ -19,7 +19,7 @@ function Rating({
 	};
 
 	return (
-		<div className="reviews__rating-form form__rating">
+		<div className="reviews__rating-form form__rating" data-testid="rating">
 			{Object.entries(ratingValues)
 				.reverse()
 				.map(([score, title]) => (

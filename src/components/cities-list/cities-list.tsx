@@ -11,7 +11,10 @@ export function CitiesList() {
 	return (
 		<div className="tabs">
 			<section className="locations container">
-				<ul className="locations__list tabs__list">
+				<ul
+					className="locations__list tabs__list"
+					data-testid="locations__list"
+				>
 					{CITIES.map((cityName) => (
 						<li className="locations__item" key={cityName}>
 							<Link

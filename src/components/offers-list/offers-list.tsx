@@ -21,7 +21,10 @@ function OffersList({ currentOffers }: OffersListProps) {
 	);
 
 	return (
-		<div className="cities__places-list places__list tabs__content">
+		<div
+			className="cities__places-list places__list tabs__content"
+			data-testid="OffersList"
+		>
 			{sorting[activeSorting](currentOffers).map((offer) => (
 				<OfferCardMemo
 					block={'cities'}

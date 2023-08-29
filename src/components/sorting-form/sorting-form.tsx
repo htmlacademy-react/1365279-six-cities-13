@@ -40,13 +40,19 @@ export function SortingForm(): JSX.Element {
 	});
 
 	return (
-		<form className="places__sorting" action="#" method="get">
+		<form
+			className="places__sorting"
+			action="#"
+			method="get"
+			data-testid="SortingForm"
+		>
 			<span className="places__sorting-caption">Sort by</span>{' '}
 			<span
 				ref={sortingElement}
 				className="places__sorting-type"
 				tabIndex={0}
 				onClick={() => setIsOpened(!isOpened)}
+				data-testid="activeSorting"
 			>
 				{SortingTypes[activeSorting]}
 				<svg
@@ -72,6 +78,7 @@ export function SortingForm(): JSX.Element {
 						})}
 						tabIndex={0}
 						onClick={() => handleSortingClick(type as Sorting)}
+						data-testid="sorting-option"
 					>
 						{title}
 					</li>

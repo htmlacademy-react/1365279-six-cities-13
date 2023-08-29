@@ -63,7 +63,13 @@ function LeafletMap({ city, points, block }: MapProps): JSX.Element {
 		);
 	}, [city, leafletMap]);
 
-	return <section ref={mapRef} className={`${block}__map map`} />;
+	return (
+		<section
+			ref={mapRef}
+			className={`${block}__map map`}
+			data-testid="leaflet-map"
+		/>
+	);
 }
 
 export default LeafletMap;

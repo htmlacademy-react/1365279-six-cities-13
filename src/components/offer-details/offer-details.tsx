@@ -69,7 +69,11 @@ export function OfferDetails({ offer }: OfferDetailsProps): JSX.Element {
 				<h2 className="offer__inside-title">What&apos;s inside</h2>
 				<ul className="offer__inside-list">
 					{goods.map((value) => (
-						<li key={value} className="offer__inside-item">
+						<li
+							key={value}
+							className="offer__inside-item"
+							data-testid="inside-item"
+						>
 							{value}
 						</li>
 					))}

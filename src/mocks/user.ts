@@ -1,10 +1,13 @@
 import { UserData } from '../types/user-data';
+import { faker } from '@faker-js/faker';
 
 function mockUser(): UserData {
 	return {
-		id: 123,
+		name: 'test',
+		avatarUrl: faker.image.url(),
+		isPro: false,
 		email: 'test@test.com',
-		token: 'string',
+		token: 'secret',
 	};
 }
 

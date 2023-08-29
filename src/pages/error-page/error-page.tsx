@@ -2,7 +2,7 @@ import { useAppDispatch } from '../../hooks';
 import { fetchOffersAction } from '../../store/api-actions';
 import styles from './error-page.module.css';
 
-export function ErrorScreen(): JSX.Element {
+export function ErrorPage(): JSX.Element {
 	const dispatch = useAppDispatch();
 
 	return (

@@ -13,13 +13,13 @@ export const RandomCityButton = () => {
 	};
 
 	return (
-		<div className="locations__item">
+		<div className="locations__item" data-testid="randomCity">
 			<Link
 				className="locations__item-link"
 				to={AppRoute.Main}
 				onClick={handleButtonClick}
 			>
-				<span>{randomCity}</span>
+				<span data-testid="city-name">{randomCity}</span>
 			</Link>
 		</div>
 	);

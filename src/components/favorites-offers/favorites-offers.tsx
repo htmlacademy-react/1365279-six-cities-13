@@ -41,6 +41,7 @@ export function FavoritesOffers({ favoritesOffers }: FavoritesOffersProps) {
 									className="locations__item-link"
 									to={AppRoute.Main}
 									onClick={() => handleButtonClick(cityName as CityName)}
+									data-testid="location-link"
 								>
 									<span>{cityName}</span>
 								</Link>

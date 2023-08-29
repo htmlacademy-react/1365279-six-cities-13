@@ -5,7 +5,7 @@ import { useCurrentOffers } from './hooks/use-current-offers';
 import { MapTypes } from '../../const';
 import { getOffersLoadingStatus } from '../../store/offers-data/selector';
 import { getFavoritesLoadingStatus } from '../../store/favorites-data/selector';
-import LoadingScreen from '../loading-page/loading-page';
+import LoadingPage from '../loading-page/loading-page';
 import { MainPageEmpty } from '../main-page-empty/main-page-empty';
 import Header from '../../components/header/header';
 import OffersList from '../../components/offers-list/offers-list';
@@ -19,7 +19,7 @@ function MainPage(): JSX.Element {
 	const isFavoritesLoading = useAppSelector(getFavoritesLoadingStatus);
 
 	if (isOffersLoading || isFavoritesLoading) {
-		return <LoadingScreen />;
+		return <LoadingPage />;
 	}
 
 	return (
@@ -29,6 +29,7 @@ function MainPage(): JSX.Element {
 			</Helmet>
 			<Header />
 			<main
+				data-testid="main-page"
 				className={classNames('page__main', 'page__main--index', {
 					'page__main--index-empty': !currentOffers,
 				})}
