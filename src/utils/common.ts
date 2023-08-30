@@ -1,4 +1,4 @@
-import { ServerOffer } from '../types/offer';
+import { CityName, ServerOffer } from '../types/offer';
 import { Sorting } from '../types/sorting';
 function sortPriceToHigh(a: ServerOffer, b: ServerOffer) {
 	return a.price - b.price;
@@ -48,3 +48,21 @@ export const getRandomSlice = <El>(size: number, elements: El[]) => {
 
 	return result;
 };
+
+export function getFavoritesOfferByCities(favoritesOffers: ServerOffer[]) {
+	const favoritesOffersByCities: Record<string, ServerOffer[]> = {};
+	const cities: CityName[] = [];
+	for (const offer of favoritesOffers) {
+		const city = offer.city.name;
+		if (city in favoritesOffersByCities) {
+			favoritesOffersByCities[city].push(offer);
+			continue;
+		}
+		cities.push(city);
+
+		favoritesOffersByCities[city] = [offer];
+		continue;
+	}
+
+	return {favoritesOffersByCities, cities};
+}

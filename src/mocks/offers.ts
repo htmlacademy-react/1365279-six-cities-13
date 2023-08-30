@@ -48,5 +48,5 @@ function mockFullOffer(): ServerOffer & FullOffer {
 	};
 }
 
-export const makeMockFullOffer = mockFullOffer();
-export const makeMockOffers = Array.from({ length: 5 }, mockOffer);
+export const makedMockFullOffer = mockFullOffer();
+export const makedMockOffers = Array.from({ length: 5 }, mockOffer);

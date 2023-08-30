@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { OfferCardMemo } from './offer-card';
 import { withHistory, withStore } from '../../mocks/mock-component';
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import { makeFakeStore } from '../../mocks/utils';
 import userEvent from '@testing-library/user-event';
 
 describe('Component: OfferCard', () => {
-	const mockOffer = makeMockOffers[0];
+	const mockOffer = makedMockOffers[0];
 	const mockHandleActiveOfferChange = vi.fn();
 
 	it('should render correct with "isPremium" = true, block = "favorites"', () => {

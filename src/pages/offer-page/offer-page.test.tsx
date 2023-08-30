@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../mocks/mock-component.tsx';
-import { makeMockFullOffer } from '../../mocks/offers.ts';
+import { makedMockFullOffer } from '../../mocks/offers.ts';
 import OfferPage from './offer-page.tsx';
 import { initialState as initialOfferState } from '../../store/offer-data/offer-data.ts';
 import { initialState as initialReviewsState } from '../../store/reviews-data/reviews-data.ts';
@@ -8,7 +8,7 @@ import { makeFakeStore } from '../../mocks/utils.ts';
 import { AuthorizationStatus } from '../../const.ts';
 
 describe('Component: OfferPage', () => {
-	const mockFullOffer = makeMockFullOffer;
+	const mockFullOffer = makedMockFullOffer;
 	const offerPageElementId = 'offer-page';
 	const commentSendFormElementId = 'ReviewsForm';
 	const loadingContainerTestId = 'loading-spinner';
@@ -91,6 +91,30 @@ describe('Component: OfferPage', () => {
 			reviews: {
 				...initialReviewsState,
 				isReviewsLoading: true,
+			},
+		};
+		const { withStoreComponent } = withStore(
+			<OfferPage />,
+			makeFakeStore(initialState)
+		);
+		const preparedComponent = withHistory(withStoreComponent);
+
+		render(preparedComponent);
+
+		expect(screen.getByTestId(loadingContainerTestId)).toBeInTheDocument();
+	});
+
+	it('should render loading screen when nearby is loading', () => {
+		const initialState = {
+			offer: {
+				...initialOfferState,
+				fullOffer: mockFullOffer,
+				isFullOfferLoading: false,
+				isNearbyLoading: true,
+			},
+			reviews: {
+				...initialReviewsState,
+				isReviewsLoading: false,
 			},
 		};
 		const { withStoreComponent } = withStore(

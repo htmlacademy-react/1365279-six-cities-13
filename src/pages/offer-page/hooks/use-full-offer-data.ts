@@ -39,7 +39,7 @@ export function useFullOfferData() {
 	const isReviewsLoading = useAppSelector(getReviewsLoadingStatus);
 	const isNearbyLoading = useAppSelector(getNearbyLoadingStatus);
 	const isDataLoading =
-		isFullOfferLoading && isReviewsLoading && isNearbyLoading;
+		isFullOfferLoading || isReviewsLoading || isNearbyLoading;
 	const hasErrorOfferLoading = useAppSelector(getErrorOfferLoadingStatus);
 
 	useEffect(() => {

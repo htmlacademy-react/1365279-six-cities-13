@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import LeafletMap from './leaflet-map';
 import { withHistory, withStore } from '../../mocks/mock-component';
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import { makeFakeStore } from '../../mocks/utils';
 
 describe('Component: LeafletMap', () => {
 	it('should render correctly', () => {
-		const mockOffers = makeMockOffers;
+		const mockOffers = makedMockOffers;
 
 		const { withStoreComponent } = withStore(
 			<LeafletMap

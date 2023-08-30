@@ -1,5 +1,5 @@
 import { CITIES } from '../../const';
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import { fetchOffersAction } from '../api-actions';
 import { initialState, offersData } from './offers-data';
 
@@ -45,7 +45,7 @@ describe('OffersData slice', () => {
 	});
 
 	it('should set active offer with "setActiveOffer" action', () => {
-		const mockOffer = makeMockOffers[0];
+		const mockOffer = makedMockOffers[0];
 		const expectedState = { ...initialState, activeOffer: mockOffer };
 
 		const result = offersData.reducer(
@@ -65,7 +65,7 @@ describe('OffersData slice', () => {
 	});
 
 	it('should set "offers" to array with offers, "isOffersLoading" to "false" with "fetchOffersAction.fulfilled"', () => {
-		const mockOffers = makeMockOffers;
+		const mockOffers = makedMockOffers;
 		const expectedState = {
 			...initialState,
 			offers: mockOffers,

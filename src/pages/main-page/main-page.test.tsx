@@ -3,11 +3,11 @@ import MainPage from './main-page.tsx';
 import { withHistory, withStore } from '../../mocks/mock-component.tsx';
 import { initialState as initialOffersState } from '../../store/offers-data/offers-data.ts';
 import { initialState as initialFavoritesState } from '../../store/favorites-data/favorites-data.ts';
-import { makeMockOffers } from '../../mocks/offers.ts';
+import { makedMockOffers } from '../../mocks/offers.ts';
 import { makeFakeStore } from '../../mocks/utils.ts';
 
 describe('Component: MainPage', () => {
-	const mockOffers = makeMockOffers;
+	const mockOffers = makedMockOffers;
 	const loadingScreenElementId = 'loading-spinner';
 
 	it('should render correctly with already loaded offers', () => {

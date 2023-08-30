@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { withHistory, withStore } from '../../mocks/mock-component';
 import { BookmarkButtonMemo } from './bookmark-button';
-import { makeMockFullOffer } from '../../mocks/offers';
+import { makedMockFullOffer } from '../../mocks/offers';
 import { extractActionsTypes, makeFakeStore } from '../../mocks/utils';
 import { APIRoute, AuthorizationStatus, FavoriteStatus } from '../../const';
 import {
@@ -11,7 +11,7 @@ import {
 } from '../../store/api-actions';
 
 describe('Component: BookmarkButton', () => {
-	const mockOffer = makeMockFullOffer;
+	const mockOffer = makedMockFullOffer;
 	const mockHandleBookmarkButtonClick = vi.fn();
 	const initialState = {
 		user: {

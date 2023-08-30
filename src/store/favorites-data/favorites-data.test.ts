@@ -1,4 +1,4 @@
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import {
 	addFavoriteAction,
 	deleteFavoriteAction,
@@ -41,7 +41,7 @@ describe('FavoritesData slice', () => {
 	});
 
 	it('should set "favorites" to array, "isFavoritesLoading" to false with "fetchFavoritesAction.fulfilled"', () => {
-		const mockFavorites = makeMockOffers;
+		const mockFavorites = makedMockOffers;
 		const expectedState = {
 			...initialState,
 			favorites: mockFavorites,
@@ -71,7 +71,7 @@ describe('FavoritesData slice', () => {
 	});
 
 	it('should add favorite offer to favorites with "addFavoriteAction.fulfilled"', () => {
-		const mockFavorite = makeMockOffers[0];
+		const mockFavorite = makedMockOffers[0];
 		const expectedState = {
 			...initialState,
 			favorites: [mockFavorite],
@@ -86,7 +86,7 @@ describe('FavoritesData slice', () => {
 	});
 
 	it('should delete favorite offer from favorites with "deleteFavoriteAction.fulfilled"', () => {
-		const mockFavorite = makeMockOffers[0];
+		const mockFavorite = makedMockOffers[0];
 		const mockInitialState = {
 			...initialState,
 			favorites: [mockFavorite],

@@ -3,11 +3,11 @@ import { CitiesList } from './cities-list';
 import { withHistory, withStore } from '../../mocks/mock-component';
 import { CITIES, SortingTypes } from '../../const';
 import { makeFakeStore } from '../../mocks/utils';
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import { offersActions } from '../../store/offers-data/offers-data';
 
 describe('Component: CitiesList', () => {
-	const mockOffers = makeMockOffers;
+	const mockOffers = makedMockOffers;
 	const expectedCount = CITIES.length;
 	const activeCityIndex = 0;
 	const initialState = {
