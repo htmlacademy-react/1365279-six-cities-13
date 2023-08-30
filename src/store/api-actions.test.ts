@@ -19,7 +19,7 @@ import {
 	sendReviewAction,
 } from './api-actions';
 import { APIRoute, FavoriteStatus } from '../const';
-import { makeMockOffers } from '../mocks/offers';
+import { makedMockOffers } from '../mocks/offers';
 import { makeMockReviews } from '../mocks/reviews';
 import { AuthData } from '../types/auth-data';
 import * as tokenStorage from '../services/token';
@@ -118,7 +118,7 @@ describe('Async actions', () => {
 
 	describe('fetchOffersAction', () => {
 		it('should dispatch "fetchOffersAction.pending" and "fetchOffersAction.fulfilled" when server response 200', async () => {
-			const mockOffers = makeMockOffers;
+			const mockOffers = makedMockOffers;
 			mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, mockOffers);
 
 			await store.dispatch(fetchOffersAction());
@@ -151,7 +151,7 @@ describe('Async actions', () => {
 
 	describe('fetchFullOfferAction', () => {
 		it('should dispatch "fetchFullOfferAction.pending" and "fetchFullOfferAction.fulfilled" when server response 200', async () => {
-			const mockOffer = makeMockOffers[0];
+			const mockOffer = makedMockOffers[0];
 			mockAxiosAdapter
 				.onGet(`${APIRoute.Offers}/offerId`)
 				.reply(200, mockOffer);
@@ -221,7 +221,7 @@ describe('Async actions', () => {
 
 	describe('fetchNearbyAction', () => {
 		it('should dispatch "fetchNearbyAction.pending" and "fetchNearbyAction.fulfilled" when server response 200', async () => {
-			const mockNearbyOffers = makeMockOffers;
+			const mockNearbyOffers = makedMockOffers;
 			mockAxiosAdapter
 				.onGet(`${APIRoute.Offers}/offerId/nearby`)
 				.reply(200, mockNearbyOffers);
@@ -296,7 +296,7 @@ describe('Async actions', () => {
 
 	describe('fetchFavoritesAction', () => {
 		it('should dispatch "fetchFavoritesAction.pending" and "fetchFavoritesAction.fulfilled" when server response 200', async () => {
-			const mockFavorites = makeMockOffers;
+			const mockFavorites = makedMockOffers;
 			mockAxiosAdapter.onGet(APIRoute.Favorite).reply(200, mockFavorites);
 
 			await store.dispatch(fetchFavoritesAction());
@@ -329,7 +329,7 @@ describe('Async actions', () => {
 
 	describe('addFavoriteAction', () => {
 		it('should dispatch "addFavoriteAction.pending" and "addFavoriteAction.fulfilled" when server response 200', async () => {
-			const mockFavorite = makeMockOffers[0];
+			const mockFavorite = makedMockOffers[0];
 			mockAxiosAdapter
 				.onPost(`${APIRoute.Favorite}/${mockFavorite.id}/${FavoriteStatus.Add}`)
 				.reply(200, mockFavorite.id);
@@ -350,7 +350,7 @@ describe('Async actions', () => {
 		});
 
 		it('should dispatch "addFavoriteAction.pending" and "addFavoriteAction.rejected" when server response 400', async () => {
-			const mockFavorite = makeMockOffers[0];
+			const mockFavorite = makedMockOffers[0];
 			mockAxiosAdapter
 				.onPost(`${APIRoute.Favorite}/${mockFavorite.id}/${FavoriteStatus.Add}`)
 				.reply(400, []);
@@ -366,7 +366,7 @@ describe('Async actions', () => {
 	});
 	describe('deleteFavoriteAction', () => {
 		it('should dispatch "deleteFavoriteAction.pending" and "deleteFavoriteAction.fulfilled" when server response 200', async () => {
-			const mockFavorite = makeMockOffers[0];
+			const mockFavorite = makedMockOffers[0];
 			mockAxiosAdapter
 				.onPost(
 					`${APIRoute.Favorite}/${mockFavorite.id}/${FavoriteStatus.Delete}`
@@ -389,7 +389,7 @@ describe('Async actions', () => {
 		});
 
 		it('should dispatch "deleteFavoriteAction.pending" and "deleteFavoriteAction.rejected" when server response 400', async () => {
-			const mockFavorite = makeMockOffers[0];
+			const mockFavorite = makedMockOffers[0];
 			mockAxiosAdapter
 				.onPost(
 					`${APIRoute.Favorite}/${mockFavorite.id}/${FavoriteStatus.Delete}`

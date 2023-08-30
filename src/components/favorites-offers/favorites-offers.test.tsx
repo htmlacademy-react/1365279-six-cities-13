@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { FavoritesOffers } from './favorites-offers';
 import { withHistory, withStore } from '../../mocks/mock-component';
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import { makeFakeStore } from '../../mocks/utils';
 
 describe('Component: FavoriteCount', () => {
 	it('should render correct', () => {
-		const mockFavorites = makeMockOffers;
+		const mockFavorites = makedMockOffers;
 		const initialStore = {
 			favorites: {
 				favorites: mockFavorites,

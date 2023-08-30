@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { OfferDetails } from './offer-details';
 import { withHistory, withStore } from '../../mocks/mock-component';
-import { makeMockFullOffer } from '../../mocks/offers';
+import { makedMockFullOffer } from '../../mocks/offers';
 import { makeFakeStore } from '../../mocks/utils';
 
 describe('Component: OfferDetails', () => {
 	it('should render correct with "isPremium" = true', () => {
-		const mockFullOffer = makeMockFullOffer;
+		const mockFullOffer = makedMockFullOffer;
 		mockFullOffer.isPremium = true;
 		const withHistoryComponent = withHistory(
 			<OfferDetails offer={mockFullOffer} />
@@ -27,7 +27,7 @@ describe('Component: OfferDetails', () => {
 	});
 
 	it('should render correct word endings', () => {
-		const mockFullOffer = makeMockFullOffer;
+		const mockFullOffer = makedMockFullOffer;
 		mockFullOffer.bedrooms = 2;
 		mockFullOffer.maxAdults = 1;
 		const withHistoryComponent = withHistory(

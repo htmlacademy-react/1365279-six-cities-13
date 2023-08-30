@@ -4,7 +4,7 @@ import { withHistory, withStore } from '../../mocks/mock-component';
 import { makeFakeStore } from '../../mocks/utils';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import App from './app';
-import { makeMockFullOffer } from '../../mocks/offers';
+import { makedMockFullOffer } from '../../mocks/offers';
 
 describe('App Routing', () => {
 	let mockHistory: MemoryHistory;
@@ -59,7 +59,7 @@ describe('App Routing', () => {
 	});
 
 	it('should render "OfferPage" when user navigate to "/offer/offerId"', () => {
-		const mockOffer = makeMockFullOffer;
+		const mockOffer = makedMockFullOffer;
 		const initialState = {
 			offer: {
 				fullOffer: mockOffer,

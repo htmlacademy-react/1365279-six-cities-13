@@ -1,4 +1,4 @@
-import { makeMockFullOffer, makeMockOffers } from '../../mocks/offers';
+import { makedMockFullOffer, makedMockOffers } from '../../mocks/offers';
 import { fetchFullOfferAction, fetchNearbyAction } from '../api-actions';
 import { initialState, offerData } from './offer-data';
 
@@ -34,7 +34,7 @@ describe('OfferData slice', () => {
 	});
 
 	it('should set offer to fullOffer, "isFullOfferLoading" to false with "fetchFullOfferAction.fulfilled"', () => {
-		const mockFullOffer = makeMockFullOffer;
+		const mockFullOffer = makedMockFullOffer;
 		const expectedState = {
 			...initialState,
 			isFullOfferLoading: false,
@@ -73,7 +73,7 @@ describe('OfferData slice', () => {
 	});
 
 	it('should set nearby offers to nearby array, "isNearbyLoading" to false with "fetchNearbyAction.fulfilled"', () => {
-		const mockNearbyOffers = makeMockOffers;
+		const mockNearbyOffers = makedMockOffers;
 		const expectedState = {
 			...initialState,
 			isFullOfferLoading: false,

@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../mocks/mock-component';
 import OffersList from './offers-list';
-import { makeMockOffers } from '../../mocks/offers';
+import { makedMockOffers } from '../../mocks/offers';
 import { makeFakeStore } from '../../mocks/utils';
 import { CITIES, SortingTypes } from '../../const';
 
 describe('Component: OffersList', () => {
 	it('should render correctly', () => {
-		const mockOffers = makeMockOffers;
+		const mockOffers = makedMockOffers;
 		const initialState = {
 			offers: {
 				activeCity: CITIES[0],
-				offers: makeMockOffers,
+				offers: makedMockOffers,
 				isOffersLoading: false,
 				activeOffer: null,
 				sorting: SortingTypes.Popular,
