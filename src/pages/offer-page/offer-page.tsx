@@ -2,12 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import ReviewsList from '../../components/reviews-list/reviews-list';
-import { ServerOffer } from '../../types/offer';
 import LeafletMap from '../../components/leaflet-map/leaflet-map';
 import { OfferCardMemo } from '../../components/offer-card/offer-card';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { offersActions } from '../../store/offers-data/offers-data';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import classNames from 'classnames';
 import NotFoundPage from '../not-found-page/not-found-page';
 import LoadingPage from '../loading-page/loading-page';
@@ -16,18 +15,20 @@ import { getAuthorizationStatus } from '../../store/user-process/selector';
 import { OfferDetails } from '../../components/offer-details/offer-details';
 import { useFullOfferData } from './hooks/use-full-offer-data';
 import { getCurrentOffer } from '../../store/offer-data/selector';
+import { ErrorOfferPage } from '../error-offer-page/error-offer-page';
 
 function OfferPage(): JSX.Element {
 	const dispatch = useAppDispatch();
 	const authorizationStatus = useAppSelector(getAuthorizationStatus);
 	const currentPoint = useAppSelector(getCurrentOffer);
+
 	const {
 		fullOffer,
 		reviews,
 		newReviews,
 		nearbyOffers,
 		isDataLoading,
-		hasErrorOfferLoading,
+		hasError,
 	} = useFullOfferData();
 
 	useEffect(() => {
@@ -37,23 +38,16 @@ function OfferPage(): JSX.Element {
 		};
 	}, [currentPoint, dispatch]);
 
-	const handleActiveOfferChange = useCallback(
-		(offer: ServerOffer | null) => {
-			if (!offer) {
-				dispatch(offersActions.setActiveOffer(fullOffer));
-			} else {
-				dispatch(offersActions.setActiveOffer(offer));
-			}
-		},
-		[dispatch, fullOffer]
-	);
-
 	if (isDataLoading) {
 		return <LoadingPage />;
 	}
 
-	if (!fullOffer || hasErrorOfferLoading) {
+	if (!fullOffer) {
 		return <NotFoundPage />;
+	}
+
+	if (hasError) {
+		return <ErrorOfferPage />;
 	}
 
 	const { description, host, images, city } = fullOffer;
@@ -138,8 +132,6 @@ function OfferPage(): JSX.Element {
 									block={'near-places'}
 									{...offer}
 									key={offer.id}
-									onMouseEnter={() => handleActiveOfferChange(offer)}
-									onMouseLeave={() => handleActiveOfferChange(null)}
 								/>
 							))}
 						</div>

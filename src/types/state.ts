@@ -24,6 +24,7 @@ export type OfferData = {
 	nearby: ServerOffer[];
 	isFullOfferLoading: boolean;
 	isNearbyLoading: boolean;
+	hasErrorNearbyLoading: boolean;
 	hasErrorOfferLoading: boolean;
 };
 
@@ -32,6 +33,7 @@ export type ReviewsData = {
 	isReviewsLoading: boolean;
 	isReviewSending: boolean;
 	isSuccessPost: boolean;
+	hasErrorReviewsLoading: boolean;
 };
 
 export type FavoritesData = {

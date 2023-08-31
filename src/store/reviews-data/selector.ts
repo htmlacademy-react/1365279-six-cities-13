@@ -12,3 +12,5 @@ export const getReviewSendingStatus = (
 ): boolean => state[NameSpace.Reviews].isReviewSending;
 export const getSuccessPostStatus = (state: State): boolean =>
 	state[NameSpace.Reviews].isSuccessPost;
+export const getErrorReviewsLoadingStatus = (state: State): boolean =>
+	state[NameSpace.Reviews].hasErrorReviewsLoading;

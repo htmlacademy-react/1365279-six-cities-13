@@ -8,6 +8,7 @@ export const initialState: OfferData = {
 	nearby: [],
 	isFullOfferLoading: false,
 	isNearbyLoading: false,
+	hasErrorNearbyLoading: false,
 	hasErrorOfferLoading: false,
 };
 
@@ -31,10 +32,15 @@ export const offerData = createSlice({
 			})
 			.addCase(fetchNearbyAction.pending, (state) => {
 				state.isNearbyLoading = true;
+				state.hasErrorNearbyLoading = false;
 			})
 			.addCase(fetchNearbyAction.fulfilled, (state, action) => {
 				state.nearby = action.payload;
 				state.isNearbyLoading = false;
+			})
+			.addCase(fetchNearbyAction.rejected, (state) => {
+				state.isNearbyLoading = false;
+				state.hasErrorNearbyLoading = true;
 			});
 	},
 });

@@ -14,6 +14,7 @@ type DetailMessageType = {
 };
 
 const StatusCodeMapping: Record<number, boolean> = {
+	[StatusCodes.NOT_FOUND]: true,
 	[StatusCodes.BAD_REQUEST]: true,
 	[StatusCodes.UNAUTHORIZED]: true,
 };
