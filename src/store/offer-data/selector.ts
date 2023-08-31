@@ -15,3 +15,5 @@ export const getNearbyLoadingStatus = (
 ): boolean => state[NameSpace.Offer].isNearbyLoading;
 export const getErrorOfferLoadingStatus = (state: State): boolean =>
 	state[NameSpace.Offer].hasErrorOfferLoading;
+export const getErrorNearbyLoadingStatus = (state: State): boolean =>
+	state[NameSpace.Offer].hasErrorNearbyLoading;

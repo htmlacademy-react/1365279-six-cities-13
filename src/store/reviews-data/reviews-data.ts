@@ -8,6 +8,7 @@ export const initialState: ReviewsData = {
 	isReviewsLoading: false,
 	isReviewSending: false,
 	isSuccessPost: false,
+	hasErrorReviewsLoading: false,
 };
 
 export const reviewsData = createSlice({
@@ -22,10 +23,15 @@ export const reviewsData = createSlice({
 		builder
 			.addCase(fetchReviewsAction.pending, (state) => {
 				state.isReviewsLoading = true;
+				state.hasErrorReviewsLoading = false;
 			})
 			.addCase(fetchReviewsAction.fulfilled, (state, action) => {
 				state.reviews = action.payload;
 				state.isReviewsLoading = false;
+			})
+			.addCase(fetchReviewsAction.rejected, (state) => {
+				state.isReviewsLoading = false;
+				state.hasErrorReviewsLoading = true;
 			})
 			.addCase(sendReviewAction.pending, (state) => {
 				state.isReviewSending = true;

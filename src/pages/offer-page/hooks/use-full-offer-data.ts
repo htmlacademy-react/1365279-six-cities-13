@@ -3,6 +3,7 @@ import { MAX_REVIEWS_QUANTITY } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
 	getCurrentOffer,
+	getErrorNearbyLoadingStatus,
 	getErrorOfferLoadingStatus,
 	getFullOfferLoadingStatus,
 	getNearby,
@@ -16,6 +17,7 @@ import {
 import { useParams } from 'react-router-dom';
 import { getRandomSlice } from '../../../utils/common';
 import {
+	getErrorReviewsLoadingStatus,
 	getReviews,
 	getReviewsLoadingStatus,
 } from '../../../store/reviews-data/selector';
@@ -41,6 +43,10 @@ export function useFullOfferData() {
 	const isDataLoading =
 		isFullOfferLoading || isReviewsLoading || isNearbyLoading;
 	const hasErrorOfferLoading = useAppSelector(getErrorOfferLoadingStatus);
+	const hasErrorReviewsLoading = useAppSelector(getErrorReviewsLoadingStatus);
+	const hasErrorNearbyLoading = useAppSelector(getErrorNearbyLoadingStatus);
+	const hasError =
+		hasErrorOfferLoading || hasErrorReviewsLoading || hasErrorNearbyLoading;
 
 	useEffect(() => {
 		dispatch(fetchFullOfferAction(params.offerId as string));
@@ -54,6 +60,6 @@ export function useFullOfferData() {
 		newReviews,
 		nearbyOffers,
 		isDataLoading,
-		hasErrorOfferLoading,
+		hasError,
 	};
 }

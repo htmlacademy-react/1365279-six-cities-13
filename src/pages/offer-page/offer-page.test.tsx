@@ -128,7 +128,31 @@ describe('Component: OfferPage', () => {
 		expect(screen.getByTestId(loadingContainerTestId)).toBeInTheDocument();
 	});
 
-	it('should render error page when offer doesn\'t exist', () => {
+	it('should render loading screen when reviews is loading', () => {
+		const initialState = {
+			offer: {
+				...initialOfferState,
+				fullOffer: mockFullOffer,
+				isFullOfferLoading: false,
+				isNearbyLoading: false,
+			},
+			reviews: {
+				...initialReviewsState,
+				isReviewsLoading: true,
+			},
+		};
+		const { withStoreComponent } = withStore(
+			<OfferPage />,
+			makeFakeStore(initialState)
+		);
+		const preparedComponent = withHistory(withStoreComponent);
+
+		render(preparedComponent);
+
+		expect(screen.getByTestId(loadingContainerTestId)).toBeInTheDocument();
+	});
+
+	it('should render not found page when offer doesn\'t exist', () => {
 		const initialState = {
 			offer: {
 				...initialOfferState,
@@ -150,5 +174,55 @@ describe('Component: OfferPage', () => {
 		render(preparedComponent);
 
 		expect(screen.getByText('Error 404. Page not found.')).toBeInTheDocument();
+	});
+
+	it('should render error page when nearby is not loading', () => {
+		const initialState = {
+			offer: {
+				...initialOfferState,
+				fullOffer: mockFullOffer,
+				isFullOfferLoading: false,
+				isNearbyLoading: false,
+				hasErrorNearbyLoading: true,
+			},
+			reviews: {
+				...initialReviewsState,
+				isReviewsLoading: false,
+			},
+		};
+		const { withStoreComponent } = withStore(
+			<OfferPage />,
+			makeFakeStore(initialState)
+		);
+		const preparedComponent = withHistory(withStoreComponent);
+
+		render(preparedComponent);
+
+		expect(screen.getByText('Oops! Something went wrong.')).toBeInTheDocument();
+	});
+
+	it('should render error page when reviews is not loading', () => {
+		const initialState = {
+			offer: {
+				...initialOfferState,
+				fullOffer: mockFullOffer,
+				isFullOfferLoading: false,
+				isNearbyLoading: false,
+			},
+			reviews: {
+				...initialReviewsState,
+				isReviewsLoading: false,
+				hasErrorReviewsLoading: true,
+			},
+		};
+		const { withStoreComponent } = withStore(
+			<OfferPage />,
+			makeFakeStore(initialState)
+		);
+		const preparedComponent = withHistory(withStoreComponent);
+
+		render(preparedComponent);
+
+		expect(screen.getByText('Oops! Something went wrong.')).toBeInTheDocument();
 	});
 });

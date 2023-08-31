@@ -1,0 +1,10 @@
+.link {
+	padding: 16px 20px 13px;
+	color: #fff;
+	background-color: #4481c3;
+	border-radius: 3px;
+}
+
+.link:focus, .link:hover {
+	background-color: #3069a6;
+}
