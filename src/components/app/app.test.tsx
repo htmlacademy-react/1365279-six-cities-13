@@ -67,6 +67,7 @@ describe('App Routing', () => {
 				isFullOfferLoading: false,
 				isNearbyLoading: false,
 				hasErrorOfferLoading: false,
+				hasErrorNearbyLoading: false,
 			},
 		};
 		const withHistoryComponent = withHistory(<App />, mockHistory);

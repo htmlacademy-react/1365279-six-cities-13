@@ -31,6 +31,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
 		isFullOfferLoading: false,
 		isNearbyLoading: false,
 		hasErrorOfferLoading: false,
+		hasErrorNearbyLoading: false,
 	},
 	favorites: {
 		favorites: [],
@@ -42,6 +43,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
 		isReviewsLoading: false,
 		isReviewSending: false,
 		isSuccessPost: false,
+		hasErrorReviewsLoading: false,
 	},
 	...(initialState ?? {}),
 });
